@@ -1,0 +1,48 @@
+body {
+    padding: 0 20px;
+}
+
+h2:nth-child(n+2) {
+    margin-top: 40px;
+}
+
+h2 {
+    border-bottom: 1px solid #999;
+}
+
+h4 {
+    margin-top: 20px;
+}
+
+.menubar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: auto;
+}
+
+.btn {
+    float: left;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.workspaceTreeWorkspace {
+    background-image: url('assets/icons/ic_folder_black_18dp.png');
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    padding-top: 7px;
+}
+
+.workspaceTreeDocument {
+    background-image: url('assets/icons/ic_insert_drive_file_black_18dp.png');
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    /*  background: url('assets/icons/ic_insert_drive_file_black_18dp.png') no-repeat left;*/
+}
