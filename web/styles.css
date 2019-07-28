@@ -24,6 +24,35 @@ h4 {
     float: left;
 }
 
+thead {
+    background-color: #c0c3c7;
+    color: #000;
+}
+
+td {
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e4ebf2;
+    color: #000;
+}
+
+.rqmElementContent {
+    resize: both;
+    overflow: auto;
+    width: 120px;
+    height: 120px;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid black;
+    display: block;
+}
+
 ul li {
     list-style-type: none;
 }
@@ -46,3 +75,5 @@ ul li {
     border-radius: 5px;
     /*  background: url('assets/icons/ic_insert_drive_file_black_18dp.png') no-repeat left;*/
 }
+
+;

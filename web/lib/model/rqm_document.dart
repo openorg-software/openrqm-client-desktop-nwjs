@@ -40,8 +40,13 @@ class RQMDocument {
   Element buildWorkspaceOverviewElement() {
     LIElement thisElement = LIElement();
     ButtonElement btn = ButtonElement()..text = '$name';
+    btn.onClick.listen((event) => showDocument(event));
     btn.className = 'workspaceTreeDocument';
     thisElement.children.add(btn);
     return thisElement;
+  }
+
+  void showDocument(MouseEvent envent) {
+    window.open('document.html?id=$internalIdentifier&name=$name', name, '');
   }
 }

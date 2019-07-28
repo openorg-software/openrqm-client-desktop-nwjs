@@ -7,6 +7,7 @@ import 'package:bootjack/bootjack.dart';
 /// Imports of OpenRQM
 import '../model/rqm_document.dart';
 import '../model/rqm_workspace.dart';
+import '../model/rqm_element.dart';
 
 class RQMRestConnector {
   List<RQMWorkspace> workspaces = List<RQMWorkspace>();
@@ -36,7 +37,7 @@ class RQMRestConnector {
 
     innerDocuments.add(RQMDocument(
       workspaceId: 2,
-      internalIdentifier: 1,
+      internalIdentifier: 2,
       externalIdentifier: 'ID02',
       name: 'docTwo',
       description: 'docOne Description',
@@ -65,5 +66,22 @@ class RQMRestConnector {
       documents: documents,
       workspaces: innerWorkspaces,
     ));
+  }
+
+  List<RQMElement> fetchElementsOfDocument(int internalIdentifier) {
+    List<RQMElement> elements = List<RQMElement>();
+    elements.add(RQMElement(
+      content:
+          "The openrqm-server shall support a REST call to fetch all workspaces with their attributes as JSON.",
+      elementTypeId: 1,
+      rank: '123',
+    ));
+    elements.add(RQMElement(
+      content:
+          "The openrqm-server shall support a REST call to fetch all elements of a document specified by it's internal identifier as JSON.",
+      elementTypeId: 1,
+      rank: '123',
+    ));
+    return elements;
   }
 }
