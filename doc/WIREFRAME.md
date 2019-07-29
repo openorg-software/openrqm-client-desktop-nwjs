@@ -6,6 +6,9 @@ This file shows all the major screens of the OpenRQM Client as wireframes.
 ## Login View
 
 ```puml
+
+scale max 650 width
+
 @startsalt
 {
   Login    | "Username  "
@@ -18,6 +21,8 @@ This file shows all the major screens of the OpenRQM Client as wireframes.
 ## Workspace View
 
 ```puml
+
+scale max 650 width
 
 @startsalt
 {
@@ -43,6 +48,8 @@ This file shows all the major screens of the OpenRQM Client as wireframes.
 ## Document View
 
 ```puml
+
+scale max 650 width
 
 @startsalt
 {

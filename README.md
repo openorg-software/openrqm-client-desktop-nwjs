@@ -3,6 +3,10 @@
 This OpenRQM Desktop Client is a [nw.js](https://nwjs.io/) project.
 The GUI is created using HTML and CSS while all functionality is written in [Dart](https://dart.dev/) and converted to JavaScript using [dart2js](https://dart.dev/tools/dart2js).
 
+## Hints for reading the OpenRQM Client documentation
+
+The documents can be read best using [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) using the [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/) extension since all drawing are created using [PlantUML](http://plantuml.com/).
+
 ## How to run / build
 
 ### Running for development purposes
