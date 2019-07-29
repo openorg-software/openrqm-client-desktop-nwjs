@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+Main css file of the openrqm-client
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 body {
     padding: 0 20px;
 }

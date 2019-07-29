@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+openrqm-client application entry point
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 ///Native Dart imports
 import 'dart:html';
 

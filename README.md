@@ -1,4 +1,10 @@
-An absolute bare-bones web app.
+OpenRQM
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+
+## License
+
+SPDX-License-Identifier: GPL-2.0-only
+
+## Copyright
+
+Copyright (C) 2019 Benjamin Schilling

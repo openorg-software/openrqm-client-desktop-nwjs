@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMElement class
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import 'dart:html';
 
 class RQMElement {
