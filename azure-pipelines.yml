@@ -11,7 +11,7 @@ pool:
 
 steps:
 
-# First install the Dart SDK
+# First install & prepare the Dart SDK
 - script: |
     sudo apt-get update
     sudo apt-get install apt-transport-https
@@ -20,4 +20,13 @@ steps:
     sudo apt-get update
     sudo apt-get install dart
     export PATH="$PATH:/usr/lib/dart/bin"
+    pub global activate webdev
   displayName: 'Prepare Dart SDK'
+
+# Compile the Dart code to JavaScript
+- script: |
+    pub get
+    webdev build
+  displayName: 'Compile Dart Code'
+
+# Download the NW..js binaries
