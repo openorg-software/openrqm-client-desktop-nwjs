@@ -26,6 +26,8 @@ steps:
 
 # Compile the Dart code to JavaScript
 - script: |
+    export PATH="$PATH":"$HOME/.pub-cache/bin"
+    export PATH="$PATH":/usr/lib/dart/bin/
     pub get
     webdev build
   displayName: 'Compile Dart Code'
