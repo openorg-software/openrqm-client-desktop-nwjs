@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+# First install the Dart SDK
+- script: |
+    sudo apt-get update
+    sudo apt-get install apt-transport-https
+    sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+    sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+    sudo apt-get update
+    sudo apt-get install dart
+    export PATH="$PATH:/usr/lib/dart/bin"
+  displayName: 'Prepare Dart SDK'
