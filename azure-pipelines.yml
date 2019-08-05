@@ -32,4 +32,12 @@ steps:
     webdev build
   displayName: 'Compile Dart Code'
 
-# Download the NW..js binaries
+# Download the NW.js binaries
+- script: |
+    wget https://dl.nwjs.io/v0.40.0/nwjs-v0.40.0-win-x64.zip
+  displayName: 'Download NW.js Windows'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '*.zip' 
+    destinationFolder: nwjs_output/
