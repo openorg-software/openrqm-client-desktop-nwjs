@@ -19,8 +19,9 @@ steps:
     sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
     sudo apt-get update
     sudo apt-get install dart
-    pub global activate webdev
     export PATH="$PATH":"$HOME/.pub-cache/bin"
+    export PATH="$PATH":/usr/lib/dart/bin/
+    pub global activate webdev
   displayName: 'Prepare Dart SDK'
 
 # Compile the Dart code to JavaScript
