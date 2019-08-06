@@ -51,6 +51,7 @@ steps:
     cd archive_path/nwjs-v0.40.0-win-x64/
     tar -cfz ../../openrqm-client-desktop-nwjs.tar *
     cd ../..
+    ls -al
   displayName: 'Copy dart2js output to archive directory'
 
 - task: GithubRelease@0 
