@@ -32,7 +32,7 @@ steps:
     webdev build
   displayName: 'Compile Dart Code'
 
-# Download the NW.js binaries
+# Download and extract the NW.js binaries
 - script: |
     wget https://dl.nwjs.io/v0.40.0/nwjs-v0.40.0-win-x64.zip
   displayName: 'Download NW.js Windows'
@@ -41,3 +41,16 @@ steps:
   inputs:
     archiveFilePatterns: '*.zip' 
     destinationFolder: nwjs_output/
+
+# Copy the NW.js binaries to a archive directory
+- script: |
+    cp nwjs_output/nwjs-v0.40.0-win-x64/nw.exe archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/nw_elf.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/nw.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/node.dll archive_path/
+    displayName: 'Copy NW.js binaires to archive directory'
+
+# Copy dart2js output to archive directory
+- script: |
+    cp -r build/* archive_path/
+    ls -al archive_path/
