@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- development
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -49,6 +50,12 @@ steps:
     cp nwjs_output/nwjs-v0.40.0-win-x64/nw_elf.dll archive_path/
     cp nwjs_output/nwjs-v0.40.0-win-x64/nw.dll archive_path/
     cp nwjs_output/nwjs-v0.40.0-win-x64/node.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/resources.pak archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/d3dcompiler_47.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/ffmpeg.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/icudtl.dat archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/libEGL.dll archive_path/
+    cp nwjs_output/nwjs-v0.40.0-win-x64/libGLESv2.dll archive_path/
   displayName: 'Copy NW.js binaires to archive directory'
 
 # Copy dart2js output to archive directory
