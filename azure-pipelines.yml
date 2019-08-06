@@ -55,5 +55,20 @@ steps:
 - script: |
     cp package.json archive_path/
     cp -r build/* archive_path/
-    ls -al archive_path/
+    cd archive_path
+    tar -cf ../openrqm-client-desktop-nwjs.tar *
+    cd ..
   displayName: 'Copy dart2js output to archive directory'
+
+- task: GithubRelease@0 
+  displayName: 'Create GitHub Release'      
+  inputs:
+    gitHubConnection: benjaminSchilling33
+    repositoryName: openrqm/openrqm-client-desktop-nwjs
+    action: edit
+    tagSource: manual
+    tag: $(Build.SourceBranchName)  
+    assetUploadMode: replace
+    assets: |
+         $(Build.Repository.LocalPath)/README.md
+         $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar
