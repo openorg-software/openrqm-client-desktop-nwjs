@@ -50,7 +50,7 @@ steps:
     cp -r build/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cd archive_path/nwjs-v0.40.0-win-x64/
     ls -al
-    tar -cfz ../../openrqm-client-desktop-nwjs.tar *
+    tar -czf ../../openrqm-client-desktop-nwjs.tar.gz *
     ls -al
     cd ../..
     ls -al
