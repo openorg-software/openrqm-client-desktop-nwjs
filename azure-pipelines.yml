@@ -49,7 +49,9 @@ steps:
     cp package.json archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cp -r build/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cd archive_path/nwjs-v0.40.0-win-x64/
+    ls -al
     tar -cfz ../../openrqm-client-desktop-nwjs.tar *
+    ls -al
     cd ../..
     ls -al
   displayName: 'Copy dart2js output to archive directory'
