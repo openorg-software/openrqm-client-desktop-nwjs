@@ -41,27 +41,13 @@ steps:
 - task: ExtractFiles@1
   inputs:
     archiveFilePatterns: '*.zip' 
-    destinationFolder: nwjs_output/
+    destinationFolder: archive_path/
 
-# Copy the NW.js binaries to a archive directory
+# Copy dart2js output to NW.js directory and tar the content
 - script: |
-    mkdir archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/nw.exe archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/nw_elf.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/nw.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/node.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/resources.pak archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/d3dcompiler_47.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/ffmpeg.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/icudtl.dat archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/libEGL.dll archive_path/
-    cp nwjs_output/nwjs-v0.40.0-win-x64/libGLESv2.dll archive_path/
-  displayName: 'Copy NW.js binaires to archive directory'
-
-# Copy dart2js output to archive directory
-- script: |
-    cp package.json archive_path/
-    cp -r build/* archive_path/
+    mkdir archive_path/package.nw/
+    cp package.json archive_path/package.nw/
+    cp -r build/* archive_path/package.nw/
     cd archive_path
     tar -cf ../openrqm-client-desktop-nwjs.tar *
     cd ..
