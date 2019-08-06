@@ -53,6 +53,7 @@ steps:
 
 # Copy dart2js output to archive directory
 - script: |
+    cp package.json archive_path/
     cp -r build/* archive_path/
     ls -al archive_path/
   displayName: 'Copy dart2js output to archive directory'
