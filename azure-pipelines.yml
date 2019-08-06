@@ -45,12 +45,12 @@ steps:
 
 # Copy dart2js output to NW.js directory and tar the content
 - script: |
-    mkdir archive_path/package.nw/
-    cp package.json archive_path/package.nw/
-    cp -r build/* archive_path/package.nw/
-    cd archive_path
-    tar -cf ../openrqm-client-desktop-nwjs.tar *
-    cd ..
+    mkdir archive_path/nwjs-v0.40.0-win-x64/package.nw/
+    cp package.json archive_path/nwjs-v0.40.0-win-x64/package.nw/
+    cp -r build/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
+    cd archive_path/nwjs-v0.40.0-win-x64/
+    tar -cfz ../../openrqm-client-desktop-nwjs.tar *
+    cd ../..
   displayName: 'Copy dart2js output to archive directory'
 
 - task: GithubRelease@0 
