@@ -1,7 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# openrqm-client-desktop-nwjs
+# Azure DevOps Pipeline for building the openrqm-client-desktop-nwjs project
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (C) 2019 Benjamin Schilling
 
 trigger:
 - master
