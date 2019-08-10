@@ -1,5 +1,7 @@
 # OpenRQM Desktop Client
 
+[![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)
+
 This OpenRQM Desktop Client is a [nw.js](https://nwjs.io/) project.
 The GUI is created using HTML and CSS while all functionality is written in [Dart](https://dart.dev/) and converted to JavaScript using [dart2js](https://dart.dev/tools/dart2js).
 
