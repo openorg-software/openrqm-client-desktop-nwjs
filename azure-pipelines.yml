@@ -69,8 +69,8 @@ steps:
 
 
 - script: |
-    markdown-pdf ./doc/ARCHITECTURE.md ARCHITECTURE.pdf
-    markdown-pdf ./doc/WIREFRAMES.md WIREFRAMES.pdf
+    markdown-pdf doc/ARCHITECTURE.md
+    markdown-pdf doc/WIREFRAME.md
     ls -al
   displayName: 'npm convert'
 
