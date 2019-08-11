@@ -86,6 +86,6 @@ steps:
     assetUploadMode: replace
     assets: |
          $(Build.Repository.LocalPath)/README.pdf
-         $(Build.Repository.LocalPath)/doc/ARCHITECTURE.md
+         $(Build.Repository.LocalPath)/doc/ARCHITECTURE.pdf
          $(Build.Repository.LocalPath)/doc/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
