@@ -69,6 +69,7 @@ steps:
 
 
 - script: |
+    markdown-pdf README.md
     markdown-pdf doc/ARCHITECTURE.md
     markdown-pdf doc/WIREFRAME.md
     ls -al
@@ -84,7 +85,7 @@ steps:
     tag: $(Build.SourceBranchName)  
     assetUploadMode: replace
     assets: |
-         $(Build.Repository.LocalPath)/README.md
+         $(Build.Repository.LocalPath)/README.pdf
          $(Build.Repository.LocalPath)/doc/ARCHITECTURE.md
-         $(Build.Repository.LocalPath)/doc/WIREFRAME.md
+         $(Build.Repository.LocalPath)/doc/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
