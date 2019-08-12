@@ -16,32 +16,22 @@ Copyright (C) 2019 Benjamin Schilling
 </head>
 
 <body>
-    <style>
-        .serif {
-            font-family: Georgia, serif;
-        }
-        
-        .b {
-            font-weight: bold;
-        }
-        
-        .i {
-            font-style: italic;
-        }
-        
-        .u,
-        .u:hover {
-            text-decoration: underline;
-        }
-    </style>
     <div class="menubar">
+        <ul class="btn nav nav-pills">
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" role="button" id="file" class="btn btn-default dropdown-toggle">File</a>
+                <ul role="menu" class="dropdown-menu" id="menu3">
+                    <li><a id="loadWorkspace">Load Workspaces</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
-
-    <table class="elementList">
-        <thead id="elementListHead"></thead>
-        <tbody id="elementList"></tbody>
-    </table>
-
+    <div class="workspace">
+        <table class="rqmElementList">
+            <thead class="rqmElementListHead" id="elementListHead"></thead>
+            <tbody id="elementList"></tbody>
+        </table>
+    </div>
 
     <script defer src="document.dart.js"></script>
 </body>

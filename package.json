@@ -1,4 +1,5 @@
 {
     "name": "openrqm",
-    "main": "build/index.html"
+    "main": "build/index.html",
+    "dependencies": {}
 }

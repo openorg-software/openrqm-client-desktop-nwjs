@@ -56,8 +56,8 @@ scale max 650 width
 {* File | Edit | Review | Linking | <&minus> | <&fullscreen-enter> | <&x> }
 {#
 ID | Content | Requirement Type
-ORQM_1 | The openrqm-server shall support a REST  call to fetch all workspaces with their attributes as JSON. | DEF 
-ORQM_2 | The openrqm-server shall support a REST call to fetch all elements of a document specified by it's internal identifier as JSON. | DEF 
+ORQM_1 | The openrqm-server shall support a REST endpoint to fetch all workspaces with their attributes as JSON. | DEF 
+ORQM_2 | The openrqm-server shall support a REST endpoint to fetch all elements of a document specified by it's internal identifier as JSON. | DEF 
 }
 }
 @endsalt

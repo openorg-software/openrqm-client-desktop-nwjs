@@ -16,32 +16,29 @@ Copyright (C) 2019 Benjamin Schilling
 </head>
 
 <body>
-    <style>
-        .serif {
-            font-family: Georgia, serif;
-        }
-        
-        .b {
-            font-weight: bold;
-        }
-        
-        .i {
-            font-style: italic;
-        }
-        
-        .u,
-        .u:hover {
-            text-decoration: underline;
-        }
-    </style>
     <div class="menubar">
-        <button class="btn" data-toggle="dropdown" id="button">
-            Load workspaces
-        </button>
+        <ul class="btn nav nav-pills">
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" role="button" id="file" class="btn btn-default dropdown-toggle">File</a>
+                <ul role="menu" class="dropdown-menu" id="menu3">
+                    <li><a id="loadWorkspace">Load Workspaces</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="btn nav nav-pills">
+            <li class="dropdown">
+                <a data-toggle="dropdown" role="button" id="edit" class="btn btn-default dropdown-toggle">Edit</a>
+                <ul role="menu" class="dropdown-menu" id="menu3">
+                    <li><a id="edit1">Edit1</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
-    <ul class="workspaceTree" id="workspaceTree">
-    </ul>
+    <div class="workspace">
+        <ul class="workspaceTree" id="workspaceTree"></ul>
+    </div>
 
 
     <script defer src="main.dart.js"></script>

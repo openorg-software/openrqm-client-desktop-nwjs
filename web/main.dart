@@ -7,6 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 ///Native Dart imports
 import 'dart:html';
+import 'dart:svg';
 
 /// Additional package imports
 import 'package:bootjack/bootjack.dart';
@@ -20,9 +21,8 @@ void main() {
   Button.use();
   Dropdown.use();
   Tab.use();
-
-  ButtonElement btn = querySelector('#button');
-  btn.onClick.listen(call);
+  AnchorElement btnLoadWorkspace = querySelector('#loadWorkspace');
+  btnLoadWorkspace.onClick.listen(call);
 }
 
 void call(MouseEvent event) {

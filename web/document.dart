@@ -16,8 +16,11 @@ import 'lib/model/rqm_workspace.dart';
 import 'lib/model/rqm_document.dart';
 import 'lib/model/rqm_element.dart';
 import 'lib/utilities/rqm_rest_connector.dart';
+import 'lib/widgets/rqm_element_table.dart';
 
 void main() {
+  Dropdown.use();
+
   TitleElement title = querySelector('#title');
   String documentName = Uri.base.queryParameters['name'];
   int internalIdentifier = int.parse(Uri.base.queryParameters['id']);
@@ -27,18 +30,12 @@ void main() {
   List<RQMElement> elements =
       restConnector.fetchElementsOfDocument(internalIdentifier);
 
-  TableSectionElement elementListHead = querySelector('#elementListHead');
-  TableRowElement headRow = TableRowElement();
-  headRow.children.add(TableCellElement()
-    ..children.add(DivElement()
-      ..text = 'Content'
-      ..className = 'rqmElementContent'));
-  headRow.children.add(TableCellElement()..text = 'REQ Type');
-  elementListHead.children.add(headRow);
+  RQMElementTable rqmElementTable = RQMElementTable(
+    elements: elements,
+  );
+  TableSectionElement head = querySelector('#elementListHead');
+  head = rqmElementTable.buildElementTableHead(head);
 
   TableSectionElement elementList = querySelector('#elementList');
-  for (RQMElement e in elements) {
-    TableRowElement row = e.buildElementRow();
-    elementList.children.add(row);
-  }
+  rqmElementTable.buildElementTable(elementList);
 }
