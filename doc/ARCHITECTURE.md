@@ -5,6 +5,7 @@
 - [OpenRQM Client Architecture](#openrqm-client-architecture)
   - [Content](#content)
   - [Overview](#overview)
+  - [Technology Stack](#technology-stack)
   - [License](#license)
   - [Copyright](#copyright)
 
@@ -55,6 +56,16 @@ documentView -- restElements : use
 loginView -- restLogin : use
 
 ```
+
+## Technology Stack
+
+The OpenRQM client reference implementation is uses the following technology stack:
+
+| Functionality | Technology | Reason for decision |
+|---|---| --- |
+| Deployment | NW.js | Allows cross-platform deployment for desktop |
+| GUI | HTML & CSS | Default web technologies |
+| Interactivity | Dart Web with dart2js | More type-safe then JavaScript due to compilation to JavaScript |
 
 
 ## License
