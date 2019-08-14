@@ -56,7 +56,8 @@ steps:
     ls -al
   displayName: 'Copy dart2js output to archive directory'
 
-- task: GithubRelease@0 
+- task: GithubRelease@0
+  condition: or(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development')))
   displayName: 'Create GitHub Release'      
   inputs:
     gitHubConnection: benjaminSchilling33
