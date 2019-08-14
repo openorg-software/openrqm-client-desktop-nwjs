@@ -33,8 +33,6 @@ void main() {
   RQMElementTable rqmElementTable = RQMElementTable(
     elements: elements,
   );
-  TableSectionElement head = querySelector('#elementListHead');
-  head = rqmElementTable.buildElementTableHead(head);
 
   TableSectionElement elementList = querySelector('#elementList');
   rqmElementTable.buildElementTable(elementList);
