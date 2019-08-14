@@ -56,7 +56,25 @@ steps:
     ls -al
   displayName: 'Copy dart2js output to archive directory'
 
-- task: GithubRelease@0
+# Convert Documentation to PDF
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g markdown-pdf
+  displayName: 'npm install dependencies'
+
+
+- script: |
+    markdown-pdf README.md
+    markdown-pdf doc/ARCHITECTURE.md
+    markdown-pdf doc/WIREFRAME.md
+    ls -al
+  displayName: 'npm convert'
+
+- task: GithubRelease@0 
   condition: or(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development')))
   displayName: 'Create GitHub Release'      
   inputs:
@@ -67,5 +85,7 @@ steps:
     tag: $(Build.SourceBranchName)  
     assetUploadMode: replace
     assets: |
-         $(Build.Repository.LocalPath)/README.md
+         $(Build.Repository.LocalPath)/README.pdf
+         $(Build.Repository.LocalPath)/doc/ARCHITECTURE.pdf
+         $(Build.Repository.LocalPath)/doc/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
