@@ -17,9 +17,9 @@ Copyright (C) 2019 Benjamin Schilling
     <link rel="stylesheet" href="packages/slickdart/slick_default_theme.css" type="text/css" />
 </head>
 
-<body>
-    <div class="menubar">
-        <ul class="btn nav nav-pills">
+<body class="grid-container">
+    <div class="menubar grid-item">
+        <ul class="nav nav-pills buttonbar">
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" role="button" id="file" class="btn btn-default dropdown-toggle">File</a>
                 <ul role="menu" class="dropdown-menu" id="menu3">
@@ -28,7 +28,16 @@ Copyright (C) 2019 Benjamin Schilling
             </li>
         </ul>
     </div>
-    <div id="workspace" class="workspace">
+
+    <div class="onoffswitch-container grid-item grid-area">
+        <div class="onoffswitch grid-item">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="modeswitch" checked>
+            <label class="onoffswitch-label" for="modeswitch"></label>
+        </div>
+        <text class="onoffswitch-text grid-item">Dark Mode</text>
+    </div>
+
+    <div id="workspace" class="workspace grid-item">
     </div>
 
     <script defer src="document.dart.js"></script>

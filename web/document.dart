@@ -26,6 +26,9 @@ void main() {
   int internalIdentifier = int.parse(Uri.base.queryParameters['id']);
   title..text = 'OpenRQM - $documentName';
 
+  CheckboxInputElement modeswitch = querySelector('#modeswitch');
+  modeswitch.checked = false;
+
   RQMRestConnector restConnector = RQMRestConnector();
   List<RQMElement> elements =
       restConnector.fetchElementsOfDocument(internalIdentifier);

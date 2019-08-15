@@ -73,7 +73,7 @@ class RQMElementTable {
       print(args['new']);
       sg.commitCurrentEdit();
     });
-
+    sg.setSelectionModel(grid.RowSelectionModel(sg.options));
     sg.onSort.subscribe(grid.basicSorter);
     sg.init();
     sg.setColumns(columns);

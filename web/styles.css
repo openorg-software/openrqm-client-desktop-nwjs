@@ -9,6 +9,17 @@ body {
     padding: 0 5px;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #111;
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 'menubar menubar menubar menubar menubar modeswitch' 'main main main main main main';
+}
+
 h2:nth-child(n+2) {
     margin-top: 40px;
 }
@@ -25,12 +36,92 @@ h4 {
 /*  Menu Bar  */
 
 .menubar {
-    margin-top: 0.1vh;
-    height: 4.25vh;
+    grid-area: menubar;
+    margin-top: 0.15vh;
+    margin-bottom: 0.15vh
 }
 
-.btn {
+.buttonbar {
     float: left;
+    position: relative;
+    align-self: center;
+}
+
+.onoffswitch-container {
+    grid-area: modeswitch;
+    display: grid;
+    grid-template-areas: 'onoffswitch' 'onoffswitchtext';
+    float: right;
+}
+
+.onoffswitch {
+    align-self: center;
+    float: right;
+    position: relative;
+    margin-top: 0.2vh;
+    width: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    grid-area: onoffswitch;
+}
+
+.onoffswitch-text {
+    align-self: center;
+    float: right;
+    position: relative;
+    grid-area: onoffswitchtext;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    height: 10px;
+    padding: 0;
+    line-height: 10px;
+    border: 0px solid #FFFFFF;
+    border-radius: 15px;
+    background-color: #9E9E9E;
+    margin-bottom: 0px;
+}
+
+.onoffswitch-label:before {
+    content: "";
+    display: block;
+    width: 15px;
+    margin: -2.5px;
+    height: 15px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 18px;
+    border-radius: 15px;
+    box-shadow: 0 3px 6px 0px #757575;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label {
+    background-color: #42A5F5;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label,
+.onoffswitch-checkbox:checked+.onoffswitch-label:before {
+    border-color: #42A5F5;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label:before {
+    right: 0px;
+    background-color: #2196F3;
+    box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -59,6 +150,7 @@ h4 {
     border: 1px solid black;
     border-radius: 5px;
     height: 95vh;
+    grid-area: main;
 }
 
 ul li {
@@ -71,3 +163,16 @@ ul {
 
 
 /*  RQMDocument  */
+
+
+/* Slick.Editors.Text, Slick.Editors.Date */
+
+input.editor-text {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    background: transparent;
+    outline: 0;
+    padding: 0;
+}
