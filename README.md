@@ -40,16 +40,16 @@ The design and architecture is described in the documents in the `doc` directory
 
 ## Features
 
-| Feature  | Status  |
-|---|---|
-| Basic workspace explorer & document viewer  | in work  |
-| Multiple views per document  |   |
-| Linking  |   |
-| Baselining  |   |
-| Shared edit  |   |
-| Multimedia content  |   |
-| PDF export |   |
-| PDF export |   |
+| Feature                                    | Status  |
+| ------------------------------------------ | ------- |
+| Basic workspace explorer & document viewer | in work |
+| Multiple views per document                |         |
+| Linking                                    |         |
+| Baselining                                 |         |
+| Shared edit                                |         |
+| Multimedia content                         |         |
+| PDF export                                 |         |
+| PDF export                                 |         |
 
 
 ## License

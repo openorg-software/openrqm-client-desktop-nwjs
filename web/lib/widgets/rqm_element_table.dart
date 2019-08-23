@@ -11,14 +11,17 @@ import '../model/rqm_element.dart';
 import 'package:slickdart/slick.dart' as grid;
 import 'dart:math' as math;
 
+import '../model/rqm_element_types.dart';
+
 class RQMElementTable {
   List<RQMElement> elements;
+  RQMElementTypes types;
 
   TableElement table;
 
   List<TableColElement> columns;
 
-  RQMElementTable({this.elements});
+  RQMElementTable({this.elements, this.types});
 
   TableSectionElement buildElementTableHead(TableSectionElement tableHead) {
     TableRowElement headRow = TableRowElement();
@@ -39,7 +42,8 @@ class RQMElementTable {
     for (RQMElement e in elements) {
       data.add({
         'reqId': elements.indexOf(e),
-        'elementTypeId': e.elementTypeId,
+        'elementTypeId':
+            types.translateRequirementTypeIdToString(e.elementTypeId),
         'content': e.content
       });
     }
@@ -66,13 +70,16 @@ class RQMElementTable {
 
     sg.onBeforeEditCell.subscribe((e, args) {
       //swap editor here
+      print('onBeforeEditCell');
       print(args['column']);
     });
+
     sg.onActiveCellBlur.subscribe((e, args) {
       print(args['old']);
       print(args['new']);
       sg.commitCurrentEdit();
     });
+
     sg.setSelectionModel(grid.RowSelectionModel(sg.options));
     sg.onSort.subscribe(grid.basicSorter);
     sg.init();

@@ -91,4 +91,15 @@ class RQMRestConnector {
     ));
     return elements;
   }
+
+  Map<int, String> fetchDocumentTypes() {
+    Map<int, String> types = {
+      1: 'Requirement',
+      2: 'Remote Requirement',
+      3: 'Realization',
+      4: 'Test'
+    };
+
+    return types;
+  }
 }

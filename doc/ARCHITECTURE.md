@@ -61,10 +61,10 @@ loginView -- restLogin : use
 
 The OpenRQM client reference implementation is uses the following technology stack:
 
-| Functionality | Technology | Reason for decision |
-|---|---| --- |
-| Deployment | NW.js | Allows cross-platform deployment for desktop |
-| GUI | HTML & CSS | Default web technologies |
+| Functionality | Technology            | Reason for decision                                             |
+| ------------- | --------------------- | --------------------------------------------------------------- |
+| Deployment    | NW.js                 | Allows cross-platform deployment for desktop                    |
+| GUI           | HTML & CSS            | Default web technologies                                        |
 | Interactivity | Dart Web with dart2js | More type-safe then JavaScript due to compilation to JavaScript |
 
 

@@ -17,6 +17,7 @@ import 'lib/model/rqm_document.dart';
 import 'lib/model/rqm_element.dart';
 import 'lib/utilities/rqm_rest_connector.dart';
 import 'lib/widgets/rqm_element_table.dart';
+import 'lib/model/rqm_element_types.dart';
 
 void main() {
   Dropdown.use();
@@ -33,8 +34,12 @@ void main() {
   List<RQMElement> elements =
       restConnector.fetchElementsOfDocument(internalIdentifier);
 
+  RQMElementTypes types =
+      RQMElementTypes(types: restConnector.fetchDocumentTypes());
+
   RQMElementTable rqmElementTable = RQMElementTable(
     elements: elements,
+    types: types,
   );
 
   TableSectionElement elementList = querySelector('#elementList');
