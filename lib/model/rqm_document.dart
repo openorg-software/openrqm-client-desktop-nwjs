@@ -4,9 +4,18 @@ RQMDocument class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
-
+import 'package:angular/angular.dart';
 import 'dart:html';
 
+@Component(
+  selector: 'document',
+  template: '''
+    <li>
+    <btn classes="workspaceTreeDocument">{{name}}</btn>
+    </li>
+    ''',
+  directives: [coreDirectives],
+)
 class RQMDocument {
   int workspaceId;
   int internalIdentifier;
@@ -43,15 +52,6 @@ class RQMDocument {
     this.baselineReview,
     this.previousBaseline,
   });
-
-  Element buildWorkspaceOverviewElement() {
-    LIElement thisElement = LIElement();
-    ButtonElement btn = ButtonElement()..text = '$name';
-    btn.onClick.listen((event) => showDocument(event));
-    btn.className = 'workspaceTreeDocument';
-    thisElement.children.add(btn);
-    return thisElement;
-  }
 
   void showDocument(MouseEvent envent) {
     window.open('document.html?id=$internalIdentifier&name=$name', name, '');

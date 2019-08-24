@@ -5,21 +5,14 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-///Native Dart imports
-import 'dart:html';
-
-/// Additional package imports
-import 'package:bootjack/bootjack.dart';
-
 /// Imports of OpenRQM
-import '../model/rqm_document.dart';
-import '../model/rqm_workspace.dart';
-import '../model/rqm_element.dart';
+import 'package:angular_app/model/rqm_workspace.dart';
+import 'package:angular_app/model/rqm_document.dart';
+import 'package:angular_app/model/rqm_element.dart';
 
 class RQMRestConnector {
-  List<RQMWorkspace> workspaces = List<RQMWorkspace>();
-
-  void fetchWorkspaces() {
+  List<RQMWorkspace> fetchWorkspaces() {
+    List<RQMWorkspace> workspaces = List<RQMWorkspace>();
     List<RQMDocument> documents = new List<RQMDocument>();
     List<RQMWorkspace> innerWorkspaces = new List<RQMWorkspace>();
     List<RQMDocument> innerDocuments = new List<RQMDocument>();
@@ -73,6 +66,8 @@ class RQMRestConnector {
       documents: documents,
       workspaces: innerWorkspaces,
     ));
+
+    return workspaces;
   }
 
   List<RQMElement> fetchElementsOfDocument(int internalIdentifier) {

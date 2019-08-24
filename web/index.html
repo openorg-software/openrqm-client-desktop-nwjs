@@ -1,48 +1,33 @@
-<!--
-openrqm-client-desktop-nwjs
-Index page of the openrqm-client
-SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
--->
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>OpenRQM</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="packages/bootjack/css/bootstrap.css">
+    <script>
+        // WARNING: DO NOT set the <base href> like this in production!
+        // Details: https://webdev.dartlang.org/angular/guide/router
+        (function() {
+            var m = document.location.pathname.match(/^(\/[-\w]+)+\/web($|\/)/);
+            document.write('<base href="' + (m ? m[0] : '/') + '" />');
+        }());
+    </script>
+
+    <title>Hello Angular</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <script defer src="main.dart.js"></script>
 </head>
 
 <body>
     <div class="menubar">
-        <ul class="btn nav nav-pills">
-            <li class="dropdown">
-                <a href="#" data-toggle="dropdown" role="button" id="file" class="btn btn-default dropdown-toggle">File</a>
-                <ul role="menu" class="dropdown-menu" id="menu3">
-                    <li><a id="loadWorkspace">Load Workspaces</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="btn nav nav-pills">
-            <li class="dropdown">
-                <a data-toggle="dropdown" role="button" id="edit" class="btn btn-default dropdown-toggle">Edit</a>
-                <ul role="menu" class="dropdown-menu" id="menu3">
-                    <li><a id="edit1">Edit1</a></li>
-                </ul>
-            </li>
-        </ul>
-        <my-button>Loading...</my-button>
+        <button class="btn" data-toggle="dropdown" id="button">
+            Load workspaces
+        </button>
     </div>
 
-    <div class="workspace">
-        <ul class="workspaceTree" id="workspaceTree"></ul>
-    </div>
-
-
-    <script defer src="main.dart.js"></script>
+    <workspace-tree>Loading...</workspace-tree>
 </body>
 
 </html>
