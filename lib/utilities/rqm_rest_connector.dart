@@ -12,6 +12,7 @@ import 'package:angular_app/model/rqm_element.dart';
 
 class RQMRestConnector {
   List<RQMWorkspace> fetchWorkspaces() {
+    print('Fetching workspaces');
     List<RQMWorkspace> workspaces = List<RQMWorkspace>();
     List<RQMDocument> documents = new List<RQMDocument>();
     List<RQMWorkspace> innerWorkspaces = new List<RQMWorkspace>();
@@ -63,6 +64,12 @@ class RQMRestConnector {
     workspaces.add(RQMWorkspace(
       name: 'RQM Workspace',
       workspaceId: 1,
+      documents: documents,
+      workspaces: innerWorkspaces,
+    ));
+    workspaces.add(RQMWorkspace(
+      name: 'RQM Workspace2',
+      workspaceId: 2,
       documents: documents,
       workspaces: innerWorkspaces,
     ));

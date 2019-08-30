@@ -8,11 +8,9 @@ import 'package:angular/angular.dart';
 import 'dart:html';
 
 @Component(
-  selector: 'document',
+  selector: 'rqm-document',
   template: '''
-    <li>
-    <btn classes="workspaceTreeDocument">{{name}}</btn>
-    </li>
+    <btn>{{name}}</btn>
     ''',
   directives: [coreDirectives],
 )
@@ -20,7 +18,10 @@ class RQMDocument {
   int workspaceId;
   int internalIdentifier;
   String externalIdentifier;
+
+  @Input()
   String name;
+
   String description;
   String confidentiality;
   int authorId;

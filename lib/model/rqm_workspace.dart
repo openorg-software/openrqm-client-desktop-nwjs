@@ -1,22 +1,26 @@
 import 'package:angular/angular.dart';
+import 'package:angular_app/model/rqm_document.template.dart';
 import 'package:angular_app/model/rqm_document.dart';
 
 @Component(
   selector: 'rqm-workspace',
   template: '''
-    <li>
-      <li classes="workspaceTreeWorkspace">{{name}}</li>
-      <ul *ngFor="let workspace of workspaces">
-        <rqmworkspace >
-        </rqmworkspace>
+    <div classes="workspaceTreeWorkspace" *ngIf="name != ''">{{name}}</div>
+      <ul>
+        <li *ngIf="workspaces != null">
+          <ul *ngFor="let workspace of workspaces" >
+              <rqm-workspace [name]="workspace.name" [workspaceId]="workspace.workspaceId" [workspaces]="workspace.workspaces" [documents]="workspace.documents"></rqm-workspace>  
+          </ul>
+        </li>
+        <li *ngIf="documents != null">
+          <ul *ngFor="let document of documents">
+              <rqm-document [name]="document.name">
+              </rqm-document>
+          </ul>
+        </li>
       </ul>
-      <ul *ngFor="let document of documents">
-        <document >
-        </document>
-      </ul>
-    </li>
-    ''',
-  directives: [coreDirectives],
+  ''',
+  directives: [coreDirectives, RQMWorkspace, RQMDocument],
 )
 class RQMWorkspace {
   @Input()
