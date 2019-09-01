@@ -1,10 +1,7 @@
 import 'package:angular/angular.dart';
-import 'package:angular_app/model/rqm_document.template.dart';
-import 'package:angular_app/model/rqm_document.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 
-@Component(
-  selector: 'rqm-workspace',
-  template: '''
+@Component(selector: 'rqm-workspace', template: '''
     <div classes="workspaceTreeWorkspace" *ngIf="name != ''">{{name}}</div>
       <ul>
         <li *ngIf="workspaces != null">
@@ -19,9 +16,7 @@ import 'package:angular_app/model/rqm_document.dart';
           </ul>
         </li>
       </ul>
-  ''',
-  directives: [coreDirectives, RQMWorkspace, RQMDocument],
-)
+  ''', directives: [coreDirectives, RQMWorkspace, RQMDocument])
 class RQMWorkspace {
   @Input()
   String name;

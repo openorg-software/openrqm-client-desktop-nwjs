@@ -5,14 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 import 'package:angular/angular.dart';
-import 'dart:html';
+import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/material_button/material_button.dart';
 
 @Component(
   selector: 'rqm-document',
   template: '''
-    <btn>{{name}}</btn>
+    <material-button [raised]="true" (click)="showDocument()" >{{name}}</material-button>
     ''',
-  directives: [coreDirectives],
+  directives: [coreDirectives, MaterialButtonComponent],
 )
 class RQMDocument {
   int workspaceId;
@@ -54,7 +55,5 @@ class RQMDocument {
     this.previousBaseline,
   });
 
-  void showDocument(MouseEvent envent) {
-    window.open('document.html?id=$internalIdentifier&name=$name', name, '');
-  }
+  showDocument() {}
 }
