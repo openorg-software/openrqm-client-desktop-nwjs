@@ -1,3 +1,6 @@
+///Native Dart imports
+import 'dart:html';
+
 ///Dart package imports
 import 'package:angular/angular.dart';
 
@@ -7,17 +10,17 @@ import 'package:angular_components/material_menu/material_menu.dart';
 import 'package:angular_components/laminate/popup/module.dart';
 import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/model/menu/menu.dart';
-import 'package:openrqm_client_desktop_nwjs/utilities/rqm_event.dart';
 
 ///OpenRQM imports
 import 'package:openrqm_client_desktop_nwjs/components/rqm_workspace_tree.dart';
 import 'package:openrqm_client_desktop_nwjs/components/rqm_document_viewer.dart';
+import 'package:openrqm_client_desktop_nwjs/components/rqm_menubar_workspaces.dart';
+import 'package:openrqm_client_desktop_nwjs/utilities/rqm_event.dart';
 
 @Component(selector: 'rqm-main', template: '''
   <div class="menubar">
-    <material-menu [menu]="menuModel" [buttonText]="menuLabel">
-    </material-menu>
-    </div>
+  <rqm-menubar-workspaces></rqm-menubar-workspaces>
+  </div>
     <div class="mainframe">
       <rqm-workspace-tree *ngIf="showWorkspaces"></rqm-workspace-tree>
       <rqm-document-viewer *ngIf="!showWorkspaces" [internalIdentifier]="documentInternalIdentifier"></rqm-document-viewer>
@@ -27,27 +30,18 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_document_viewer.dart'
   ClassProvider(ZIndexer),
 ], directives: [
   coreDirectives,
-  MaterialIconComponent,
-  MaterialMenuComponent,
   RQMWorkspaceTree,
   RQMDocumentViewer,
+  RQMMenuBarWorkspaces
 ])
 class RQMMain implements RQMEvent {
-  String menuLabel = 'File';
-  var menuModel;
-  MenuModel<MenuItem> menuModelWithIcon;
-
   bool showWorkspaces = true;
   int documentInternalIdentifier;
 
   RQMMain() {
-    menuModel = MenuModel<MenuItem>([
-      MenuItemGroup<MenuItem>([
-        MenuItem('Load Workspaces', action: () => loadWorkspaces()),
-      ])
-    ]);
-
-    menuModelWithIcon = MenuModel<MenuItem>(menuModel.itemGroups);
+    ///Disable the default context menu of the app
+    Element body = querySelector('#body');
+    body.onContextMenu.listen((MouseEvent e) => e.preventDefault());
   }
 
   void loadWorkspaces() {

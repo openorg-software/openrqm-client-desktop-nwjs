@@ -19,7 +19,7 @@ The GUI is created using HTML and CSS while all functionality is written in [Dar
 
 ## Hints for reading the OpenRQM Client documentation
 
-The documents can be read best using [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) using the [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/) extension since all drawing are created using [PlantUML](http://plantuml.com/).
+The documents can be read best using [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) using the [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/) extension since all drawings are created using [PlantUML](http://plantuml.com/).
 
 ## How to run / build
 
@@ -40,16 +40,16 @@ The design and architecture is described in the documents in the `doc` directory
 
 ## Features
 
-| Feature                                    | Status  |
-| ------------------------------------------ | ------- |
-| Basic workspace explorer & document viewer | in work |
-| Multiple views per document                |         |
-| Linking                                    |         |
-| Baselining                                 |         |
-| Shared edit                                |         |
-| Multimedia content                         |         |
-| PDF export                                 |         |
-| PDF export                                 |         |
+| Feature                                    | Status  | Release |
+| ------------------------------------------ | ------- | ------- |
+| Basic workspace explorer & document viewer | in work | MVP     |
+| Linking                                    |         | MVP     |
+| PDF export                                 |         | MVP     |
+| Multiple views per document                |         |         |
+| Baselining                                 |         |         |
+| Shared edit                                |         |         |
+| Multimedia content                         |         |         |
+| Tracing Graphs                             |         |         |
 
 
 ## License
