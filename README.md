@@ -30,6 +30,9 @@ The design and architecture is described in the documents in `doc` directory.
 
 SPDX-License-Identifier: GPL-2.0-only
 
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_large)
+
 ## Copyright
 
 Copyright (C) 2019 Benjamin Schilling
