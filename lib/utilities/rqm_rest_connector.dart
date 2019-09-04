@@ -5,24 +5,18 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-///Native Dart imports
-import 'dart:html';
-
-/// Additional package imports
-import 'package:bootjack/bootjack.dart';
-
 /// Imports of OpenRQM
-import '../model/rqm_document.dart';
-import '../model/rqm_workspace.dart';
-import '../model/rqm_element.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_workspace.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 
 class RQMRestConnector {
-  List<RQMWorkspace> workspaces = List<RQMWorkspace>();
-
-  void fetchWorkspaces() {
-    List<RQMDocument> documents = new List<RQMDocument>();
-    List<RQMWorkspace> innerWorkspaces = new List<RQMWorkspace>();
-    List<RQMDocument> innerDocuments = new List<RQMDocument>();
+  List<RQMWorkspace> fetchWorkspaces() {
+    print('Fetching workspaces');
+    List<RQMWorkspace> workspaces = List<RQMWorkspace>();
+    List<RQMDocument> documents = List<RQMDocument>();
+    List<RQMWorkspace> innerWorkspaces = List<RQMWorkspace>();
+    List<RQMDocument> innerDocuments = List<RQMDocument>();
     documents.add(RQMDocument(
       workspaceId: 1,
       internalIdentifier: 1,
@@ -64,7 +58,7 @@ class RQMRestConnector {
     innerWorkspaces.add(RQMWorkspace(
       documents: innerDocuments,
       workspaceId: 2,
-      name: 'Workspace 2',
+      name: 'Inner Workspace',
     ));
 
     workspaces.add(RQMWorkspace(
@@ -73,9 +67,17 @@ class RQMRestConnector {
       documents: documents,
       workspaces: innerWorkspaces,
     ));
+    workspaces.add(RQMWorkspace(
+      name: 'RQM Workspace 2',
+      workspaceId: 2,
+      documents: documents,
+      workspaces: innerWorkspaces,
+    ));
+
+    return workspaces;
   }
 
-  List<RQMElement> fetchElementsOfDocument(int internalIdentifier) {
+  List<RQMElement> fetchElementsOfDocument() {
     List<RQMElement> elements = List<RQMElement>();
     elements.add(RQMElement(
       content:
@@ -89,10 +91,19 @@ class RQMRestConnector {
       elementTypeId: 1,
       rank: '123',
     ));
+
+    for (int i = 0; i < 100; i++) {
+      elements.add(RQMElement(
+        content:
+            "The openrqm-server shall support a REST call to fetch all elements of a document specified by it's internal identifier as JSON.",
+        elementTypeId: 1,
+        rank: '123',
+      ));
+    }
     return elements;
   }
 
-  Map<int, String> fetchDocumentTypes() {
+  Map<int, String> fetchElementTypes() {
     Map<int, String> types = {
       1: 'Requirement',
       2: 'Remote Requirement',

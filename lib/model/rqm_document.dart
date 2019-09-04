@@ -4,14 +4,25 @@ RQMDocument class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
+import 'package:angular/angular.dart';
+import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/material_button/material_button.dart';
 
-import 'dart:html';
-
+@Component(
+  selector: 'rqm-document',
+  template: '''
+    <material-button [raised]="true" (click)="showDocument()" >{{name}}</material-button>
+    ''',
+  directives: [coreDirectives, MaterialButtonComponent],
+)
 class RQMDocument {
   int workspaceId;
   int internalIdentifier;
   String externalIdentifier;
+
+  @Input()
   String name;
+
   String description;
   String confidentiality;
   int authorId;
@@ -44,16 +55,5 @@ class RQMDocument {
     this.previousBaseline,
   });
 
-  Element buildWorkspaceOverviewElement() {
-    LIElement thisElement = LIElement();
-    ButtonElement btn = ButtonElement()..text = '$name';
-    btn.onClick.listen((event) => showDocument(event));
-    btn.className = 'workspaceTreeDocument';
-    thisElement.children.add(btn);
-    return thisElement;
-  }
-
-  void showDocument(MouseEvent envent) {
-    window.open('document.html?id=$internalIdentifier&name=$name', name, '');
-  }
+  showDocument() {}
 }

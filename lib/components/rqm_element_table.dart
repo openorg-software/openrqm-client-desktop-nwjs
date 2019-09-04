@@ -6,12 +6,12 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import 'dart:html';
+import 'dart:math';
 
-import '../model/rqm_element.dart';
 import 'package:slickdart/slick.dart' as grid;
-import 'dart:math' as math;
 
-import '../model/rqm_element_types.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
 
 class RQMElementTable {
   List<RQMElement> elements;
@@ -23,50 +23,48 @@ class RQMElementTable {
 
   RQMElementTable({this.elements, this.types});
 
-  TableSectionElement buildElementTableHead(TableSectionElement tableHead) {
-    TableRowElement headRow = TableRowElement();
-    headRow.children.add(TableCellElement()
-      ..children.add(DivElement()
-        ..text = 'Content'
-        ..className = 'rqmElementTitle'));
-    headRow.children.add(TableCellElement()
-      ..text = 'REQ Type'
-      ..className = 'rqmElementTitle');
-
-    tableHead.children.add(headRow);
-    return tableHead;
+  String contentFormatter(
+      int row, int cell, value, grid.Column columnDef, Map dataRow) {
+    return '''<p style=' white-space: normal;'>$value</p>''';
   }
 
-  TableSectionElement buildElementTable(TableSectionElement tableBody) {
+  HtmlElement buildElementTable(HtmlElement container) {
     List data = [];
     for (RQMElement e in elements) {
       data.add({
         'reqId': elements.indexOf(e),
         'elementTypeId':
             types.translateRequirementTypeIdToString(e.elementTypeId),
-        'content': e.content
+        'content': e.content,
       });
     }
 
     var columns = <grid.Column>[
-      new grid.Column.fromMap({'width': 10, 'name': "Id", 'field': "reqId"}),
-      new grid.Column.fromMap(
-          {'width': 15, 'name': "Type", 'field': "elementTypeId"}),
-      new grid.Column.fromMap(
-          {'name': "Content", 'field': "content", 'editor': 'TextEditor'})
+      grid.Column.fromMap({'width': 10, 'name': "Id", 'field': "reqId"}),
+      grid.Column.fromMap({
+        'width': 15,
+        'name': "Type",
+        'field': "elementTypeId",
+      }),
+      grid.Column.fromMap({
+        'name': "Content",
+        'field': "content",
+        'editor': 'TextEditor',
+        'formatter': contentFormatter
+      })
     ];
     columns.forEach((grid.Column _) {
       _.minWidth = 10;
     });
 
-    Element el = querySelector('#workspace');
-    var opt = new grid.GridOptions()
+    var opt = grid.GridOptions()
       ..enableColumnReorder = true
       ..explicitInitialization = false
       ..multiColumnSort = false
       ..forceFitColumns = true
+      ..dynamicHeight = true
       ..editable = true;
-    grid.SlickGrid sg = new grid.SlickGrid.fromOpt(el, data, [], opt);
+    grid.SlickGrid sg = grid.SlickGrid.fromOpt(container, data, [], opt);
 
     sg.onBeforeEditCell.subscribe((e, args) {
       //swap editor here
@@ -74,7 +72,13 @@ class RQMElementTable {
       print(args['column']);
     });
 
+    sg.onColumnsResized.subscribe((e, args) {
+      print('onColumnsResized');
+      sg.resetDynHeight();
+    });
+
     sg.onActiveCellBlur.subscribe((e, args) {
+      print('onActiveCellBlur');
       print(args['old']);
       print(args['new']);
       sg.commitCurrentEdit();
@@ -86,6 +90,8 @@ class RQMElementTable {
     sg.setColumns(columns);
     sg.invalidate();
     sg.render();
+
+    return container;
   }
 
   void resize() {}

@@ -1,168 +1,161 @@
-/*
-openrqm-client-desktop-nwjs
-Main css file of the openrqm-client
-SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
-*/
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
-body {
-    padding: 0 5px;
+/* Master Styles */
+
+h1 {
+    color: #369;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #111;
-    }
+h2,
+h3 {
+    color: #444;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-areas: 'menubar menubar menubar menubar menubar modeswitch' 'main main main main main main';
+body,
+input[text],
+button {
+    color: black;
+    font-family: Cambria, Georgia;
 }
 
-h2:nth-child(n+2) {
-    margin-top: 40px;
+a {
+    cursor: pointer;
+    cursor: hand;
 }
 
-h2 {
-    border-bottom: 1px solid #999;
+button {
+    font-family: Arial;
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
 }
 
-h4 {
-    margin-top: 20px;
+button:hover {
+    background-color: #cfd8dc;
+}
+
+button:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+}
+
+label {
+    padding-right: 0.5em;
 }
 
 
-/*  Menu Bar  */
+/* Navigation link styles */
+
+nav a {
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #eee;
+    border-radius: 4px;
+}
+
+nav a:visited,
+a:link {
+    color: #607D8B;
+}
+
+nav a:hover {
+    color: #039be5;
+    background-color: #CFD8DC;
+}
+
+nav a.active {
+    color: #039be5;
+}
+
+
+/* items class */
+
+.items {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 24em;
+}
+
+.items li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+}
+
+.items li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+}
+
+.items li.selected {
+    background-color: #CFD8DC;
+    color: white;
+}
+
+.items li.selected:hover {
+    background-color: #BBD8DC;
+}
+
+.items .text {
+    position: relative;
+    top: -3px;
+}
+
+.items .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #607D8B;
+    line-height: 1em;
+    position: relative;
+    left: -1px;
+    top: -4px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+}
+
+
+/* everywhere else */
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* OpenRQM CSS   */
 
 .menubar {
-    grid-area: menubar;
-    margin-top: 0.15vh;
-    margin-bottom: 0.15vh
+    background-color: lightsteelblue;
 }
 
-.buttonbar {
-    float: left;
-    position: relative;
-    align-self: center;
+.mainframe {
+    background-color: lightcyan;
 }
 
-.onoffswitch-container {
-    grid-area: modeswitch;
-    display: grid;
-    grid-template-areas: 'onoffswitch' 'onoffswitchtext';
-    float: right;
-}
-
-.onoffswitch {
-    align-self: center;
-    float: right;
-    position: relative;
-    margin-top: 0.2vh;
-    width: 30px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    grid-area: onoffswitch;
-}
-
-.onoffswitch-text {
-    align-self: center;
-    float: right;
-    position: relative;
-    grid-area: onoffswitchtext;
-}
-
-.onoffswitch-checkbox {
-    display: none;
-}
-
-.onoffswitch-label {
-    display: block;
-    overflow: hidden;
-    cursor: pointer;
-    height: 10px;
-    padding: 0;
-    line-height: 10px;
-    border: 0px solid #FFFFFF;
-    border-radius: 15px;
-    background-color: #9E9E9E;
-    margin-bottom: 0px;
-}
-
-.onoffswitch-label:before {
-    content: "";
-    display: block;
-    width: 15px;
-    margin: -2.5px;
-    height: 15px;
-    background: #FFFFFF;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 18px;
-    border-radius: 15px;
-    box-shadow: 0 3px 6px 0px #757575;
-}
-
-.onoffswitch-checkbox:checked+.onoffswitch-label {
-    background-color: #42A5F5;
-}
-
-.onoffswitch-checkbox:checked+.onoffswitch-label,
-.onoffswitch-checkbox:checked+.onoffswitch-label:before {
-    border-color: #42A5F5;
-}
-
-.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-
-.onoffswitch-checkbox:checked+.onoffswitch-label:before {
-    right: 0px;
-    background-color: #2196F3;
-    box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
-}
-
-
-/*  RQMWorkspace Viewer  */
-
-.workspaceTreeWorkspace {
-    background-image: url('assets/icons/ic_folder_black_18dp.png');
-    background-repeat: no-repeat;
-    padding-left: 40px;
-    padding-top: 7px;
-}
-
-.workspaceTreeDocument {
-    background-image: url('assets/icons/ic_insert_drive_file_black_18dp.png');
-    background-repeat: no-repeat;
-    padding-left: 40px;
-    padding-top: 7px;
-    padding-bottom: 10px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    /*  background: url('assets/icons/ic_insert_drive_file_black_18dp.png') no-repeat left;*/
-}
-
-.workspace {
-    border: 1px solid black;
-    border-radius: 5px;
+.document-viewer {
     height: 95vh;
-    grid-area: main;
 }
-
-ul li {
-    list-style-type: none;
-}
-
-ul {
-    padding-left: 0px;
-}
-
-
-/*  RQMDocument  */
 
 
 /* Slick.Editors.Text, Slick.Editors.Date */
@@ -175,4 +168,9 @@ input.editor-text {
     background: transparent;
     outline: 0;
     padding: 0;
+}
+
+p {
+    margin: 0px;
+    font-size: 10pt;
 }
