@@ -4,9 +4,27 @@ RQMDocument class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
+import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
 
-import 'dart:html';
+import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/material_button/material_button.dart';
 
+import 'package:openrqm_client_desktop_nwjs/utilities/rqm_route_paths.dart';
+import 'package:openrqm_client_desktop_nwjs/utilities/rqm_routes.dart';
+
+@Component(selector: 'rqm-document', template: '''
+    <material-button [raised]="true" [routerLink]="RQMRoutePaths.documentViewer.toUrl()" [routerLinkActive]="'active'">{{name}}</material-button>
+    ''', directives: [
+  coreDirectives,
+  routerDirectives,
+  MaterialButtonComponent,
+  RQMRoutePaths,
+  RQMRoutes,
+], exports: [
+  RQMRoutePaths,
+  RQMRoutes,
+])
 class RQMDocument {
   int workspaceId;
   int internalIdentifier;

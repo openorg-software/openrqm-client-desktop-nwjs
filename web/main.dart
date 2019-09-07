@@ -1,28 +1,18 @@
-/*
-openrqm-client-desktop-nwjs
-openrqm-client application entry point
-SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
-*/
+import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
 
-///Native Dart imports
-import 'dart:html';
-import 'dart:svg';
+import 'package:openrqm_client_desktop_nwjs/components/app_component.template.dart'
+    as ng;
 
-/// Additional package imports
-import 'package:bootjack/bootjack.dart';
+import 'main.template.dart' as self;
 
-/// Imports of OpenRQM
-import 'lib/model/rqm_workspace.dart';
-import 'lib/model/rqm_document.dart';
-import 'lib/utilities/rqm_rest_connector.dart';
+@GenerateInjector(
+  routerProvidersHash,
+)
+final InjectorFactory injector = self.injector$Injector;
 
 void main() {
-  Button.use();
-  Dropdown.use();
-  Tab.use();
-  AnchorElement btnLoadWorkspace = querySelector('#loadWorkspace');
-  btnLoadWorkspace.onClick.listen(call);
+  runApp(ng.AppComponentNgFactory, createInjector: injector);
 }
 
 void call(MouseEvent event) {
