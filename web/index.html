@@ -1,50 +1,30 @@
-<!--
-openrqm-client-desktop-nwjs
-Index page of the openrqm-client
-SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
--->
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>OpenRQM</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="packages/bootjack/css/bootstrap.css">
+    <script>
+        // WARNING: DO NOT set the <base href> like this in production!
+        // Details: https://webdev.dartlang.org/angular/guide/router
+        (function() {
+            var m = document.location.pathname.match(/^(\/[-\w]+)+\/web($|\/)/);
+            document.write('<base href="' + (m ? m[0] : '/') + '" />');
+        }());
+    </script>
+
+    <title>OpenRQM Client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="packages/slickdart/slick.grid.css" type="text/css" />
+    <link rel="stylesheet" href="packages/slickdart/slick_default_theme.css" type="text/css" />
+    <script defer src="main.dart.js"></script>
 </head>
 
-<body>
-    <style>
-        .serif {
-            font-family: Georgia, serif;
-        }
-        
-        .b {
-            font-weight: bold;
-        }
-        
-        .i {
-            font-style: italic;
-        }
-        
-        .u,
-        .u:hover {
-            text-decoration: underline;
-        }
-    </style>
-    <div class="menubar">
-        <button class="btn" data-toggle="dropdown" id="button">
-            Load workspaces
-        </button>
-    </div>
-
-    <ul class="workspaceTree" id="workspaceTree">
-    </ul>
-
-
-    <script defer src="main.dart.js"></script>
+<body id="body">
+    <app-component></app-component>
 </body>
 
 </html>
