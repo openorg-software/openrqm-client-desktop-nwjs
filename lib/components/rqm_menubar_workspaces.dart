@@ -1,5 +1,4 @@
 ///Dart package imports
-import 'dart:html';
 import 'package:angular/angular.dart';
 
 ///Material Components
@@ -10,17 +9,16 @@ import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/model/menu/menu.dart';
 
 ///OpenRQM imports
-import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
-
-import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
+import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
 
 @Component(
-  selector: 'rqm-menubar-document',
+  selector: 'rqm-menubar-workspaces',
   template: '''
-  <div #container class="document-viewer">
-  </div>
+    <material-menu [menu]="menuModel" [buttonText]="menuLabelFile">
+    </material-menu>
+    <material-menu [menu]="menuModel" [buttonText]="menuLabelEdit">
+    </material-menu>
+    <rqm-settings></rqm-settings>
   ''',
   providers: [
     popupBindings,
@@ -30,6 +28,19 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
     coreDirectives,
     MaterialIconComponent,
     MaterialMenuComponent,
+    RQMSettings
   ],
 )
-class RQMMenuBarDocument {}
+class RQMMenuBarWorkspaces {
+  var menuModel;
+  String menuLabelFile = 'File';
+  String menuLabelEdit = 'Edit';
+
+  RQMMenuBarWorkspaces() {
+    menuModel = MenuModel<MenuItem>([
+      MenuItemGroup<MenuItem>([
+        MenuItem('Load Workspaces'),
+      ])
+    ]);
+  }
+}

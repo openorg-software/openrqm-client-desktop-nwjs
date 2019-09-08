@@ -14,14 +14,3 @@ final InjectorFactory injector = self.injector$Injector;
 void main() {
   runApp(ng.AppComponentNgFactory, createInjector: injector);
 }
-
-void call(MouseEvent event) {
-  UListElement workspaceTree = querySelector('#workspaceTree');
-  workspaceTree.children.clear();
-
-  RQMRestConnector rest = RQMRestConnector();
-  rest.fetchWorkspaces();
-  for (RQMWorkspace wrkspc in rest.workspaces) {
-    workspaceTree.children.add(wrkspc.buildWorkspaceTree());
-  }
-}

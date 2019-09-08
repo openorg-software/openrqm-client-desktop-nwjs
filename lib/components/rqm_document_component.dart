@@ -1,6 +1,6 @@
 /*
 openrqm-client-desktop-nwjs
-RQMDocument class
+RQMDocumentComponent class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
@@ -25,10 +25,11 @@ import 'package:openrqm_client_desktop_nwjs/utilities/rqm_routes.dart';
   RQMRoutePaths,
   RQMRoutes,
 ])
-class RQMDocument {
+class RQMDocumentComponent {
   int workspaceId;
   int internalIdentifier;
   String externalIdentifier;
+  @Input()
   String name;
   String description;
   String confidentiality;
@@ -43,7 +44,7 @@ class RQMDocument {
   int baselineReview;
   int previousBaseline;
 
-  RQMDocument({
+  RQMDocumentComponent({
     this.workspaceId,
     this.internalIdentifier,
     this.externalIdentifier,
@@ -61,17 +62,4 @@ class RQMDocument {
     this.baselineReview,
     this.previousBaseline,
   });
-
-  Element buildWorkspaceOverviewElement() {
-    LIElement thisElement = LIElement();
-    ButtonElement btn = ButtonElement()..text = '$name';
-    btn.onClick.listen((event) => showDocument(event));
-    btn.className = 'workspaceTreeDocument';
-    thisElement.children.add(btn);
-    return thisElement;
-  }
-
-  void showDocument(MouseEvent envent) {
-    window.open('document.html?id=$internalIdentifier&name=$name', name, '');
-  }
 }
