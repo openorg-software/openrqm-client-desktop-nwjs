@@ -6,8 +6,8 @@ import 'package:angular/angular.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
-
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
+
 
 import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
 

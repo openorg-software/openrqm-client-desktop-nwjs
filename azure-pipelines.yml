@@ -56,7 +56,6 @@ steps:
     ls -al
   displayName: 'Copy dart2js output to archive directory'
 
-
 # Convert Documentation to PDF
 - task: NodeTool@0
   inputs:

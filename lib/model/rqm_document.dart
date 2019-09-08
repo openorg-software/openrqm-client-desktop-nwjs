@@ -4,7 +4,6 @@ RQMDocument class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
-
 class RQMDocument {
   int workspaceId;
   int internalIdentifier;

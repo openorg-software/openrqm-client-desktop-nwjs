@@ -1,6 +1,8 @@
 # Files and directories created by pub
 .dart_tool/
 .packages
+.pub/
+build/
 # Remove the following pattern if you wish to check in your lock file
 pubspec.lock
 
@@ -11,3 +13,7 @@ build/
 doc/api/
 /.vscode/launch.json
 /analysis_options.yaml
+test/**/*.g.dart
+
+# Visual Studio code files
+.vscode/

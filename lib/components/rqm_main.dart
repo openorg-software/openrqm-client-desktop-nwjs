@@ -19,6 +19,7 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_menubar_workspaces.da
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_routes.dart';
 
+
 @Component(selector: 'rqm-main', template: '''
   <div class="menubar">
   <rqm-menubar-workspaces></rqm-menubar-workspaces>

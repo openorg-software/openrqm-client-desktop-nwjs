@@ -1,6 +1,6 @@
 # OpenRQM Desktop Client
 
-[![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)
+[![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)  [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_shield)
 
 This OpenRQM Desktop Client is a [nw.js](https://nwjs.io/) project.
 The GUI is created using HTML and CSS while all functionality is written in [Dart](https://dart.dev/) and converted to JavaScript using [dart2js](https://dart.dev/tools/dart2js).
@@ -19,7 +19,7 @@ The GUI is created using HTML and CSS while all functionality is written in [Dar
 
 ## Hints for reading the OpenRQM Client documentation
 
-The documents can be read best using [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) using the [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/) extension since all drawing are created using [PlantUML](http://plantuml.com/).
+The documents can be read best using [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io/) using the [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/) extension since all drawings are created using [PlantUML](http://plantuml.com/).
 
 ## How to run / build
 
@@ -40,21 +40,24 @@ The design and architecture is described in the documents in the `doc` directory
 
 ## Features
 
-| Feature                                    | Status  |
-| ------------------------------------------ | ------- |
-| Basic workspace explorer & document viewer | in work |
-| Multiple views per document                |         |
-| Linking                                    |         |
-| Baselining                                 |         |
-| Shared edit                                |         |
-| Multimedia content                         |         |
-| PDF export                                 |         |
-| PDF export                                 |         |
+| Feature                                    | Status  | Release |
+| ------------------------------------------ | ------- | ------- |
+| Basic workspace explorer & document viewer | in work | MVP     |
+| Linking                                    |         | MVP     |
+| PDF export                                 |         | MVP     |
+| Multiple views per document                |         |         |
+| Baselining                                 |         |         |
+| Shared edit                                |         |         |
+| Multimedia content                         |         |         |
+| Tracing Graphs                             |         |         |
 
 
 ## License
 
 SPDX-License-Identifier: GPL-2.0-only
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_large)
 
 ## Copyright
 

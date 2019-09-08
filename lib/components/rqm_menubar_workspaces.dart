@@ -11,6 +11,7 @@ import 'package:angular_components/model/menu/menu.dart';
 ///OpenRQM imports
 import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
 
+
 @Component(
   selector: 'rqm-menubar-workspaces',
   template: '''
@@ -35,7 +36,6 @@ class RQMMenuBarWorkspaces {
   var menuModel;
   String menuLabelFile = 'File';
   String menuLabelEdit = 'Edit';
-
   RQMMenuBarWorkspaces() {
     menuModel = MenuModel<MenuItem>([
       MenuItemGroup<MenuItem>([
