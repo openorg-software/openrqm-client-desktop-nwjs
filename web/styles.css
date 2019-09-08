@@ -30,7 +30,7 @@ a {
 
 button {
     font-family: Arial;
-    background-color: #eee;
+    background-color: rgb(122, 16, 16);
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
@@ -156,6 +156,13 @@ nav a.active {
 .document-viewer {
     height: 95vh;
 }
+
+body {
+    margin: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+
 
 
 /* Slick.Editors.Text, Slick.Editors.Date */

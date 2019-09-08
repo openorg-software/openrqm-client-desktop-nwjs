@@ -13,9 +13,6 @@ import 'package:angular_components/model/menu/menu.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
-
-import 'package:openrqm_client_desktop_nwjs/utilities/rqm_rest_connector.dart';
-
 import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
 
 @Component(

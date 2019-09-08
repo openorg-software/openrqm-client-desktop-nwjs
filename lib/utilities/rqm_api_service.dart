@@ -1,17 +1,20 @@
 /*
 openrqm-client-desktop-nwjs
-RQMRestConnector class
+RQMApiService class
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
+
+/// Native Dart imports
+import 'dart:async';
 
 /// Imports of OpenRQM
 import 'package:openrqm_client_desktop_nwjs/model/rqm_workspace.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 
-class RQMRestConnector {
-  List<RQMWorkspace> fetchWorkspaces() {
+class RQMApiService {
+  Future<List<RQMWorkspace>> fetchWorkspaces() async {
     print('Fetching workspaces');
     List<RQMWorkspace> workspaces = List<RQMWorkspace>();
     List<RQMDocument> documents = List<RQMDocument>();

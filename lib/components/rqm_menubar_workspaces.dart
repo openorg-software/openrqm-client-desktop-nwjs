@@ -9,6 +9,8 @@ import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/model/menu/menu.dart';
 
 ///OpenRQM imports
+import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
+
 
 @Component(
   selector: 'rqm-menubar-workspaces',
@@ -17,8 +19,7 @@ import 'package:angular_components/model/menu/menu.dart';
     </material-menu>
     <material-menu [menu]="menuModel" [buttonText]="menuLabelEdit">
     </material-menu>
-    <material-menu [menu]="menuModel" [buttonText]="menuLabelSettings">
-    </material-menu>
+    <rqm-settings></rqm-settings>
   ''',
   providers: [
     popupBindings,
@@ -28,23 +29,18 @@ import 'package:angular_components/model/menu/menu.dart';
     coreDirectives,
     MaterialIconComponent,
     MaterialMenuComponent,
+    RQMSettings
   ],
 )
 class RQMMenuBarWorkspaces {
   var menuModel;
-  MenuModel<MenuItem> menuModelWithIcon;
-
   String menuLabelFile = 'File';
   String menuLabelEdit = 'Edit';
-  String menuLabelSettings = 'Settings';
-
   RQMMenuBarWorkspaces() {
     menuModel = MenuModel<MenuItem>([
       MenuItemGroup<MenuItem>([
         MenuItem('Load Workspaces'),
       ])
     ]);
-
-    menuModelWithIcon = MenuModel<MenuItem>(menuModel.itemGroups);
   }
 }

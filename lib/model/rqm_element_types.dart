@@ -9,3 +9,4 @@ class RQMElementTypes {
     return types[elementTypeId];
   }
 }
+

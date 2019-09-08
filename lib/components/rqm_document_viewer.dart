@@ -6,8 +6,8 @@ import 'package:angular/angular.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
+import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
 
-import 'package:openrqm_client_desktop_nwjs/utilities/rqm_rest_connector.dart';
 
 import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
 
@@ -20,6 +20,9 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
   directives: [
     coreDirectives,
   ],
+  providers: [
+    ClassProvider(RQMApiService),
+  ],
 )
 class RQMDocumentViewer implements AfterViewInit {
   @ViewChild('container', read: HtmlElement)
@@ -30,14 +33,16 @@ class RQMDocumentViewer implements AfterViewInit {
   @Input()
   int internalIdentifier;
 
+  final RQMApiService _rqmApiService;
+  RQMDocumentViewer(this._rqmApiService);
+
   @override
   ngAfterViewInit() {
-    RQMRestConnector restConnector = RQMRestConnector();
-    List<RQMElement> elements = restConnector.fetchElementsOfDocument();
+    List<RQMElement> elements = _rqmApiService.fetchElementsOfDocument();
     int length = elements.length;
     print('elements ' + '$length');
     RQMElementTypes types =
-        RQMElementTypes(types: restConnector.fetchElementTypes());
+        RQMElementTypes(types: _rqmApiService.fetchElementTypes());
     RQMElementTable rqmElementTable = RQMElementTable(
       elements: elements,
       types: types,
