@@ -81,7 +81,7 @@ steps:
   displayName: 'Set Release Tag if master branch'
 
 - script: |
-    echo '##vso[task.setvariable variable=releasetag]development'
+    echo '##vso[task.setvariable variable=releasetag]dev'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   displayName: 'Set Release Tag if development branch'
 
@@ -97,6 +97,6 @@ steps:
     assetUploadMode: replace
     assets: |
          $(Build.Repository.LocalPath)/README.pdf
-         $(Build.Repository.LocalPath)/doc/ARCHITECTURE.pdf
-         $(Build.Repository.LocalPath)/doc/WIREFRAME.pdf
+         $(Build.Repository.LocalPath)/ARCHITECTURE.pdf
+         $(Build.Repository.LocalPath)/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
