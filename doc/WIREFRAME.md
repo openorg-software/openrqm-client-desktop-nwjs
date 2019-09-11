@@ -52,7 +52,6 @@ scale max 650 width
 
 ```plantuml
 @startuml
-
 scale max 650 width
 
 @startsalt

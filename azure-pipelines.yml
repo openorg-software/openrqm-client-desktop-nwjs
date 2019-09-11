@@ -64,14 +64,14 @@ steps:
 
 - script: |
     sudo apt-get install pandoc texlive
-    npm install -g pandoc-plantuml
+    pip install pandoc-plantuml-filter
   displayName: 'install required tools'
 
 
 - script: |
-    pandoc -F pandoc-plantuml -o README.pdf README.md
-    pandoc -F pandoc-plantuml -o ARCHITECTURE.pdf doc/ARCHITECTURE.md
-    pandoc -F pandoc-plantuml -o WIREFRAME.pdf doc/WIREFRAME.md
+    pandoc -o README.pdf README.md --filter pandoc-plantuml
+    pandoc -o ARCHITECTURE.pdf doc/ARCHITECTURE.md --filter pandoc-plantuml
+    pandoc -o WIREFRAME.pdf doc/WIREFRAME.md --filter pandoc-plantuml
     ls -al
   displayName: 'pandoc convert'
 
