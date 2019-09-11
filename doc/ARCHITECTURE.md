@@ -20,8 +20,8 @@ Each of the views pulls the data related to it from the openrqm-server applicati
 
 The REST endpoints are described in more detail in the openrqm-server documentation.
 
-```puml
-
+```plantuml
+@startuml
 caption OpenRQM Client Component Diagram
 
 skinparam monochrome true
@@ -53,7 +53,7 @@ openrqmserver -- restLogin : provide
 workspaceView -- restWorkspaces : use
 documentView -- restElements : use
 loginView -- restLogin : use
-
+@enduml
 ```
 
 

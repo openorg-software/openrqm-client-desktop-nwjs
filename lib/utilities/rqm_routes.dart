@@ -17,7 +17,7 @@ class RQMRoutes {
     component: rqm_document_viewer.RQMDocumentViewerNgFactory,
   );
 
-  static final all = <RouteDefinition>[
+  static final allMainFrame = <RouteDefinition>[
     workspaceTree,
     documentViewer,
     RouteDefinition.redirect(

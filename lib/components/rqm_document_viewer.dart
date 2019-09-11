@@ -8,17 +8,21 @@ import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
 
-
 import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
+import 'package:openrqm_client_desktop_nwjs/components/rqm_menubar_document.dart';
 
 @Component(
   selector: 'rqm-document-viewer',
   template: '''
-  <div #container class="document-viewer">
+  <div class="menubar">
+    <rqm-menubar-document></rqm-menubar-document>
+  </div>
+  <div #container class="mainframe document-viewer">
   </div>
   ''',
   directives: [
     coreDirectives,
+    RQMMenuBarDocument,
   ],
   providers: [
     ClassProvider(RQMApiService),

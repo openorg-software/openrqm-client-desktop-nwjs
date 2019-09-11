@@ -4,6 +4,7 @@ import 'dart:html';
 ///Dart package imports
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:angular_components/theme/dark_theme.dart';
 
 ///Material Components
 import 'package:angular_components/material_icon/material_icon.dart';
@@ -19,28 +20,31 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_menubar_workspaces.da
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_routes.dart';
 
-
-@Component(selector: 'rqm-main', template: '''
-  <div class="menubar">
-  <rqm-menubar-workspaces></rqm-menubar-workspaces>
+@Component(
+  selector: 'rqm-main',
+  template: '''
+  <div darkTheme>
+    <router-outlet [routes]="RQMRoutes.allMainFrame"></router-outlet>
   </div>
-    <div class="mainframe">
-      <router-outlet [routes]="RQMRoutes.all"></router-outlet>
-    </div>
-  ''', providers: [
-  popupBindings,
-  ClassProvider(ZIndexer),
-  ClassProvider(RQMApiService),
-], directives: [
-  coreDirectives,
-  routerDirectives,
-  RQMWorkspaceTreeComponent,
-  RQMDocumentViewer,
-  RQMMenuBarWorkspaces
-], exports: [
-  RQMRoutePaths,
-  RQMRoutes
-])
+  ''',
+  providers: [
+    popupBindings,
+    ClassProvider(ZIndexer),
+    ClassProvider(RQMApiService),
+  ],
+  directives: [
+    coreDirectives,
+    routerDirectives,
+    DarkThemeDirective,
+    RQMWorkspaceTreeComponent,
+    RQMDocumentViewer,
+    RQMMenuBarWorkspaces
+  ],
+  exports: [
+    RQMRoutePaths,
+    RQMRoutes,
+  ],
+)
 class RQMMain {
   RQMMain() {
     ///Disable the default context menu of the app

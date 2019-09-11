@@ -5,8 +5,8 @@ This file shows all the major screens of the OpenRQM Client as wireframes.
 
 ## Login View
 
-```puml
-
+```plantuml
+@startuml
 scale max 650 width
 
 @startsalt
@@ -16,11 +16,13 @@ scale max 650 width
   [Cancel  <&circle-x>] | [  OK  <&account-login> ]
 }
 @endsalt
+@enduml
 ```
 
 ## Workspace View
 
-```puml
+```plantuml
+@startuml
 
 scale max 650 width
 
@@ -43,11 +45,13 @@ scale max 650 width
 }
 }
 @endsalt
+@enduml
 ```
 
 ## Document View
 
-```puml
+```plantuml
+@startuml
 
 scale max 650 width
 
@@ -61,6 +65,7 @@ ORQM_2 | DEF  | The openrqm-server shall support a REST endpoint to fetch all el
 }
 }
 @endsalt
+@enduml
 ```
 
 ## Linking View

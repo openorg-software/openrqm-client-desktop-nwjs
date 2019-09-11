@@ -13,18 +13,23 @@ import 'package:angular_components/material_button/material_button.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_route_paths.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_routes.dart';
 
-@Component(selector: 'rqm-document', template: '''
+@Component(
+  selector: 'rqm-document',
+  template: '''
     <material-button [raised]="true" [routerLink]="RQMRoutePaths.documentViewer.toUrl()" [routerLinkActive]="'active'">{{name}}</material-button>
-    ''', directives: [
-  coreDirectives,
-  routerDirectives,
-  MaterialButtonComponent,
-  RQMRoutePaths,
-  RQMRoutes,
-], exports: [
-  RQMRoutePaths,
-  RQMRoutes,
-])
+    ''',
+  directives: [
+    coreDirectives,
+    routerDirectives,
+    MaterialButtonComponent,
+    RQMRoutePaths,
+    RQMRoutes,
+  ],
+  exports: [
+    RQMRoutePaths,
+    RQMRoutes,
+  ],
+)
 class RQMDocumentComponent {
   int workspaceId;
   int internalIdentifier;

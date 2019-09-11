@@ -14,12 +14,16 @@ import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
 import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
+import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
 
 @Component(
   selector: 'rqm-menubar-document',
   template: '''
-  <div #container class="document-viewer">
-  </div>
+    <material-menu [menu]="menuModel" [buttonText]="menuLabelFile">
+    </material-menu>
+    <material-menu [menu]="menuModel" [buttonText]="menuLabelEdit">
+    </material-menu>
+    <rqm-settings></rqm-settings>
   ''',
   providers: [
     popupBindings,
@@ -29,6 +33,18 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
     coreDirectives,
     MaterialIconComponent,
     MaterialMenuComponent,
+    RQMSettings,
   ],
 )
-class RQMMenuBarDocument {}
+class RQMMenuBarDocument {
+  var menuModel;
+  String menuLabelFile = 'File';
+  String menuLabelEdit = 'Edit';
+  RQMMenuBarDocument() {
+    menuModel = MenuModel<MenuItem>([
+      MenuItemGroup<MenuItem>([
+        MenuItem('Load Workspaces'),
+      ])
+    ]);
+  }
+}
