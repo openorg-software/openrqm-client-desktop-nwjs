@@ -64,14 +64,14 @@ steps:
 
 - script: |
     sudo apt-get install pandoc texlive
-    pip install pandoc-plantuml-filter
+    npm install -g pandoc-plantuml
   displayName: 'install required tools'
 
 
 - script: |
-    pandoc -o README.pdf README.md --filter pandoc-plantuml
-    pandoc -o ARCHITECTURE.pdf doc/ARCHITECTURE.md --filter pandoc-plantuml
-    pandoc -o WIREFRAME.pdf doc/WIREFRAME.md --filter pandoc-plantuml
+    pandoc -F pandoc-plantuml -o README.pdf README.md
+    pandoc -F pandoc-plantuml -o ARCHITECTURE.pdf doc/ARCHITECTURE.md
+    pandoc -F pandoc-plantuml -o WIREFRAME.pdf doc/WIREFRAME.md
     ls -al
   displayName: 'pandoc convert'
 
@@ -81,7 +81,7 @@ steps:
   displayName: 'Set Release Tag if master branch'
 
 - script: |
-    echo '##vso[task.setvariable variable=releasetag]latest'
+    echo '##vso[task.setvariable variable=releasetag]dev'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   displayName: 'Set Release Tag if development branch'
 
