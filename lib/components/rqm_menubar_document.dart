@@ -1,5 +1,4 @@
 ///Dart package imports
-import 'dart:html';
 import 'package:angular/angular.dart';
 
 ///Material Components
@@ -10,10 +9,6 @@ import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/model/menu/menu.dart';
 
 ///OpenRQM imports
-import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
-import 'package:openrqm_client_desktop_nwjs/components/rqm_element_table.dart';
 import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
 
 @Component(

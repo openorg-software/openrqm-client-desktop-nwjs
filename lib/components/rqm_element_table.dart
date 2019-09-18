@@ -6,11 +6,10 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import 'dart:html';
-import 'dart:math';
 
 import 'package:slickdart/slick.dart' as grid;
 
-import 'package:openrqm_client_desktop_nwjs/model/rqm_element.dart';
+import 'package:openrqm/api.dart';
 import 'package:openrqm_client_desktop_nwjs/model/rqm_element_types.dart';
 
 class RQMElementTable {

@@ -5,8 +5,8 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_menubar_workspaces.da
 ///Material Components
 
 ///RQM imports
+import 'package:openrqm/api.dart';
 import 'package:openrqm_client_desktop_nwjs/utilities/rqm_api_service.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_workspace.dart';
 import 'package:openrqm_client_desktop_nwjs/components/rqm_workspace_component.dart';
 
 @Component(

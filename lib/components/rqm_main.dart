@@ -7,11 +7,8 @@ import 'package:angular_router/angular_router.dart';
 import 'package:angular_components/theme/dark_theme.dart';
 
 ///Material Components
-import 'package:angular_components/material_icon/material_icon.dart';
-import 'package:angular_components/material_menu/material_menu.dart';
 import 'package:angular_components/laminate/popup/module.dart';
 import 'package:angular_components/laminate/overlay/zindexer.dart';
-import 'package:angular_components/model/menu/menu.dart';
 
 ///OpenRQM imports
 import 'package:openrqm_client_desktop_nwjs/components/rqm_workspace_tree_component.dart';

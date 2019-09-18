@@ -2,13 +2,11 @@
 import 'package:angular/angular.dart';
 
 ///Material Components
-import 'package:angular_components/material_menu/material_menu.dart';
 import 'package:angular_components/laminate/popup/module.dart';
 import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_button/material_button.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
-import 'package:angular_components/model/menu/menu.dart';
 
 ///OpenRQM imports
 

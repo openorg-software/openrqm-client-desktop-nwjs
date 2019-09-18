@@ -1,7 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:openrqm_client_desktop_nwjs/components/rqm_document_component.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_document.dart';
-import 'package:openrqm_client_desktop_nwjs/model/rqm_workspace.dart';
+import 'package:openrqm/api.dart';
 
 @Component(
   selector: 'rqm-workspace',

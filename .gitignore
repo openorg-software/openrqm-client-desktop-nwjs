@@ -17,3 +17,4 @@ test/**/*.g.dart
 
 # Visual Studio code files
 .vscode/
+/package-lock.json
