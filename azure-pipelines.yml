@@ -81,7 +81,7 @@ steps:
   displayName: 'Set Release Tag if master branch'
 
 - script: |
-    echo '##vso[task.setvariable variable=releasetag]dev'
+    echo '##vso[task.setvariable variable=releasetag]latest'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   displayName: 'Set Release Tag if development branch'
 
