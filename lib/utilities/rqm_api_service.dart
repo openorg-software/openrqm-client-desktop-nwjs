@@ -13,18 +13,14 @@ import 'package:openrqm/api.dart';
 
 class RQMApiService {
   Future<List<RQMWorkspace>> fetchWorkspaces() async {
-    var api_instance = new DocumentApi();
+    ApiClient client = ApiClient(basePath: 'http://127.0.0.1:8090');
+    var api_instance = WorkspacesApi(client);
     try {
-      var result = api_instance.getDocument();
-      print(result);
+      var result = api_instance.getWorkspaces();
+      return result; 
     } catch (e) {
       print("Exception when calling DocumentApi->getDocument: $e\n");
     }
-
-    print('Fetching workspaces');
-    List<RQMWorkspace> workspaces = List<RQMWorkspace>();
-
-    return workspaces;
   }
 
   List<RQMElement> fetchElementsOfDocument() {
