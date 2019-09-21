@@ -12,8 +12,11 @@ dependencies:
   bootjack:
   slickdart: ^0.2.0+4
   openrqm: ^1.0.4
+  js: ^0.6.0
+  node_io: ^1.0.1+2
 
 dev_dependencies:
   build_runner: ^1.5.1
   build_test: ^0.10.8
   build_web_compilers: ^2.3.0
+  build_node_compilers:

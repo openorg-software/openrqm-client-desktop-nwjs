@@ -41,7 +41,11 @@ class RQMDocumentViewer implements AfterViewInit {
 
   @override
   ngAfterViewInit() {
-    List<RQMElement> elements = _rqmApiService.fetchElementsOfDocument();
+    List<RQMElement> elements;
+
+    _rqmApiService
+        .fetchElementsOfDocument(internalIdentifier)
+        .then((recievedElements) => elements = recievedElements);
     int length = elements.length;
     print('elements ' + '$length');
     RQMElementTypes types =

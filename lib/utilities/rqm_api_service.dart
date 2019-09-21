@@ -16,16 +16,37 @@ class RQMApiService {
     ApiClient client = ApiClient(basePath: 'http://127.0.0.1:8090');
     var api_instance = WorkspacesApi(client);
     try {
-      var result = api_instance.getWorkspaces();
-      return result; 
+      Future<List<RQMWorkspace>> result = api_instance.getWorkspaces();
+      return orderListOfWorkspaces(result);
     } catch (e) {
       print("Exception when calling DocumentApi->getDocument: $e\n");
     }
+    return List<RQMWorkspace>();
   }
 
-  List<RQMElement> fetchElementsOfDocument() {
-    List<RQMElement> elements = List<RQMElement>();
-    return elements;
+  Future<List<RQMWorkspace>> orderListOfWorkspaces(
+      Future<List<RQMWorkspace>> list) async {
+    List<RQMWorkspace> fetchedSpaces = await list;
+    fetchedSpaces.forEach((workspace) => print(workspace.toString()));
+    List<RQMWorkspace> parents = fetchedSpaces
+        .where((workspace) => workspace.workspaceId == null)
+        .toList();
+    parents.forEach((workspace) => workspace.workspaces = fetchedSpaces
+        .where((innerWorkspace) => workspace.id == innerWorkspace.workspaceId)
+        .toList());
+    parents.forEach((workspace) => print(workspace.toString()));
+    return parents;
+  }
+
+  Future<List<RQMElement>> fetchElementsOfDocument(int documentId) {
+    ApiClient client = ApiClient(basePath: 'http://127.0.0.1:8090');
+    var api_instance = ElementsApi(client);
+    try {
+      var result = api_instance.getElements(documentid: documentId);
+      return result;
+    } catch (e) {
+      print("Exception when calling DocumentApi->getDocument: $e\n");
+    }
   }
 
   Map<int, String> fetchElementTypes() {

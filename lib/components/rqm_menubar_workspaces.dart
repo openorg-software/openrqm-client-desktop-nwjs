@@ -11,7 +11,6 @@ import 'package:angular_components/model/menu/menu.dart';
 ///OpenRQM imports
 import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.dart';
 
-
 @Component(
   selector: 'rqm-menubar-workspaces',
   template: '''
@@ -29,7 +28,7 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.da
     coreDirectives,
     MaterialIconComponent,
     MaterialMenuComponent,
-    RQMSettings
+    RQMSettingsComponent
   ],
 )
 class RQMMenuBarWorkspaces {

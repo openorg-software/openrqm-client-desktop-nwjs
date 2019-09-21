@@ -6,18 +6,18 @@ import 'package:openrqm/api.dart';
   selector: 'rqm-workspace',
   template: '''
     <div classes="workspaceTreeWorkspace" *ngIf="name != null && name != ''">{{name}}</div>
-      <ul *ngIf="workspaces != null && documents != null">
-        <li *ngIf="workspaces != null">
-          <ul *ngFor="let workspace of workspaces" >
+      <ul *ngIf="workspaces != null || documents != null">
+        <div *ngIf="workspaces != null">
+          <li *ngFor="let workspace of workspaces" >
               <rqm-workspace [name]="workspace.name" [workspaceId]="workspace.workspaceId" [workspaces]="workspace.workspaces" [documents]="workspace.documents"></rqm-workspace>  
-          </ul>
-        </li>
-        <li *ngIf="documents != null">
-          <ul *ngFor="let document of documents">
+          </li>
+        </div>
+        <div *ngIf="documents != null">
+          <li *ngFor="let document of documents">
               <rqm-document [name]="document.name">
               </rqm-document>
-          </ul>
-        </li>
+          </li>
+        </div>
       </ul>
   ''',
   directives: [

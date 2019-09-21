@@ -7,6 +7,8 @@ import 'package:angular_components/laminate/overlay/zindexer.dart';
 import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_button/material_button.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
+import 'package:openrqm_client_desktop_nwjs/model/rqm_settings.dart';
+import 'package:openrqm_client_desktop_nwjs/nwjs/rqm_nwjs_file_storage.dart';
 
 ///OpenRQM imports
 
@@ -29,8 +31,11 @@ import 'package:angular_components/material_dialog/material_dialog.dart';
         <material-button raised (trigger)="darkModeEnabled = !darkModeEnabled">
           {{darkModeEnabled == false ? 'Enable' : 'Disable'}} Dark Mode
         </material-button>
+                  <material-button raised (trigger)="storeSettings()">
+            Save
+          </material-button>
+        <div footer>          
 
-        <div footer>
           <material-button autoFocus class="close-button" (trigger)="showSettings = false">
             Close
           </material-button>
@@ -51,10 +56,15 @@ import 'package:angular_components/material_dialog/material_dialog.dart';
   ],
   styleUrls: ['rqm_settings_component.scss.css'],
 )
-class RQMSettings {
+class RQMSettingsComponent {
   String menuLabelSettings = 'Settings';
   bool darkModeEnabled = false;
   bool showSettings = false;
 
-  RQMSettings() {}
+  RQMSettingsComponent() {}
+
+  void storeSettings() {
+    RQMNwJsFileStorage filestore = RQMNwJsFileStorage();
+    filestore.saveSettings(RQMSettings());
+  }
 }

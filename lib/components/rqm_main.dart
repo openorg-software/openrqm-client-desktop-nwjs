@@ -46,6 +46,6 @@ class RQMMain {
   RQMMain() {
     ///Disable the default context menu of the app
     Element body = querySelector('#body');
-    body.onContextMenu.listen((MouseEvent e) => e.preventDefault());
+    //body.onContextMenu.listen((MouseEvent e) => e.preventDefault());
   }
 }

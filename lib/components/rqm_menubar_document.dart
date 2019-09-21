@@ -28,7 +28,7 @@ import 'package:openrqm_client_desktop_nwjs/components/rqm_settings_component.da
     coreDirectives,
     MaterialIconComponent,
     MaterialMenuComponent,
-    RQMSettings,
+    RQMSettingsComponent,
   ],
 )
 class RQMMenuBarDocument {
