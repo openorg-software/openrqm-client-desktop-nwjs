@@ -3,45 +3,49 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
-import { RQMMenubarWorkspacesComponent } from './rqmmenubar-workspaces/rqmmenubar-workspaces.component';
-import { RQMMainComponent } from './rqmmain/rqmmain.component';
-import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
-import { RQMWorkspaceComponent } from './rqmworkspace/rqmworkspace.component';
-import { RQMDocumentComponent } from './rqmdocument/rqmdocument.component';
 
+/// For workspace-tree
+import { TreeviewModule } from 'ngx-treeview';
+import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
+import { RQMMainComponent } from './rqmmain/rqmmain.component';
+import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+/// For document-viewer
+import { AngularSlickgridModule } from 'angular-slickgrid';
+
+/// Menubar
+import { ModalModule, BsModalRef } from 'ngx-bootstrap';
+
+/// For OpenRQM API
+import { ApiModule } from 'openrqm-api';
+import { BASE_PATH } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiModule, BASE_PATH } from 'openrqm-api';
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTree, MatTreeModule } from '@angular/material/tree';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
+import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
+import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     RQMWorkspaceTreeComponent,
-    RQMMenubarWorkspacesComponent,
     RQMMainComponent,
+    RQMWorkspaceTreeviewComponent,
+    RQMWorkspaceMenubarComponent,
     RQMDocumentViewerComponent,
-    RQMWorkspaceComponent,
-    RQMDocumentComponent,
-    RQMSettingsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    TreeviewModule.forRoot(),
+    FormsModule,
+    FontAwesomeModule,
     ApiModule,
-    BrowserAnimationsModule,
-    MatMenuModule,
-    MatTreeModule,
-    MatIconModule,
-    MatProgressBarModule
+    HttpClientModule,
+    ModalModule.forRoot(),
+    AngularSlickgridModule.forRoot()
   ],
-  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
+  providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/' }, BsModalRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

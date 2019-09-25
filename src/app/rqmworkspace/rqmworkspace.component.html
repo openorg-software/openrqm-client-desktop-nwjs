@@ -1,9 +1,0 @@
-<mat-nested-tree-node *ngIf="workspaces != null || documents != null">
-    <mat-nested-tree-node *ngFor="let workspace of workspaces">
-        <rqm-workspace [name]="workspace.name" [workspaceId]="workspace.workspaceId" [workspaces]="workspace.workspaces" [documents]="workspace.documents"></rqm-workspace>
-    </mat-nested-tree-node>
-    <mat-nested-tree-node *ngFor="let document of documents">
-        <rqm-document [name]="document.name">
-        </rqm-document>
-    </mat-nested-tree-node>
-</mat-nested-tree-node>

@@ -1,18 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'rqmmain',
+  selector: 'app-rqmmain',
   templateUrl: './rqmmain.component.html',
-  styleUrls: ['./rqmmain.component.scss']
+  styleUrls: ['./rqmmain.component.css']
 })
 export class RQMMainComponent implements OnInit {
 
-  @ViewChild('body', { static: false }) body: ElementRef;
-
-  constructor() {
-    ///Disable the default context menu of the app
-    //body.onContextMenu.listen((MouseEvent e) => e.preventDefault());
-  }
+  constructor() { }
 
   ngOnInit() {
   }
