@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <h2>{{model?.id}}</h2>
+    <div class="row">
+        <div class="col-xs-3"><label>Id:</label> <input class="form-control" [(ngModel)]="model.id" /></div>
+        <div class="col-xs-3"><label>Type:</label> <input class="form-control" [(ngModel)]="model.elementtype" /></div>
+        <div class="col-xs-3"><label>Rank:</label> <input class="form-control" [(ngModel)]="model.rank" /></div>
+        <div class="col-xs-3"><label>Parent:</label> <input class="form-control" [(ngModel)]="model.parent" /></div>
+    </div>
+
+    <div class="row"><label>Content:</label> <input class="form-control" [(ngModel)]="model.content" /></div>
+</div>

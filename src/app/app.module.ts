@@ -24,6 +24,9 @@ import { BASE_PATH } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
+import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-menubar.component';
+import { RQMElementViewerComponent } from './rqmelement-viewer/rqmelement-viewer.component';
+import { RQMElementViewerPreloadComponent } from './rqmelement-viewer-preload/rqmelement-viewer-preload.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-vie
     RQMWorkspaceTreeviewComponent,
     RQMWorkspaceMenubarComponent,
     RQMDocumentViewerComponent,
+    RQMDocumentMenubarComponent,
+    RQMElementViewerComponent,
+    RQMElementViewerPreloadComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +50,10 @@ import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-vie
     HttpClientModule,
     ModalModule.forRoot(),
     AngularSlickgridModule.forRoot()
+  ],
+  entryComponents: [
+    RQMElementViewerComponent,
+    RQMElementViewerPreloadComponent
   ],
   providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/' }, BsModalRef],
   bootstrap: [AppComponent]

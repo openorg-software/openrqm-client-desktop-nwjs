@@ -1,4 +1,5 @@
+<app-rqmdocument-menubar></app-rqmdocument-menubar>
 <div class="container">
-    <angular-slickgrid gridId="grid1" gridWidth="2000" [columnDefinitions]="columnDefinitions" [gridOptions]="gridOptions" [dataset]="dataset">
+    <angular-slickgrid gridId="grid1" [columnDefinitions]="columnDefinitions" [gridOptions]="gridOptions" [dataset]="dataset" (onAngularGridCreated)="angularGridReady($event)">
     </angular-slickgrid>
 </div>
