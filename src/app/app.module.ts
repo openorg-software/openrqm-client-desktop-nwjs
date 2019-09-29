@@ -27,6 +27,7 @@ import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-vie
 import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-menubar.component';
 import { RQMElementViewerComponent } from './rqmelement-viewer/rqmelement-viewer.component';
 import { RQMElementViewerPreloadComponent } from './rqmelement-viewer-preload/rqmelement-viewer-preload.component';
+import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { RQMElementViewerPreloadComponent } from './rqmelement-viewer-preload/rq
     RQMDocumentMenubarComponent,
     RQMElementViewerComponent,
     RQMElementViewerPreloadComponent,
+    RQMSettingsComponent,
   ],
   imports: [
     BrowserModule,
