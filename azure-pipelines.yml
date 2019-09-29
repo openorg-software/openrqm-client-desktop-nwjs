@@ -42,7 +42,7 @@ steps:
 - script: |
     mkdir archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cp nw-package.json archive_path/nwjs-v0.40.0-win-x64/package.nw/package.json
-    cp -r dist/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
+    cp -r dist/openrqm-client-desktop-nwjs/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cd archive_path/nwjs-v0.40.0-win-x64/
     ls -al
     tar -czf ../../openrqm-client-desktop-nwjs.tar.gz *
