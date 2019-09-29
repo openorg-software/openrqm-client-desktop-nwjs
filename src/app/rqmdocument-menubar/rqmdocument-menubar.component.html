@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="#/workspace-tree">
+        <fa-icon [icon]="faCaret" [styles]="{'color':'white'}" size="2x"></fa-icon>
+    </a>
+
+    <a class="navbar-brand" href="#">
+      OpenRQM
+    </a>
+
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link">File</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Edit
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Export</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Tracing
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Show Tracing Tree</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="openModal(settings)">Settings</a>
+            </li>
+        </ul>
+    </div>
+    <ng-template #settings>
+        <app-rqmsettings></app-rqmsettings>
+
+    </ng-template>
+
+
+</nav>

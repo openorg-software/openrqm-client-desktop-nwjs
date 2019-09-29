@@ -12,26 +12,20 @@ pool:
 
 steps:
 
-# First install & prepare the Dart SDK
-- script: |
-    sudo apt-get update
-    sudo apt-get install apt-transport-https
-    sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
-    sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
-    sudo apt-get update
-    sudo apt-get install dart
-    export PATH="$PATH":"$HOME/.pub-cache/bin"
-    export PATH="$PATH":/usr/lib/dart/bin/
-    pub global activate webdev
-  displayName: 'Prepare Dart SDK'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
 
-# Compile the Dart code to JavaScript
+# First install angular-cli
 - script: |
-    export PATH="$PATH":"$HOME/.pub-cache/bin"
-    export PATH="$PATH":/usr/lib/dart/bin/
-    pub get
-    webdev build
-  displayName: 'Compile Dart Code'
+    npm install -g @angular/cli
+  displayName: 'Install angular-cli'
+
+# Build the angular project
+- script: |
+    ng build
+  displayName: 'Build angular project'
 
 # Download and extract the NW.js binaries
 - script: |
@@ -43,25 +37,20 @@ steps:
     archiveFilePatterns: '*.zip' 
     destinationFolder: archive_path/
 
-# Copy dart2js output to NW.js directory and tar the content
+# Copy angular build output to NW.js directory and tar the content
 - script: |
     mkdir archive_path/nwjs-v0.40.0-win-x64/package.nw/
-    cp package.json archive_path/nwjs-v0.40.0-win-x64/package.nw/
-    cp -r build/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
+    cp nw-package.json archive_path/nwjs-v0.40.0-win-x64/package.nw/package.json
+    cp -r dist/* archive_path/nwjs-v0.40.0-win-x64/package.nw/
     cd archive_path/nwjs-v0.40.0-win-x64/
     ls -al
     tar -czf ../../openrqm-client-desktop-nwjs.tar.gz *
     ls -al
     cd ../..
     ls -al
-  displayName: 'Copy dart2js output to archive directory'
+  displayName: 'Copy angular build output to archive directory'
 
 # Convert Documentation to PDF
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
 - script: |
     sudo apt-get install pandoc texlive
     npm install -g pandoc-plantuml
