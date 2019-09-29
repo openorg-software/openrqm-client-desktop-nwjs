@@ -68,7 +68,10 @@ export class RQMDocumentViewerComponent implements OnInit {
     ];
     this.gridOptions = {
       enableGridMenu: false,
-      enableAutoResize: true,       // true by default
+      enableAutoResize: true,
+      autoResize: {
+        containerId: 'container'
+      },
       enableCellNavigation: true,
       enableRowMoveManager: true,
       rowMoveManager: {
