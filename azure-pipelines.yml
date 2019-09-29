@@ -20,6 +20,7 @@ steps:
 # First install angular-cli
 - script: |
     npm install -g @angular/cli
+    npm install --save-dev @angular-devkit/build-angular
   displayName: 'Install angular-cli'
 
 # Build the angular project
