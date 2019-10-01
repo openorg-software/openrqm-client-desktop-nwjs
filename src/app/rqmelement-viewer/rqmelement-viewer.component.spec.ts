@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMElementViewer Component Tests
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RQMElementViewerComponent } from './rqmelement-viewer.component';
@@ -8,9 +15,9 @@ describe('RQMElementViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMElementViewerComponent ]
+      declarations: [RQMElementViewerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

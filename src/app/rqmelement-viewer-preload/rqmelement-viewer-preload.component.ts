@@ -1,10 +1,13 @@
+/*
+openrqm-client-desktop-nwjs
+RQMElementViewerPreload Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { Component } from '@angular/core';
 
 @Component({
-  template:
-    `<h4>
-      <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
-      Loading...
-    </h4>`
+  templateUrl: './rqmelement-viewer-preload.component.html',
 })
 export class RQMElementViewerPreloadComponent { }

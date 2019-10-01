@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMDocumentViewer Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { AngularGridInstance, ExtensionName, Column, GridOption, GridServiceInsertOption } from 'angular-slickgrid';
 import { RQMElementViewerComponent } from '../rqmelement-viewer/rqmelement-viewer.component';

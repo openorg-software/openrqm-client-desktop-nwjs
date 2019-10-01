@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMWorkspaceTreeView i18n
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { TreeviewItem, TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
 
 export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
