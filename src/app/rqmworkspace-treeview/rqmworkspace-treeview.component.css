@@ -9,3 +9,9 @@ label {
     margin-bottom: 0;
     cursor: pointer;
 }
+
+fa-icon {
+    padding-left: 5px;
+    padding-right: 10px;
+    color: black;
+}

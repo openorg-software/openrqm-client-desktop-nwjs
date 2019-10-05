@@ -17,8 +17,13 @@ Copyright (C) 2019 Benjamin Schilling
 
     <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link">File</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  File
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">New Workspace</a>
+                </div>
             </li>
 
             <li class="nav-item">

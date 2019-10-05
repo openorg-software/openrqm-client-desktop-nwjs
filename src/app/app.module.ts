@@ -24,11 +24,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSlickgridModule } from 'angular-slickgrid';
 
 /// Menubar
-import { ModalModule, BsModalRef } from 'ngx-bootstrap';
+import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 /// For OpenRQM API
-import { ApiModule } from 'openrqm-api';
-import { BASE_PATH } from 'openrqm-api';
+import { ApiModule, BASE_PATH } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
@@ -36,6 +35,10 @@ import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-m
 import { RQMElementViewerComponent } from './rqmelement-viewer/rqmelement-viewer.component';
 import { RQMElementViewerPreloadComponent } from './rqmelement-viewer-preload/rqmelement-viewer-preload.component';
 import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
+import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.component';
+import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
+import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
+import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,10 @@ import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
     RQMElementViewerComponent,
     RQMElementViewerPreloadComponent,
     RQMSettingsComponent,
+    RQMAddWorkspaceComponent,
+    RQMAddDocumentComponent,
+    RQMTracingComponent,
+    RQMDocumentExporterComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,14 +65,18 @@ import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
     FontAwesomeModule,
     ApiModule,
     HttpClientModule,
-    ModalModule.forRoot(),
-    AngularSlickgridModule.forRoot()
+    NgbModule,
+    AngularSlickgridModule.forRoot(),
   ],
   entryComponents: [
     RQMElementViewerComponent,
-    RQMElementViewerPreloadComponent
+    RQMElementViewerPreloadComponent,
+    RQMSettingsComponent,
+    RQMAddDocumentComponent,
+    RQMAddWorkspaceComponent,
+    RQMDocumentMenubarComponent
   ],
-  providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/' }, BsModalRef],
+  providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/api/v1' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

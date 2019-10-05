@@ -5,8 +5,31 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+<ng-template #settingsModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Settings</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    <app-rqmsettings></app-rqmsettings>
+</ng-template>
+<ng-template #exportModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Export</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <app-rqmdocument-exporter></app-rqmdocument-exporter>
+</ng-template>
+<ng-template #tracingModal>
+</ng-template>
+
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a href="#/workspace-tree">
+    <a href="/workspace-tree">
         <fa-icon [icon]="faCaret" [styles]="{'color':'white'}" size="2x"></fa-icon>
     </a>
 
@@ -30,26 +53,22 @@ Copyright (C) 2019 Benjamin Schilling
                   Edit
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Export</a>
+                    <a class="dropdown-item" (click)="openModal(exportModal)">Export</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown " role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
                   Tracing
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Show Tracing Tree</a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdown ">
+                    <a class="dropdown-item " href="# ">Show Tracing Tree</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="openModal(settings)">Settings</a>
+            <li class="nav-item ">
+                <a class="nav-link " (click)="openModal(settingsModal) ">Settings</a>
             </li>
         </ul>
     </div>
-    <ng-template #settings>
-        <app-rqmsettings></app-rqmsettings>
-
-    </ng-template>
 
 
 </nav>

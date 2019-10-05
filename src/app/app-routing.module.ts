@@ -13,8 +13,8 @@ import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-vie
 
 const routes: Routes = [
   { path: 'workspace-tree', component: RQMWorkspaceTreeComponent },
-  { path: 'document-viewer', component: RQMDocumentViewerComponent },
-  { path: '', redirectTo: '/document-viewer', pathMatch: 'full' }];
+  { path: 'document-viewer/:id', component: RQMDocumentViewerComponent },
+  { path: '', redirectTo: '/workspace-tree', pathMatch: 'full' }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

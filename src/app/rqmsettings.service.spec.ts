@@ -1,6 +1,6 @@
 /*
 openrqm-client-desktop-nwjs
-RQMSettings Service
+RQMSettings Service Tests
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */

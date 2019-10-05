@@ -5,18 +5,19 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { TreeviewItem, TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
+import { TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
+import { RQMTreeViewItem, } from '../rqmworkspace-tree/rqmtreeview-item';
 
 export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
-    private internalSelectedItem: TreeviewItem;
+    private internalSelectedItem: RQMTreeViewItem;
 
-    set selectedItem(value: TreeviewItem) {
+    set selectedItem(value: RQMTreeViewItem) {
         if (value && value.children === undefined) {
             this.internalSelectedItem = value;
         }
     }
 
-    get selectedItem(): TreeviewItem {
+    get selectedItem(): RQMTreeViewItem {
         return this.internalSelectedItem;
     }
 

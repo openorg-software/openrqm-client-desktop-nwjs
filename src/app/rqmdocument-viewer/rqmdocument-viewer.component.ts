@@ -6,7 +6,7 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit } from '@angular/core';
-import { AngularGridInstance, ExtensionName, Column, GridOption, GridServiceInsertOption } from 'angular-slickgrid';
+import { AngularGridInstance, ExtensionName, Column, GridOption } from 'angular-slickgrid';
 import { RQMElementViewerComponent } from '../rqmelement-viewer/rqmelement-viewer.component';
 import { RQMElementViewerPreloadComponent } from '../rqmelement-viewer-preload/rqmelement-viewer-preload.component';
 import { ElementsService, RQMElements } from 'openrqm-api';
@@ -48,29 +48,22 @@ export class RQMDocumentViewerComponent implements OnInit {
         excludeFromGridMenu: true
       },
       {
-        id: '#', field: '', name: '', width: 40,
-        selectable: false, resizable: false,
-        cssClass: 'add-item',
-        excludeFromExport: true,
-        excludeFromColumnPicker: true,
-        excludeFromHeaderMenu: true,
-        excludeFromGridMenu: true,
-        onCellClick: () => this.addNewItem(),
-      },
-      {
         id: 'id', name: 'Id', field: 'id', sortable: true
       },
       {
         id: 'content', name: 'Content', field: 'content', sortable: false
       },
       {
-        id: 'elementtype', name: 'Type', field: 'elementtype', sortable: false
+        id: 'elementTypeId', name: 'Type', field: 'elementTypeId', sortable: false
       },
       {
         id: 'rank', name: 'Rank', field: 'rank', sortable: true
       },
       {
-        id: 'parent', name: 'Parent', field: 'parent', sortable: true
+        id: 'parentElementId', name: 'Parent', field: 'parentElementId', sortable: true
+      },
+      {
+        id: 'documentId', name: 'Document Id', field: 'documentId', sortable: false
       }
     ];
     this.gridOptions = {
@@ -88,7 +81,7 @@ export class RQMDocumentViewerComponent implements OnInit {
       enableRowDetailView: true,
       rowDetailView: {
         // We can load the "process" asynchronously in 2 different ways (httpClient OR even Promise)
-        process: (item) => this.simulateServerAsyncCall(item),
+        process: (item) => this.showDetails(item),
         // process: (item) => this.http.get(`api/item/${item.id}`),
 
         // load only once and reuse the same item detail without calling process method
@@ -135,9 +128,10 @@ export class RQMDocumentViewerComponent implements OnInit {
           this.dataset.push({
             id: element.id,
             content: element.content,
-            elementtype: element.elementTypeId,
+            elementTypeId: element.elementTypeId,
             rank: element.rank,
-            parent: element.parentElementId
+            parentElementId: element.parentElementId,
+            documentId: element.documentId
           });
         });
         this.angularGrid.slickGrid.setData(this.dataset);
@@ -196,63 +190,16 @@ export class RQMDocumentViewerComponent implements OnInit {
     this.angularGrid.slickGrid.render();
   }
 
-  changeDetailViewRowCount() {
-    if (this.angularGrid && this.angularGrid.extensionService) {
-      const options = this.rowDetailInstance.getOptions();
-      if (options && options.panelRows) {
-        options.panelRows = this.detailViewRowCount; // change number of rows dynamically
-        this.rowDetailInstance.setOptions(options);
-      }
-    }
-  }
-
-  closeAllRowDetail() {
-    if (this.angularGrid && this.angularGrid.extensionService) {
-      this.rowDetailInstance.collapseAll();
-    }
-  }
-
-  /** Just for demo purposes, we will simulate an async server call and return more details on the selected row item */
-  simulateServerAsyncCall(item: any) {
-    // random set of names to use for more item detail
+  showDetails(item: any) {
 
     // fill the template on async delay
     return new Promise((resolve) => {
       const itemDetail = item;
-
-      // let's add some extra properties to our item for a better async simulation
-
 
       // resolve the data after delay specified
       resolve(itemDetail);
 
     });
   }
-  private randomNumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
 
-  addNewItem() {
-
-    console.log("add item called");
-    const randomYear = 2000 + Math.floor(Math.random() * 10);
-    const randomMonth = Math.floor(Math.random() * 11);
-    const randomDay = Math.floor((Math.random() * 28));
-    const randomPercent = Math.round(Math.random() * 100);
-    const newItem = {
-      id: this.dataset.length + 1,
-      title: 'Task ' + randomYear,
-      duration: Math.round(Math.random() * 100) + '',
-      percentComplete: randomPercent,
-      start: `${randomMonth}/${randomDay}/${randomYear}`,
-      finish: `${randomMonth}/${randomDay}/${randomYear}`,
-      fortDriven: true
-    };
-
-    // add the item to the grid
-
-    let options: GridServiceInsertOption;
-    options.highlightRow = true;
-    this.angularGrid.gridService.addItem(newItem, options);
-  }
 }

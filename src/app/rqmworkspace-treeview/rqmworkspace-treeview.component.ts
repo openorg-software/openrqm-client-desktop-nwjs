@@ -5,12 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, Injectable, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { isNil } from 'lodash';
-import { TreeviewI18n, TreeviewItem, TreeviewConfig, DropdownTreeviewComponent, TreeviewHelper } from 'ngx-treeview';
+import { TreeviewI18n, TreeviewConfig, TreeviewHelper } from 'ngx-treeview';
 import { RQMWorkspaceTreeviewI18n } from './rqmworkspace-treeview-i18n';
 import { TreeviewComponent } from 'ngx-treeview';
-
+import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faFolder as faFolderRegular } from '@fortawesome/free-regular-svg-icons';
+import { RQMTreeViewItem, } from '../rqmworkspace-tree/rqmtreeview-item';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-rqmworkspace-treeview',
   templateUrl: './rqmworkspace-treeview.component.html',
@@ -21,15 +24,25 @@ import { TreeviewComponent } from 'ngx-treeview';
 })
 export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Input() config: TreeviewConfig;
-  @Input() items: TreeviewItem[];
+  @Input() items: RQMTreeViewItem[];
   @Input() value: any;
   @Output() valueChange = new EventEmitter<any>();
   @ViewChild(TreeviewComponent, { read: false, static: false }) treeviewComponent: TreeviewComponent;
-  filterText: string;
+
   private dropdownTreeviewSelectI18n: RQMWorkspaceTreeviewI18n;
 
+  /// Font Awesome Icons used in Template
+  faFile = faFileAlt;
+  faFolder = faFolderSolid;
+  faFolderRegular = faFolderRegular;
+  faFolderOpen = faFolderOpen;
+
+  /// Router for navigation to documents
+  router: Router;
+
+
   constructor(
-    public i18n: TreeviewI18n
+    public i18n: TreeviewI18n, router: Router
   ) {
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
@@ -38,6 +51,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
       maxHeight: 500
     });
     this.dropdownTreeviewSelectI18n = i18n as RQMWorkspaceTreeviewI18n;
+    this.router = router;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -47,24 +61,27 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }
   }
 
-  select(item: TreeviewItem) {
+  select(item: RQMTreeViewItem) {
     if (item.children === undefined) {
       this.selectItem(item);
     }
     console.log("select");
     console.log(item.value);
+    if (item.isDocument) {
+      this.router.navigate(['/document-viewer', item.internalIdentifier]);
+    }
   }
 
   private updateSelectedItem() {
     if (!isNil(this.items)) {
-      const selectedItem = TreeviewHelper.findItemInList(this.items, this.value);
+      let selectedItem: RQMTreeViewItem = TreeviewHelper.findItemInList(this.items, this.value);
       if (selectedItem) {
         this.selectItem(selectedItem);
       }
     }
   }
 
-  private selectItem(item: TreeviewItem) {
+  private selectItem(item: RQMTreeViewItem) {
     if (this.dropdownTreeviewSelectI18n.selectedItem !== item) {
       this.dropdownTreeviewSelectI18n.selectedItem = item;
       if (this.value !== item.value) {

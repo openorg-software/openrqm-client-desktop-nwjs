@@ -6,6 +6,7 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component } from '@angular/core';
+import { ElementService, RQMElement } from 'openrqm-api';
 
 @Component({
   selector: 'app-rqmelement-viewer',
@@ -13,14 +14,46 @@ import { Component } from '@angular/core';
   styleUrls: ['./rqmelement-viewer.component.css']
 })
 export class RQMElementViewerComponent {
+
+  elementService: ElementService;
+
   model: {
-    id: Number;
-    content: String;
-    type: Number;
-    rank: String;
-    parent: Number;
+    id: number;
+    content: string;
+    elementTypeId: number;
+    rank: string;
+    parentElementId: number;
+    documentId: number;
   };
 
-  constructor() { }
+  constructor(elementService: ElementService) {
+    this.elementService = elementService;
+  }
+
+  saveElement() {
+    let element = {} as RQMElement;
+    element.content = this.model.content;
+    element.id = this.model.id;
+    element.elementTypeId = this.model.elementTypeId;
+    element.rank = this.model.rank;
+    element.parentElementId = this.model.parentElementId;
+    element.documentId = this.model.documentId;
+    console.log(this.model);
+    console.log(element);
+    console.log(this.elementService);
+    this.elementService.putElement(element).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('save element done');
+      }
+    );
+  }
 
 }

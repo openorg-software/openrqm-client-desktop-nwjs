@@ -9,10 +9,13 @@ Copyright (C) 2019 Benjamin Schilling
     <h2>{{model?.id}}</h2>
     <div class="row">
         <div class="col-xs-3"><label>Id:</label> <input class="form-control" [(ngModel)]="model.id" /></div>
-        <div class="col-xs-3"><label>Type:</label> <input class="form-control" [(ngModel)]="model.elementtype" /></div>
+        <div class="col-xs-3"><label>Type:</label> <input class="form-control" [(ngModel)]="model.elementTypeId" /></div>
         <div class="col-xs-3"><label>Rank:</label> <input class="form-control" [(ngModel)]="model.rank" /></div>
-        <div class="col-xs-3"><label>Parent:</label> <input class="form-control" [(ngModel)]="model.parent" /></div>
+        <div class="col-xs-3"><label>Parent:</label> <input class="form-control" [(ngModel)]="model.parentElementId" /></div>
     </div>
 
     <div class="row"><label>Content:</label> <input class="form-control" [(ngModel)]="model.content" /></div>
+    <hr>
+    <button type="button" class="btn btn-outline-dark" (click)="saveElement()">Save</button>
+
 </div>
