@@ -31,7 +31,9 @@ export class RQMDocumentViewerComponent implements OnInit {
   angularGridReady(angularGrid: AngularGridInstance) {
     this.angularGrid = angularGrid;
   }
+
   get rowDetailInstance(): any {
+    console.log("rowDetailInstance");
     return this.angularGrid && this.angularGrid.extensionService.getSlickgridAddonInstance(ExtensionName.rowDetailView) || {};
   }
 
@@ -141,6 +143,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   onBeforeMoveRow(e, data) {
+    console.log("onBeforeMoveRow");
     for (let i = 0; i < data.rows.length; i++) {
       // no point in moving before or after itself
       if (data.rows[i] === data.insertBefore || data.rows[i] === data.insertBefore - 1) {
@@ -152,6 +155,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   onMoveRows(e, args) {
+
+    console.log("onMoveRows");
     const extractedRows = [];
     let left;
     let right;
@@ -191,7 +196,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   showDetails(item: any) {
-
+    console.log("showdetails");
     // fill the template on async delay
     return new Promise((resolve) => {
       const itemDetail = item;

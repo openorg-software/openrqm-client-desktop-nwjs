@@ -1,6 +1,6 @@
 /*
 openrqm-client-desktop-nwjs
-RQMDocumentsExporter Component Controller
+RQMDocumentsExporter Component Tests
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */

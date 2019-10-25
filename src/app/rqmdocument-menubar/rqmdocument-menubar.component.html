@@ -23,6 +23,8 @@ Copyright (C) 2019 Benjamin Schilling
     </div>
     <app-rqmdocument-exporter></app-rqmdocument-exporter>
 </ng-template>
+<ng-template #reviewModal>
+</ng-template>
 <ng-template #tracingModal>
 </ng-template>
 
@@ -54,6 +56,14 @@ Copyright (C) 2019 Benjamin Schilling
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" (click)="openModal(exportModal)">Export</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Review
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="# ">Manage Review</a>
                 </div>
             </li>
             <li class="nav-item dropdown ">

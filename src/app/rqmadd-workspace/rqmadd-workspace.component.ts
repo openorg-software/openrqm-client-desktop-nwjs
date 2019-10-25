@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMAddWorkspace Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

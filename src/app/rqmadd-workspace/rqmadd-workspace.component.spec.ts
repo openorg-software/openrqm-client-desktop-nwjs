@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMAddWorkspace Component Tests
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RQMAddWorkspaceComponent } from './rqmadd-workspace.component';
@@ -8,9 +15,9 @@ describe('RQMAddWorkspaceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMAddWorkspaceComponent ]
+      declarations: [RQMAddWorkspaceComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

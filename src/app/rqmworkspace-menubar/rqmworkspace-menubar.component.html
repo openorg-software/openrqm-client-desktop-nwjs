@@ -5,6 +5,37 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+<ng-template #settingsModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Settings</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    <app-rqmsettings></app-rqmsettings>
+</ng-template>
+
+<ng-template #addWorkspace let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Workspace</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <app-rqmadd-workspace></app-rqmadd-workspace>
+</ng-template>
+
+<ng-template #addDocument let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Document</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <app-rqmadd-document></app-rqmadd-document>
+</ng-template>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
       OpenRQM
@@ -22,28 +53,17 @@ Copyright (C) 2019 Benjamin Schilling
                   File
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">New Workspace</a>
+                    <a class="dropdown-item" (click)="openModal(addWorkspace)">Add Workspace</a>
+                    <a class="dropdown-item" (click)="openModal(addDocument)">Add Document</a>
                 </div>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link">Edit</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="openModal(template)">Settings</a>
+            <li class="nav-item ">
+                <a class="nav-link " (click)="openModal(settingsModal) ">Settings</a>
             </li>
         </ul>
     </div>
-
-    <ng-template #template>
-        <div class="modal-header">
-            <h4 class="modal-title pull-left">Settings</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            This is a modal.
-        </div>
-    </ng-template>
 </nav>
