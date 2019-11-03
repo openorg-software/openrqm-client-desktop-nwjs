@@ -68,7 +68,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     console.log("select");
     console.log(item.value);
     if (item.isDocument) {
-      this.router.navigate(['/document-viewer', item.internalIdentifier]);
+      this.router.navigate(['/document-viewer', item.value]);
     }
   }
 

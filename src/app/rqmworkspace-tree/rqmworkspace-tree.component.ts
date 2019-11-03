@@ -7,7 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit } from '@angular/core';
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
-import { WorkspacesService, RQMWorkspaces, RQMWorkspace } from 'openrqm-api';
+import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
 import { RQMTreeViewItem } from './rqmtreeview-item';
 
@@ -57,7 +57,7 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     );
   }
 
-  workspacesToTreeviewItems(workspaces: RQMWorkspaces): RQMTreeViewItem[] {
+  workspacesToTreeviewItems(workspaces: RQMWorkspace[]): RQMTreeViewItem[] {
     let rootItems: RQMTreeViewItem[] = new Array();
 
     workspaces.forEach(ws => {
@@ -77,7 +77,7 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     let documents: RQMTreeViewItem[] = new Array();
 
     workspaces = RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(rqmWorkspace);
-    documents = RQMWorkspaceTreeComponent.resolveDocumentsRecursively(rqmWorkspace);
+    //documents = RQMWorkspaceTreeComponent.resolveDocumentsRecursively(rqmWorkspace);
     tvi = tvi.concat(workspaces);
     tvi = tvi.concat(documents);
     return tvi;
@@ -89,17 +89,20 @@ export class RQMWorkspaceTreeComponent implements OnInit {
       tvi.push(new RQMTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(ws), false
       ));
     });
-    return tvi;
-  }
-
-  static resolveDocumentsRecursively(rqmWorkspace: RQMWorkspace): RQMTreeViewItem[] {
-    let tvi: RQMTreeViewItem[] = new Array();
     rqmWorkspace.documents.forEach((doc) => {
       tvi.push(new RQMTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
     });
     return tvi;
   }
-
+  /*
+    static resolveDocumentsRecursively(rqmWorkspace: RQMWorkspace): RQMTreeViewItem[] {
+      let tvi: RQMTreeViewItem[] = new Array();
+      rqmWorkspace.documents.forEach((doc) => {
+        tvi.push(new RQMTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
+      });
+      return tvi;
+    }
+  */
   onFilterChange(value: string) {
     console.log('filter:', value);
   }

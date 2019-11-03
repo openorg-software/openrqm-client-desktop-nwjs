@@ -7,10 +7,14 @@ Copyright (C) 2019 Benjamin Schilling
 
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item">
+        <!-- If the item has children a black folder icon shall be displayed -->
         <fa-icon *ngIf="item.children" (click)="onCollapseExpand() " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
+        <!-- If the item is a document a file icon shall be displayed -->
         <fa-icon *ngIf="item.isDocument " [icon]="faFile"></fa-icon>
+        <!-- If the item is not a document and does not has children, a white folder shall be displayed -->
         <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular"></fa-icon>
-        <label class="form-check-label " (click)="select(item) ">{{ item.text }}</label>
+        <!-- On click the select method with the item as a parameter is called, the text of the item and the ID are displayed (the ID only for debug purposes) -->
+        <label class="form-check-label " (click)="select(item) ">{{ item.text }} - ID: {{ item.value }}</label>
     </div>
 </ng-template>
 <ng-template #headerTemplate let-config="config " let-item="item " let-onCollapseExpand="onCollapseExpand " let-onCheckedChange="onCheckedChange " let-onFilterTextChange="onFilterTextChange ">

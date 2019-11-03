@@ -6,10 +6,14 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit } from '@angular/core';
+import { ParamMap } from '@angular/router'
+import { switchMap } from 'rxjs/operators'
 import { AngularGridInstance, ExtensionName, Column, GridOption } from 'angular-slickgrid';
 import { RQMElementViewerComponent } from '../rqmelement-viewer/rqmelement-viewer.component';
 import { RQMElementViewerPreloadComponent } from '../rqmelement-viewer-preload/rqmelement-viewer-preload.component';
-import { ElementsService, RQMElements } from 'openrqm-api';
+import { ElementsService, RQMElement } from 'openrqm-api';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -23,9 +27,10 @@ export class RQMDocumentViewerComponent implements OnInit {
   dataset: any[] = [];
   detailViewRowCount = 9;
   elementsService: ElementsService;
-  elements: RQMElements;
+  elements: RQMElement[] = [];
+  id: string;
 
-  constructor(elementsService: ElementsService
+  constructor(elementsService: ElementsService, private route: ActivatedRoute,
   ) { this.elementsService = elementsService; }
 
   angularGridReady(angularGrid: AngularGridInstance) {
@@ -38,6 +43,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.columnDefinitions = [
       {
         id: '#', field: '', name: '', width: 40,
@@ -118,7 +124,7 @@ export class RQMDocumentViewerComponent implements OnInit {
     // VERY IMPORTANT, Angular-Slickgrid uses Slickgrid DataView which REQUIRES a unique "id" and it has to be lowercase "id" and be part of the dataset
     this.dataset = [];
 
-    this.elementsService.getElements(1).subscribe(
+    this.elementsService.getElements(parseInt(this.id)).subscribe(
       el => {
         this.elements = el;
       },
