@@ -32,7 +32,7 @@
         "lodash": "^4.17.15",
         "ngx-bootstrap": "^5.1.2",
         "ngx-treeview": "^6.0.2",
-        "openrqm-api": "^1.0.2",
+        "openrqm-api": "^1.0.5",
         "path": "^0.12.7",
         "rxjs": "~6.4.0",
         "rxjs-compat": "^6.5.3",

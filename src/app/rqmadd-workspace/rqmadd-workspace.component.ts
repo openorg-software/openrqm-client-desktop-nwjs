@@ -7,6 +7,8 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit } from '@angular/core';
 
+import { WorkspaceService } from 'openrqm-api'
+
 @Component({
   selector: 'app-rqmadd-workspace',
   templateUrl: './rqmadd-workspace.component.html',
@@ -14,9 +16,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RQMAddWorkspaceComponent implements OnInit {
 
-  constructor() { }
+  workspaceService: WorkspaceService;
+
+  constructor(workspaceService: WorkspaceService) {
+    this.workspaceService = workspaceService;
+  }
 
   ngOnInit() {
   }
 
+  addWorkspace() {
+    //this.workspaceService.
+  }
 }
