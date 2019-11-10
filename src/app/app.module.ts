@@ -19,6 +19,7 @@ import { RQMMainComponent } from './rqmmain/rqmmain.component';
 import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 /// For document-viewer
 import { AngularSlickgridModule } from 'angular-slickgrid';
@@ -39,6 +40,7 @@ import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.co
 import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
 import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
 import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
+import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument
     RQMAddDocumentComponent,
     RQMTracingComponent,
     RQMDocumentExporterComponent,
+    RQMWorkspaceTreeviewItemPropertiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument
     HttpClientModule,
     NgbModule,
     AngularSlickgridModule.forRoot(),
+    BsDropdownModule.forRoot(),
   ],
   entryComponents: [
     RQMElementViewerComponent,
@@ -74,7 +78,8 @@ import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument
     RQMSettingsComponent,
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,
-    RQMDocumentMenubarComponent
+    RQMDocumentMenubarComponent,
+    RQMWorkspaceTreeviewItemPropertiesComponent
   ],
   providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/api/v1' }],
   bootstrap: [AppComponent]

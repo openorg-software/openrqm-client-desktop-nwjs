@@ -5,10 +5,19 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Add Workspace</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="passBack()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-3"><label>Name:</label> <input class="form-control" #workspaceName/></div>
-        <div class="col-xs-3"><label>Parent Workspace Id:</label> <input class="form-control" #workspaceId/></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3"><label>Parent ID: {{parentId}}</label></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="addWorkspace()">Add</button>

@@ -27,12 +27,16 @@ export class RQMSettingsService {
   constructor() {
     this.filePath = RQMSettingsService.getFilePath();
     this.checkSettingsFile();
-    this.rqmSettingsModel = this.loadSettings();
+    this.loadSettings().then(
+      data => {
+        this.rqmSettingsModel = data;
+      }
+    );
   }
 
   private checkSettingsFile() {
     if (window.nw) {
-      console.log("NW.js available");
+      console.log("NW.js available, when checking settings file");
       if (window.nw.require('fs').existsSync(this.filePath)) {
         console.log("OpenRQM settings file available");
       } else {
@@ -43,10 +47,10 @@ export class RQMSettingsService {
     }
   }
 
-  private loadSettings(): RQMSettingsModel {
+  private async loadSettings(): Promise<RQMSettingsModel> {
     let jsonString: string;
     if (window.nw) {
-      console.log("NW.js available");
+      console.log("NW.js available when loading settings.");
       console.log(this.filePath);
       window.nw.require('fs').readFileSync(this.filePath, (err, data) => {
         if (err) throw err;
@@ -70,6 +74,16 @@ export class RQMSettingsService {
   saveServerPort(serverPort: number) {
     this.rqmSettingsModel.serverPort = serverPort;
     this.saveSettings();
+  }
+
+  getApiBasePath(): string {
+    this.filePath = RQMSettingsService.getFilePath();
+    this.checkSettingsFile();
+    this.loadSettings()
+    let serverIp: string = this.rqmSettingsModel.serverIpAddress;
+    let serverPort: Number = this.rqmSettingsModel.serverPort;
+    let path: string = 'http://' + serverIp + ':' + serverPort + '/api/v1';
+    return path;
   }
 
   saveSettings() {

@@ -5,9 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { DocumentService, RQMDocument } from 'openrqm-api'
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-rqmadd-document',
   templateUrl: './rqmadd-document.component.html',
@@ -18,9 +19,18 @@ export class RQMAddDocumentComponent implements OnInit {
   documentService: DocumentService;
 
   @ViewChild('documentName', { static: false }) documentName;
-  @ViewChild('workspaceId', { static: false }) workspaceId;
+  @ViewChild('shortName', { static: false }) shortName;
+  @ViewChild('description', { static: false }) description;
+  @ViewChild('confidentiality', { static: false }) confidentiality;
+  @ViewChild('authorId', { static: false }) authorId;
+  @ViewChild('reviewerText', { static: false }) reviewerText;
+  @ViewChild('approverId', { static: false }) approverId;
+  @ViewChild('languageId', { static: false }) languageId;
+  @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
 
-  constructor(documentSerivce: DocumentService) {
+  @Input() public parentId: any;
+
+  constructor(documentSerivce: DocumentService, public activeModal: NgbActiveModal) {
     this.documentService = documentSerivce;
   }
 
@@ -30,24 +40,23 @@ export class RQMAddDocumentComponent implements OnInit {
   addDocument() {
     let document = {} as RQMDocument;
     document.id = 0;
-    document.workspaceId = parseInt(this.workspaceId.nativeElement.value);
+    document.workspaceId = this.parentId;
     document.internalIdentifier = 0;
-    document.externalIdentifier = "Test";
+    document.externalIdentifier = this.documentName.externalIdentifier.value;
     document.name = this.documentName.nativeElement.value;
-    document.shortName = "DOC";
-    document.description = "Test Doc";
-    document.confidentiality = "Restricted";
-    document.authorId = 0;
-    document.languageId = 1;
-    document.approverId = null;
-    document.reviewerText = "test reviewer text";
+    document.shortName = this.shortName.nativeElement.value;
+    document.description = this.description.nativeElement.value;
+    document.confidentiality = this.confidentiality.nativeElement.value;
+    document.authorId = this.authorId.nativeElement.value;
+    document.reviewerText = this.reviewerText.nativeElement.value;
+    document.approverId = this.approverId.nativeElement.value;
+    document.languageId = this.languageId.nativeElement.value;
     document.lastModifiedById = 0;
     document.lastModifiedOn = new Date(5000);
     document.baselineMajor = 0;
     document.baselineMinor = 0;
     document.baselineReview = 0;
     document.previousBaselineId = null;
-
 
     this.documentService.postDocument(document).subscribe(
       next => {
@@ -62,6 +71,12 @@ export class RQMAddDocumentComponent implements OnInit {
         console.log('add document done');
       }
     );
+    this.passBack();
+    window.location.reload();
+  }
+
+  passBack() {
+    this.activeModal.close();
   }
 
 }

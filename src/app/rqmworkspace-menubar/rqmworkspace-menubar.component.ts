@@ -7,6 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { RQMWorkspace } from 'openrqm-api';
 
 @Component({
   selector: 'app-rqmworkspace-menubar',
@@ -15,12 +16,10 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RQMWorkspaceMenubarComponent implements OnInit {
 
-  @ViewChild('addWorkspace', { static: false }) addWorkspace;
-  @ViewChild('addDocument', { static: false }) addDocument;
-
   navbarOpen = false;
 
   closeResult: string;
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {

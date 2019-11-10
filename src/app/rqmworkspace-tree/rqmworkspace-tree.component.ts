@@ -9,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
-import { RQMTreeViewItem } from './rqmtreeview-item';
-
+import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
+import { RQMSettingsService } from '../rqmsettings.service';
 @Component({
   selector: 'app-rqmworkspace-tree',
   templateUrl: './rqmworkspace-tree.component.html',
@@ -19,7 +19,7 @@ import { RQMTreeViewItem } from './rqmtreeview-item';
 export class RQMWorkspaceTreeComponent implements OnInit {
 
   dropdownEnabled = true;
-  items: RQMTreeViewItem[];
+  items: RQMWorkspaceTreeViewItem[];
   values: number[];
   config = TreeviewConfig.create({
     hasAllCheckBox: false,
@@ -28,7 +28,8 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     decoupleChildFromParent: false,
     maxHeight: 1000
   });
-  workspaceService: WorkspacesService;
+  workspacesService: WorkspacesService;
+  settingService: RQMSettingsService;
 
   buttonClasses = [
     'btn-outline-primary',
@@ -42,11 +43,15 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   ];
   buttonClass = this.buttonClasses[0];
 
-  constructor(workspaceService: WorkspacesService
-  ) { this.workspaceService = workspaceService; }
+  constructor(workspacesService: WorkspacesService, settingsService: RQMSettingsService
+  ) {
+    this.workspacesService = workspacesService;
+    this.settingService = settingsService;
+  }
 
   ngOnInit() {
-    this.workspaceService.getWorkspaces().subscribe(
+    this.workspacesService.configuration.basePath = this.settingService.getApiBasePath();
+    this.workspacesService.getWorkspaces().subscribe(
       (ws) => {
         console.log(ws);
         this.items = this.workspacesToTreeviewItems(ws);
@@ -57,12 +62,12 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     );
   }
 
-  workspacesToTreeviewItems(workspaces: RQMWorkspace[]): RQMTreeViewItem[] {
-    let rootItems: RQMTreeViewItem[] = new Array();
+  workspacesToTreeviewItems(workspaces: RQMWorkspace[]): RQMWorkspaceTreeViewItem[] {
+    let rootItems: RQMWorkspaceTreeViewItem[] = new Array();
 
     workspaces.forEach(ws => {
       if (ws.workspaceId == 0) {
-        rootItems.push(new RQMTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveChildrenRecursively(ws), false
+        rootItems.push(new RQMWorkspaceTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveChildrenRecursively(ws), false
         ));
       }
     });
@@ -71,38 +76,29 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     return rootItems;
   }
 
-  static resolveChildrenRecursively(rqmWorkspace: RQMWorkspace): RQMTreeViewItem[] {
-    let tvi: RQMTreeViewItem[] = new Array();
-    let workspaces: RQMTreeViewItem[] = new Array();
-    let documents: RQMTreeViewItem[] = new Array();
+  static resolveChildrenRecursively(rqmWorkspace: RQMWorkspace): RQMWorkspaceTreeViewItem[] {
+    let tvi: RQMWorkspaceTreeViewItem[] = new Array();
+    let workspaces: RQMWorkspaceTreeViewItem[] = new Array();
+    let documents: RQMWorkspaceTreeViewItem[] = new Array();
 
     workspaces = RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(rqmWorkspace);
-    //documents = RQMWorkspaceTreeComponent.resolveDocumentsRecursively(rqmWorkspace);
     tvi = tvi.concat(workspaces);
     tvi = tvi.concat(documents);
     return tvi;
   }
 
-  static resolveWorkspacesRecursively(rqmWorkspace: RQMWorkspace): RQMTreeViewItem[] {
-    let tvi: RQMTreeViewItem[] = new Array();
+  static resolveWorkspacesRecursively(rqmWorkspace: RQMWorkspace): RQMWorkspaceTreeViewItem[] {
+    let tvi: RQMWorkspaceTreeViewItem[] = new Array();
     rqmWorkspace.workspaces.forEach((ws) => {
-      tvi.push(new RQMTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(ws), false
+      tvi.push(new RQMWorkspaceTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(ws), false
       ));
     });
     rqmWorkspace.documents.forEach((doc) => {
-      tvi.push(new RQMTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
+      tvi.push(new RQMWorkspaceTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
     });
     return tvi;
   }
-  /*
-    static resolveDocumentsRecursively(rqmWorkspace: RQMWorkspace): RQMTreeViewItem[] {
-      let tvi: RQMTreeViewItem[] = new Array();
-      rqmWorkspace.documents.forEach((doc) => {
-        tvi.push(new RQMTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
-      });
-      return tvi;
-    }
-  */
+
   onFilterChange(value: string) {
     console.log('filter:', value);
   }

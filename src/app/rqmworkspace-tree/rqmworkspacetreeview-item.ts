@@ -1,11 +1,11 @@
 
 
 import { TreeviewItem } from 'ngx-treeview';
-export class RQMTreeViewItem extends TreeviewItem {
+export class RQMWorkspaceTreeViewItem extends TreeviewItem {
     public isDocument?: boolean;
     public internalIdentifier?: number;
-    public children: RQMTreeViewItem[];
-    constructor(text?: string, value?: number, collapsed?: boolean, children?: RQMTreeViewItem[], isDocument?: boolean, internalIdentifier?: number) {
+    public children: RQMWorkspaceTreeViewItem[];
+    constructor(text?: string, value?: number, collapsed?: boolean, children?: RQMWorkspaceTreeViewItem[], isDocument?: boolean, internalIdentifier?: number) {
         super({
             text: text, value: value, collapsed: collapsed
         });

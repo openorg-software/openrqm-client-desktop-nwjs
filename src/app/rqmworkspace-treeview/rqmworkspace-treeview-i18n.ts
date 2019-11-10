@@ -6,18 +6,18 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
-import { RQMTreeViewItem, } from '../rqmworkspace-tree/rqmtreeview-item';
+import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 
 export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
-    private internalSelectedItem: RQMTreeViewItem;
+    private internalSelectedItem: RQMWorkspaceTreeViewItem;
 
-    set selectedItem(value: RQMTreeViewItem) {
+    set selectedItem(value: RQMWorkspaceTreeViewItem) {
         if (value && value.children === undefined) {
             this.internalSelectedItem = value;
         }
     }
 
-    get selectedItem(): RQMTreeViewItem {
+    get selectedItem(): RQMWorkspaceTreeViewItem {
         return this.internalSelectedItem;
     }
 

@@ -5,36 +5,42 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Add Document</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="passBack()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+</div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-xs-3"><label>Name:</label> <input class="form-control" #documentName/></div>
+        <div class="col-xs-3"><label>Document Name:</label> <input class="form-control" #documentName/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Workspace:</label> <input class="form-control" #workspaceId/></div>
+        <div class="col-xs-3"><label>Workspace: {{parentId}}</label></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Short Name:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Short Name:</label> <input class="form-control" #shortName/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Description:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Description:</label> <input class="form-control" #description/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Confidentiality:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Confidentiality:</label> <input class="form-control" #confidentiality/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Author:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Author:</label> <input class="form-control" #authorId/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Reviewer:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Reviewer:</label> <input class="form-control" #reviewerText/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Approver:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Approver:</label> <input class="form-control" #approverId/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Language:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>Language:</label> <input class="form-control" #languageId/></div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>External Identifier:</label> <input class="form-control" /></div>
+        <div class="col-xs-3"><label>External Identifier:</label> <input class="form-control" #externalIdentifier/></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="addDocument()">Add</button>

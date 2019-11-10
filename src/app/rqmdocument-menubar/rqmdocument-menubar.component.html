@@ -31,7 +31,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a href="/workspace-tree">
+    <a routerLink="/workspace-tree" routerLinkActive="active">
         <fa-icon [icon]="faCaret" [styles]="{'color':'white'}" size="2x"></fa-icon>
     </a>
 
@@ -66,16 +66,16 @@ Copyright (C) 2019 Benjamin Schilling
                     <a class="dropdown-item" href="# ">Manage Review</a>
                 </div>
             </li>
-            <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown " role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown" role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
                   Tracing
                 </a>
-                <div class="dropdown-menu " aria-labelledby="navbarDropdown ">
-                    <a class="dropdown-item " href="# ">Show Tracing Tree</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="# ">Show Tracing Tree</a>
                 </div>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link " (click)="openModal(settingsModal) ">Settings</a>
+            <li class="nav-item">
+                <a class="nav-link " (click)="openModal(settingsModal)">Settings</a>
             </li>
         </ul>
     </div>

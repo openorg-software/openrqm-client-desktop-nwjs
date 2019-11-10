@@ -6,17 +6,26 @@ Copyright (C) 2019 Benjamin Schilling
 -->
 
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
-    <div class="form-inline row-item">
+    <div class="form-inline row-item" ngbDropdown #treeViewDropdown="ngbDropdown" (contextmenu)="onContextMenu($event, treeViewDropdown);">
         <!-- If the item has children a black folder icon shall be displayed -->
-        <fa-icon *ngIf="item.children" (click)="onCollapseExpand() " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
+        <fa-icon *ngIf=" item.children " (click)="onCollapseExpand() " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
         <!-- If the item is a document a file icon shall be displayed -->
-        <fa-icon *ngIf="item.isDocument " [icon]="faFile"></fa-icon>
+        <fa-icon *ngIf="item.isDocument " [icon]="faFile "></fa-icon>
         <!-- If the item is not a document and does not has children, a white folder shall be displayed -->
-        <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular"></fa-icon>
+        <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular "></fa-icon>
         <!-- On click the select method with the item as a parameter is called, the text of the item and the ID are displayed (the ID only for debug purposes) -->
-        <label class="form-check-label " (click)="select(item) ">{{ item.text }} - ID: {{ item.value }}</label>
+        <label class="form-check-label " (click)="select(item) " id="treeviewObjectDropdown " ngbDropdownAnchor>
+        {{ item.text }}
+        </label>
+        <!-- Dropdown when clicking on a treeview item -->
+        <div ngbDropdownMenu aria-labelledby="dropdownManual" autoClose="true">
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddWorkspace(item)">Add Workspace</button>
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
+            <button ngbDropdownItem (click)="openProperties(item)">Properties</button>
+        </div>
     </div>
 </ng-template>
+
 <ng-template #headerTemplate let-config="config " let-item="item " let-onCollapseExpand="onCollapseExpand " let-onCheckedChange="onCheckedChange " let-onFilterTextChange="onFilterTextChange ">
     <div *ngIf="config.hasFilter " class="row row-filter ">
         <div class="col-12 ">
@@ -36,5 +45,6 @@ Copyright (C) 2019 Benjamin Schilling
     </div>
     <div *ngIf="config.hasDivider " class="dropdown-divider "></div>
 </ng-template>
-<ngx-treeview [config]="config " [headerTemplate]="headerTemplate " [items]="items " [itemTemplate]="itemTemplate ">
+
+<ngx-treeview id="treeview" [config]="config " [headerTemplate]="headerTemplate " [items]="items " [itemTemplate]="itemTemplate ">
 </ngx-treeview>
