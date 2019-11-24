@@ -5,6 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-fa-icon {
-    padding-right: 10px;
+.menu-icon {
+    padding: 0;
+}
+
+.menu-spacer {
+    flex: 1 1 auto;
 }

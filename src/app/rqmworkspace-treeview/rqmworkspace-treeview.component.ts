@@ -19,7 +19,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
-import { RQMWorkspace } from 'openrqm-api';
+import { RQMWorkspace, DocumentService, WorkspaceService, WorkspacesService } from 'openrqm-api';
 @Component({
   selector: 'app-rqmworkspace-treeview',
   templateUrl: './rqmworkspace-treeview.component.html',
@@ -49,7 +49,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
 
 
   constructor(
-    public i18n: TreeviewI18n, router: Router, private modalService: NgbModal
+    public i18n: TreeviewI18n, router: Router, private modalService: NgbModal, private documentSerivce: DocumentService, private workspaceService: WorkspaceService,
   ) {
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
@@ -144,6 +144,46 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  deleteWorkspace(item: RQMWorkspaceTreeViewItem) {
+    if (item.children === undefined) {
+      this.selectItem(item);
+    }
+    this.workspaceService.deleteWorkspace(item.value).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('delete workspace done');
+      }
+    );
+    window.location.reload();
+  }
+
+  deleteDocument(item: RQMWorkspaceTreeViewItem) {
+    if (item.children === undefined) {
+      this.selectItem(item);
+    }
+    this.documentSerivce.deleteDocument(item.value).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('delete workspace done');
+      }
+    );
+    window.location.reload();
   }
 
   private getDismissReason(reason: any): string {

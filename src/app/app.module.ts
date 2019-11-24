@@ -12,20 +12,24 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+/// Design
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { RQMMaterialModule } from './material-module'
+
+
 /// For workspace-tree
 import { TreeviewModule } from 'ngx-treeview';
 import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
 import { RQMMainComponent } from './rqmmain/rqmmain.component';
 import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
 import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 /// For document-viewer
-import { AngularSlickgridModule } from 'angular-slickgrid';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-/// Menubar
-import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 /// For OpenRQM API
 import { ApiModule, BASE_PATH } from 'openrqm-api';
@@ -69,8 +73,10 @@ import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-tree
     ApiModule,
     HttpClientModule,
     NgbModule,
-    AngularSlickgridModule.forRoot(),
     BsDropdownModule.forRoot(),
+    BrowserAnimationsModule,
+    RQMMaterialModule,
+    CKEditorModule,
   ],
   entryComponents: [
     RQMElementViewerComponent,

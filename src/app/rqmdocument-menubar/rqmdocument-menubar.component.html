@@ -30,55 +30,12 @@ Copyright (C) 2019 Benjamin Schilling
 
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a routerLink="/workspace-tree" routerLinkActive="active">
-        <fa-icon [icon]="faCaret" [styles]="{'color':'white'}" size="2x"></fa-icon>
-    </a>
-
-    <a class="navbar-brand" href="#">
-      OpenRQM
-    </a>
-
-    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-
-    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link">File</a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Edit
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" (click)="openModal(exportModal)">Export</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Review
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="# ">Manage Review</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown" role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
-                  Tracing
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="# ">Show Tracing Tree</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " (click)="openModal(settingsModal)">Settings</a>
-            </li>
-        </ul>
-    </div>
-
-
-</nav>
+<mat-toolbar color="primary">
+    <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
+    <span>OpenRQM</span>
+    <button mat-button (click)="openModal(exportModal)">Export</button>
+    <button mat-button (click)="openModal(settingsModal)">Review</button>
+    <button mat-button (click)="openModal(settingsModal)">Tracing</button>
+    <span class="menu-spacer"></span>
+    <button mat-button (click)="openModal(settingsModal)">Settings</button>
+</mat-toolbar>

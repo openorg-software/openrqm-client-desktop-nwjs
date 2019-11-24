@@ -22,6 +22,8 @@ Copyright (C) 2019 Benjamin Schilling
             <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddWorkspace(item)">Add Workspace</button>
             <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
             <button ngbDropdownItem (click)="openProperties(item)">Properties</button>
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="deleteWorkspace(item)">Delete Workspace</button>
+            <button *ngIf="item.isDocument " ngbDropdownItem (click)="deleteDocument(item)">Delete Document</button>
         </div>
     </div>
 </ng-template>

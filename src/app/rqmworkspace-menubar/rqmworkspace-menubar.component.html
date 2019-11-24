@@ -15,33 +15,10 @@ Copyright (C) 2019 Benjamin Schilling
     <app-rqmsettings></app-rqmsettings>
 </ng-template>
 
-
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-      OpenRQM
-    </a>
-
-    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-
-    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  File
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link">Edit</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link " (click)="openModal(settingsModal) ">Settings</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<mat-toolbar color="primary">
+    <span>OpenRQM</span>
+    <button mat-button>File</button>
+    <button mat-button>Edit</button>
+    <span class="menu-spacer"></span>
+    <button mat-button (click)="openModal(settingsModal)">Settings</button>
+</mat-toolbar>
