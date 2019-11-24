@@ -49,7 +49,7 @@ export class RQMSettingsService {
 
   private async loadSettings(): Promise<RQMSettingsModel> {
     let jsonString: string;
-    if (window.nw) {
+    /*if (window.nw) {
       console.log("NW.js available when loading settings.");
       console.log(this.filePath);
       window.nw.require('fs').readFileSync(this.filePath, (err, data) => {
@@ -58,12 +58,12 @@ export class RQMSettingsService {
         let jsonObject: SettingsJsonObject = JSON.parse(jsonString);
         return new RQMSettingsModel(jsonObject.serverIpAddress, jsonObject.serverPort);
       });
-    } else {
-      console.log("NW.js not available, falling back to development mode, server at 127.0.0.1:8090.");
-      jsonString = "{\"serverIpAddress\":\"127.0.0.1\",\"serverPort\":8090}";
-      let jsonObject: SettingsJsonObject = JSON.parse(jsonString);
-      return new RQMSettingsModel(jsonObject.serverIpAddress, jsonObject.serverPort);
-    }
+    } else {*/
+    console.log("NW.js not available, falling back to development mode, server at 127.0.0.1:8090.");
+    jsonString = "{\"serverIpAddress\":\"127.0.0.1\",\"serverPort\":8090}";
+    let jsonObject: SettingsJsonObject = JSON.parse(jsonString);
+    return new RQMSettingsModel(jsonObject.serverIpAddress, jsonObject.serverPort);
+    //}
   }
 
   saveServerIpAddress(serverIpAddres: string) {

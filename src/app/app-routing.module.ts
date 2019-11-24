@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/workspace-tree', pathMatch: 'full' }];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

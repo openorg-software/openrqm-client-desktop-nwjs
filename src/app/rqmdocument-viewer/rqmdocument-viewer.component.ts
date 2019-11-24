@@ -7,11 +7,9 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElementsService, RQMElement, ElementService } from 'openrqm-api';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { MatMenuTrigger } from '@angular/material'
-import { RQMElementViewerPreloadComponent } from '../rqmelement-viewer-preload/rqmelement-viewer-preload.component';
-
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -27,6 +25,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   elementService: ElementService;
   elements: RQMElement[] = [];
   id: string;
+
+  reloadSubscription: any;
 
   displayedColumns: string[] = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
 
@@ -45,8 +45,23 @@ export class RQMDocumentViewerComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  constructor(elementsService: ElementsService, elementService: ElementService, private route: ActivatedRoute,
-  ) { this.elementsService = elementsService; this.elementService = elementService; }
+  constructor(elementsService: ElementsService, elementService: ElementService, private router: Router, private route: ActivatedRoute,
+  ) {
+    // For reloading the page
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.reloadSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+
+    //Initialization
+    this.elementsService = elementsService;
+    this.elementService = elementService;
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -73,6 +88,9 @@ export class RQMDocumentViewerComponent implements OnInit {
         parentElementId = element.parentElementId;
         aboveRank = element.rank;
         belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
+        if (belowRank == null) {
+          belowRank = "";
+        }
       }
     }
     if (aboveRank == "" || belowRank == "" || parentElementId == -1) {
@@ -101,8 +119,7 @@ export class RQMDocumentViewerComponent implements OnInit {
         console.log('add element done');
       }
     );
-
-    window.location.reload();
+    this.router.navigate(['/document-viewer', this.id]);
   }
   // Add an element below the current element
   addElementBelow(aboveElementId: number): void {
@@ -114,6 +131,9 @@ export class RQMDocumentViewerComponent implements OnInit {
       if (element.id == aboveElementId) {
         aboveRank = element.rank;
         belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
+        if (belowRank == null) {
+          belowRank = "";
+        }
       }
     }
     if (aboveRank == "" || belowRank == "" || aboveElementId == -1) {
@@ -143,7 +163,7 @@ export class RQMDocumentViewerComponent implements OnInit {
       }
     );
 
-    window.location.reload();
+    this.router.navigate(['/document-viewer', this.id]);
   }
 
   // Add an element below the current element
@@ -170,6 +190,13 @@ export class RQMDocumentViewerComponent implements OnInit {
         console.log('delete element done');
       }
     );
-    window.location.reload();
+    this.router.navigate(['/document-viewer', this.id]);
+  }
+
+  // For reloading the page
+  ngOnDestroy() {
+    if (this.reloadSubscription) {
+      this.reloadSubscription.unsubscribe();
+    }
   }
 }

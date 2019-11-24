@@ -37,8 +37,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
 import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-menubar.component';
-import { RQMElementViewerComponent } from './rqmelement-viewer/rqmelement-viewer.component';
-import { RQMElementViewerPreloadComponent } from './rqmelement-viewer-preload/rqmelement-viewer-preload.component';
 import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
 import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
@@ -55,8 +53,6 @@ import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-tree
     RQMWorkspaceMenubarComponent,
     RQMDocumentViewerComponent,
     RQMDocumentMenubarComponent,
-    RQMElementViewerComponent,
-    RQMElementViewerPreloadComponent,
     RQMSettingsComponent,
     RQMAddWorkspaceComponent,
     RQMAddDocumentComponent,
@@ -79,8 +75,6 @@ import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-tree
     CKEditorModule,
   ],
   entryComponents: [
-    RQMElementViewerComponent,
-    RQMElementViewerPreloadComponent,
     RQMSettingsComponent,
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,

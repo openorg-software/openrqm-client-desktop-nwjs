@@ -19,7 +19,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
-import { RQMWorkspace, DocumentService, WorkspaceService, WorkspacesService } from 'openrqm-api';
+import { DocumentService, WorkspaceService } from 'openrqm-api';
 @Component({
   selector: 'app-rqmworkspace-treeview',
   templateUrl: './rqmworkspace-treeview.component.html',
@@ -44,12 +44,11 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   faFolderOpen = faFolderOpen;
 
   /// Router for navigation to documents
-  router: Router;
   closeResult: string;
 
 
   constructor(
-    public i18n: TreeviewI18n, router: Router, private modalService: NgbModal, private documentSerivce: DocumentService, private workspaceService: WorkspaceService,
+    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentSerivce: DocumentService, private workspaceService: WorkspaceService,
   ) {
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
@@ -58,7 +57,6 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
       maxHeight: 500
     });
     this.dropdownTreeviewSelectI18n = i18n as RQMWorkspaceTreeviewI18n;
-    this.router = router;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -163,7 +161,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
         console.log('delete workspace done');
       }
     );
-    window.location.reload();
+    this.router.navigate(['/workspace-tree']);
   }
 
   deleteDocument(item: RQMWorkspaceTreeViewItem) {
@@ -183,7 +181,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
         console.log('delete workspace done');
       }
     );
-    window.location.reload();
+    this.router.navigate(['/workspace-tree']);
   }
 
   private getDismissReason(reason: any): string {
