@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMDocumentMenubar Component Tests
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RQMDocumentMenubarComponent } from './rqmdocument-menubar.component';
@@ -8,9 +15,9 @@ describe('RQMDocumentMenubarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMDocumentMenubarComponent ]
+      declarations: [RQMDocumentMenubarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

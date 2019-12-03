@@ -1,27 +1,52 @@
+<!-- 
+openrqm-client-desktop-nwjs
+RQMWorkspaceTreeView Component Template
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+-->
+
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
-    <div class="form-inline row-item">
-        <i *ngIf="item.children" (click)="onCollapseExpand()" aria-hidden="true" class="fa" [class.fa-caret-right]="item.collapsed" [class.fa-caret-down]="!item.collapsed"></i>
-        <label class="form-check-label" (click)="select(item)">{{ item.text }}</label>
-    </div>
-</ng-template>
-<ng-template #headerTemplate let-config="config" let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange" let-onFilterTextChange="onFilterTextChange">
-    <div *ngIf="config.hasFilter" class="row row-filter">
-        <div class="col-12">
-            <input class="form-control" type="text" [placeholder]="i18n.getFilterPlaceholder()" [(ngModel)]="filterText" (ngModelChange)="onFilterTextChange($event)" />
+    <div class="form-inline row-item" ngbDropdown #treeViewDropdown="ngbDropdown" (contextmenu)="onContextMenu($event, treeViewDropdown);">
+        <!-- If the item has children a black folder icon shall be displayed -->
+        <fa-icon *ngIf=" item.children " (click)="onCollapseExpand() " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
+        <!-- If the item is a document a file icon shall be displayed -->
+        <fa-icon *ngIf="item.isDocument " [icon]="faFile "></fa-icon>
+        <!-- If the item is not a document and does not has children, a white folder shall be displayed -->
+        <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular "></fa-icon>
+        <!-- On click the select method with the item as a parameter is called, the text of the item and the ID are displayed (the ID only for debug purposes) -->
+        <label class="form-check-label " (click)="select(item) " id="treeviewObjectDropdown " ngbDropdownAnchor>
+        {{ item.text }}
+        </label>
+        <!-- Dropdown when clicking on a treeview item -->
+        <div ngbDropdownMenu aria-labelledby="dropdownManual" autoClose="true">
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddWorkspace(item)">Add Workspace</button>
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
+            <button ngbDropdownItem (click)="openProperties(item)">Properties</button>
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="deleteWorkspace(item)">Delete Workspace</button>
+            <button *ngIf="item.isDocument " ngbDropdownItem (click)="deleteDocument(item)">Delete Document</button>
         </div>
     </div>
-    <div *ngIf="config.hasAllCheckBox || config.hasCollapseExpand" class="row">
-        <div class="col-12">
-            <label *ngIf="config.hasAllCheckBox" (click)="select(item)">
+</ng-template>
+
+<ng-template #headerTemplate let-config="config " let-item="item " let-onCollapseExpand="onCollapseExpand " let-onCheckedChange="onCheckedChange " let-onFilterTextChange="onFilterTextChange ">
+    <div *ngIf="config.hasFilter " class="row row-filter ">
+        <div class="col-12 ">
+            <input class="form-control " type="text " [placeholder]="i18n.getFilterPlaceholder() " [(ngModel)]="filterText " (ngModelChange)="onFilterTextChange($event) " />
+        </div>
+    </div>
+    <div *ngIf="config.hasAllCheckBox || config.hasCollapseExpand " class="row ">
+        <div class="col-12 ">
+            <label *ngIf="config.hasAllCheckBox " (click)="select(item) ">
           <strong>{{ i18n.getAllCheckboxText() }}</strong>
         </label>
-            <label *ngIf="config.hasCollapseExpand" class="pull-right" (click)="onCollapseExpand()">
-          <i [title]="i18n.getTooltipCollapseExpandText(item.collapsed)" aria-hidden="true" class="fa" [class.fa-expand]="item.collapsed"
-            [class.fa-compress]="!item.collapsed"></i>
+            <label *ngIf="config.hasCollapseExpand " class="pull-right " (click)="onCollapseExpand() ">
+          <i [title]="i18n.getTooltipCollapseExpandText(item.collapsed) " aria-hidden="true " class="fa " [class.fa-expand]="item.collapsed "
+            [class.fa-compress]="!item.collapsed "></i>
         </label>
         </div>
     </div>
-    <div *ngIf="config.hasDivider" class="dropdown-divider"></div>
+    <div *ngIf="config.hasDivider " class="dropdown-divider "></div>
 </ng-template>
-<ngx-treeview [config]="config" [headerTemplate]="headerTemplate" [items]="items" [itemTemplate]="itemTemplate">
+
+<ngx-treeview id="treeview" [config]="config " [headerTemplate]="headerTemplate " [items]="items " [itemTemplate]="itemTemplate ">
 </ngx-treeview>

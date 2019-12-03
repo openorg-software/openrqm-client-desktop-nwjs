@@ -1,10 +1,16 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+<!-- 
+openrqm-client-desktop-nwjs
+RQMSettings Component Template
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+-->
+
 <div class="modal-body">
-    This is a modal.
-    <button (click)="saveSettings()">Save</button>
+    <div class="row">
+        <div class="col-xs-3"><label>Server IP:</label> <input class="form-control" #serverIpInputField /></div>
+        <div class="col-xs-3"><label>Server Port:</label> <input class="form-control" #serverPortInputField /></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="saveSettings()">Save</button>
+    </div>
 </div>

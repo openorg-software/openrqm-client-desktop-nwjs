@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularGridInstance, ExtensionName, Column, GridOption, GridServiceInsertOption } from 'angular-slickgrid';
-import { RQMElementViewerComponent } from '../rqmelement-viewer/rqmelement-viewer.component';
-import { RQMElementViewerPreloadComponent } from '../rqmelement-viewer-preload/rqmelement-viewer-preload.component';
-import { ElementsService, RQMElements } from 'openrqm-api';
+/*
+openrqm-client-desktop-nwjs
+RQMDocumentViewer Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ElementsService, RQMElement, ElementService } from 'openrqm-api';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import { MatMenuTrigger } from '@angular/material'
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
+import { isBreakStatement } from 'typescript';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -10,110 +19,55 @@ import { ElementsService, RQMElements } from 'openrqm-api';
   styleUrls: ['./rqmdocument-viewer.component.css']
 })
 export class RQMDocumentViewerComponent implements OnInit {
-  angularGrid: AngularGridInstance;
-  columnDefinitions: Column[] = [];
-  gridOptions: GridOption = {};
-  dataset: any[] = [];
+
+  public Editor = InlineEditor;
+
   detailViewRowCount = 9;
   elementsService: ElementsService;
-  elements: RQMElements;
+  elementService: ElementService;
+  elements: RQMElement[] = [];
+  id: string;
 
-  constructor(elementsService: ElementsService
-  ) { this.elementsService = elementsService; }
+  reloadSubscription: any;
 
-  angularGridReady(angularGrid: AngularGridInstance) {
-    this.angularGrid = angularGrid;
+  displayedColumns: string[] = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+
+  // For context menu
+  @ViewChild(MatMenuTrigger, { static: false })
+  contextMenu: MatMenuTrigger;
+
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+  onContextMenu(event: MouseEvent, elementId: number) {
+    console.log(elementId);
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'elementId': elementId };
+    this.contextMenu.openMenu();
   }
-  get rowDetailInstance(): any {
-    return this.angularGrid && this.angularGrid.extensionService.getSlickgridAddonInstance(ExtensionName.rowDetailView) || {};
+
+  constructor(elementsService: ElementsService, elementService: ElementService, private router: Router, private route: ActivatedRoute,
+  ) {
+    // For reloading the page
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.reloadSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+
+    //Initialization
+    this.elementsService = elementsService;
+    this.elementService = elementService;
   }
 
   ngOnInit(): void {
-    this.columnDefinitions = [
-      {
-        id: '#', field: '', name: '', width: 40,
-        behavior: 'selectAndMove',
-        selectable: false, resizable: false,
-        cssClass: 'cell-reorder dnd',
-        excludeFromExport: true,
-        excludeFromColumnPicker: true,
-        excludeFromHeaderMenu: true,
-        excludeFromGridMenu: true
-      },
-      {
-        id: '#', field: '', name: '', width: 40,
-        selectable: false, resizable: false,
-        cssClass: 'add-item',
-        excludeFromExport: true,
-        excludeFromColumnPicker: true,
-        excludeFromHeaderMenu: true,
-        excludeFromGridMenu: true,
-        onCellClick: () => this.addNewItem(),
-      },
-      {
-        id: 'id', name: 'Id', field: 'id', sortable: true
-      },
-      {
-        id: 'content', name: 'Content', field: 'content', sortable: false
-      },
-      {
-        id: 'elementtype', name: 'Type', field: 'elementtype', sortable: false
-      },
-      {
-        id: 'rank', name: 'Rank', field: 'rank', sortable: true
-      },
-      {
-        id: 'parent', name: 'Parent', field: 'parent', sortable: true
-      }
-    ];
-    this.gridOptions = {
-      enableGridMenu: false,
-      enableAutoResize: true,       // true by default
-      enableCellNavigation: true,
-      enableRowMoveManager: true,
-      rowMoveManager: {
-        onBeforeMoveRows: (e, args) => this.onBeforeMoveRow(e, args),
-        onMoveRows: (e, args) => this.onMoveRows(e, args),
-      },
-      enableRowDetailView: true,
-      rowDetailView: {
-        // We can load the "process" asynchronously in 2 different ways (httpClient OR even Promise)
-        process: (item) => this.simulateServerAsyncCall(item),
-        // process: (item) => this.http.get(`api/item/${item.id}`),
-
-        // load only once and reuse the same item detail without calling process method
-        loadOnce: true,
-
-        // limit expanded row to only 1 at a time
-        singleRowExpand: false,
-
-        // false by default, clicking anywhere on the row will open the detail view
-        // when set to false, only the "+" icon would open the row detail
-        // if you use editor or cell navigation you would want this flag set to false (default)
-        useRowClick: true,
-
-        // how many grid rows do we want to use for the row detail panel (this is only set once and will be used for all row detail)
-        // also note that the detail view adds an extra 1 row for padding purposes
-        // so if you choose 4 panelRows, the display will in fact use 5 rows
-        panelRows: this.detailViewRowCount,
-
-        // you can override the logic for showing (or not) the expand icon
-        // for example, display the expand icon only on every 2nd row
-        // expandableOverride: (row: number, dataContext: any, grid: any) => (dataContext.id % 2 === 1),
-
-        // Preload View Component
-        preloadComponent: RQMElementViewerPreloadComponent,
-
-        // View Component to load when row detail data is ready
-        viewComponent: RQMElementViewerComponent,
-      }
-    };
-
-    // fill the dataset with your data
-    // VERY IMPORTANT, Angular-Slickgrid uses Slickgrid DataView which REQUIRES a unique "id" and it has to be lowercase "id" and be part of the dataset
-    this.dataset = [];
-
-    this.elementsService.getElements(1).subscribe(
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.elementsService.getElements(parseInt(this.id)).subscribe(
       el => {
         this.elements = el;
       },
@@ -121,128 +75,244 @@ export class RQMDocumentViewerComponent implements OnInit {
         console.log(err);
       },
       () => {
-        this.elements.forEach(element => {
-          this.dataset.push({
-            id: element.id,
-            content: element.content,
-            elementtype: element.elementTypeId,
-            rank: element.rank,
-            parent: element.parentElementId
-          });
-        });
-        this.angularGrid.slickGrid.setData(this.dataset);
-        this.angularGrid.slickGrid.render();
+        console.log(this.elements);
+        if (this.elements.length == 0) {
+          this.addFirstElement();
+        }
       }
     );
   }
+  // Add the first element of the document to initialize
+  addFirstElement(): void {
+    let aboveRank: string = "";
+    let belowRank: string = "aaaaaaaaaaaaaaaaaaaa";
 
-  onBeforeMoveRow(e, data) {
-    for (let i = 0; i < data.rows.length; i++) {
-      // no point in moving before or after itself
-      if (data.rows[i] === data.insertBefore || data.rows[i] === data.insertBefore - 1) {
-        e.stopPropagation();
-        return false;
+    let element = {} as RQMElement;
+    element.content = "";
+    element.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
+    element.elementTypeId = 1;
+    element.rank = "0";
+    element.id = 0;
+    element.parentElementId = null;
+
+    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('add element done');
+      }
+    );
+    //this.router.navigate(['/document-viewer', this.id]);
+  }
+
+  // Add an element after the current element
+  addElementAfter(aboveElementId: number): void {
+    console.log(aboveElementId);
+    let aboveRank: string = "";
+    let belowRank: string = "";
+    let parentElementId: number = -1;
+
+
+    // go through all elements, if element id matches aboveElementId 
+    for (let element of this.elements) {
+      if (element.id == aboveElementId) {
+        let aboveElement: RQMElement = element;
+        let belowElement: RQMElement = this.elements[this.elements.indexOf(aboveElement) + 1];
+        //if parentId of above is different from parent id of below
+        if (aboveElement.parentElementId != belowElement.parentElementId) {
+          //look for last child element of aboveElement and set as new aboveElement
+          let lastParentId: number = null;
+          let parentFound: Boolean = false;
+          let lastIndex: number = null;
+          for (let newElement of this.elements) {
+            // If the newElement has the aboveElement as the parent we are in the correct location in the tree
+            if (newElement.parentElementId == aboveElement.id) {
+              parentFound = true;
+              lastParentId = newElement.parentElementId;
+              lastIndex = this.elements.indexOf(newElement);
+              continue;
+            }
+            // If we are in the correct location in the tree and the parentId changed, the newElement  in the belowElement and the last element is the above element.
+            if (parentFound && lastParentId != null && lastParentId != newElement.parentElementId) {
+              aboveElement = this.elements[lastIndex];
+              belowElement = newElement;
+              break;
+            }
+            lastParentId = newElement.parentElementId;
+            lastIndex = this.elements.indexOf(newElement);
+          }
+
+        }
+        // if parentId of above and below is the same, take them
+        parentElementId = element.parentElementId;
+        aboveRank = aboveElement.rank;
+        belowRank = belowElement.rank;
+        console.log(aboveRank);
+        console.log(belowRank);
+        if (belowRank == null) {
+          belowRank = "";
+        }
       }
     }
-    return true;
-  }
-
-  onMoveRows(e, args) {
-    const extractedRows = [];
-    let left;
-    let right;
-    const rows = args.rows;
-    const insertBefore = args.insertBefore;
-    left = this.dataset.slice(0, insertBefore);
-    right = this.dataset.slice(insertBefore, this.dataset.length);
-    rows.sort((a, b) => {
-      return a - b;
-    });
-
-    for (let i = 0; i < rows.length; i++) {
-      extractedRows.push(this.dataset[rows[i]]);
+    if (aboveRank == "" || belowRank == "" || parentElementId == -1) {
+      console.log('could not determine aboveRank or belowRank');
+      return;
     }
 
-    rows.reverse();
+    let element = {} as RQMElement;
+    element.content = "";
+    element.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
+    element.elementTypeId = 1;
+    element.rank = "0";
+    element.id = 0;
+    element.parentElementId = parentElementId == 0 ? null : parentElementId;
 
-    for (let i = 0; i < rows.length; i++) {
-      const row = rows[i];
-      if (row < insertBefore) {
-        left.splice(row, 1);
-      } else {
-        right.splice(row - insertBefore, 1);
+    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('add element done');
+      }
+    );
+    this.router.navigate(['/document-viewer', this.id]);
+  }
+  // Add an element below the current element
+  addElementBelow(aboveElementId: number): void {
+    console.log(aboveElementId);
+    let aboveRank: string = "";
+    let belowRank: string = "";
+
+    for (let element of this.elements) {
+      if (element.id == aboveElementId) {
+        aboveRank = element.rank;
+        belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
+        if (belowRank == null) {
+          belowRank = "";
+        }
       }
     }
-    this.dataset = left.concat(extractedRows.concat(right));
-    const selectedRows = [];
-
-    for (let i = 0; i < rows.length; i++) {
-      selectedRows.push(left.length + i);
+    if (aboveRank == "" || belowRank == "" || aboveElementId == -1) {
+      console.log('could not determine aboveId or belowId');
+      return;
     }
 
-    this.angularGrid.slickGrid.resetActiveCell();
-    this.angularGrid.slickGrid.setData(this.dataset);
-    this.angularGrid.slickGrid.setSelectedRows(selectedRows);
-    this.angularGrid.slickGrid.render();
+    let element = {} as RQMElement;
+    element.content = "";
+    element.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
+    element.elementTypeId = 1;
+    element.rank = "0";
+    element.id = 0;
+    element.parentElementId = aboveElementId;
+
+    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('add element done');
+      }
+    );
+
+    this.router.navigate(['/document-viewer', this.id]);
   }
 
-  changeDetailViewRowCount() {
-    if (this.angularGrid && this.angularGrid.extensionService) {
-      const options = this.rowDetailInstance.getOptions();
-      if (options && options.panelRows) {
-        options.panelRows = this.detailViewRowCount; // change number of rows dynamically
-        this.rowDetailInstance.setOptions(options);
+  // Add an element below the current element
+  deleteElement(elementId: number): void {
+    console.log(elementId);
+
+    let element: RQMElement;
+    for (let tempElement of this.elements) {
+      if (tempElement.id == elementId) {
+        element = tempElement;
       }
     }
+    console.log(element);
+    this.elementService.deleteElement(element.id).subscribe(
+      next => {
+        console.log('next');
+        console.log(next);
+      },
+      err => {
+        console.log('err');
+        console.log(err);
+      },
+      () => {
+        console.log('delete element done');
+      }
+    );
+    this.router.navigate(['/document-viewer', this.id]);
   }
 
-  closeAllRowDetail() {
-    if (this.angularGrid && this.angularGrid.extensionService) {
-      this.rowDetailInstance.collapseAll();
+  onBlurCKeditor({ editor }: ChangeEvent, elementId: number) {
+    const data = editor.getData();
+    console.log(data);
+    this.saveElement(elementId, null, data, null);
+  }
+
+  saveElement(elementId: number, type: number, content: string, parent: number) {
+    console.log(elementId);
+    let changed: Boolean = false;
+    let element: RQMElement;
+    for (let tempElement of this.elements) {
+      if (tempElement.id == elementId) {
+        element = tempElement;
+      }
     }
+
+    if (type != null && element.elementTypeId != type) {
+      element.elementTypeId = type;
+      changed = true;
+    }
+    if (content != null && element.content != content) {
+      element.content = content;
+      changed = true;
+    }
+    if (parent != null && element.parentElementId != parent) {
+      element.parentElementId = parent;
+      changed = true;
+    }
+
+    if (changed == true) {
+      console.log(element);
+      this.elementService.patchElement(element).subscribe(
+        next => {
+          console.log('next');
+          console.log(next);
+        },
+        err => {
+          console.log('err');
+          console.log(err);
+        },
+        () => {
+          console.log('patching element done');
+        }
+      );
+      this.router.navigate(['/document-viewer', this.id]);
+    }
+
   }
 
-  /** Just for demo purposes, we will simulate an async server call and return more details on the selected row item */
-  simulateServerAsyncCall(item: any) {
-    // random set of names to use for more item detail
-
-    // fill the template on async delay
-    return new Promise((resolve) => {
-      const itemDetail = item;
-
-      // let's add some extra properties to our item for a better async simulation
-
-
-      // resolve the data after delay specified
-      resolve(itemDetail);
-
-    });
-  }
-  private randomNumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  addNewItem() {
-
-    console.log("add item called");
-    const randomYear = 2000 + Math.floor(Math.random() * 10);
-    const randomMonth = Math.floor(Math.random() * 11);
-    const randomDay = Math.floor((Math.random() * 28));
-    const randomPercent = Math.round(Math.random() * 100);
-    const newItem = {
-      id: this.dataset.length + 1,
-      title: 'Task ' + randomYear,
-      duration: Math.round(Math.random() * 100) + '',
-      percentComplete: randomPercent,
-      start: `${randomMonth}/${randomDay}/${randomYear}`,
-      finish: `${randomMonth}/${randomDay}/${randomYear}`,
-      fortDriven: true
-    };
-
-    // add the item to the grid
-
-    let options: GridServiceInsertOption;
-    options.highlightRow = true;
-    this.angularGrid.gridService.addItem(newItem, options);
+  // For reloading the page
+  ngOnDestroy() {
+    if (this.reloadSubscription) {
+      this.reloadSubscription.unsubscribe();
+    }
   }
 }

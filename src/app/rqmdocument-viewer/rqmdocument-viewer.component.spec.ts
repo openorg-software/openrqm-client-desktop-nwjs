@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMDocumentViewer Component Tests
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer.component';
@@ -8,9 +15,9 @@ describe('RQMDocumentViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMDocumentViewerComponent ]
+      declarations: [RQMDocumentViewerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

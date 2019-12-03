@@ -1,4 +1,17 @@
+/*
+openrqm-client-desktop-nwjs
+RQMWorkspaceTreeView Component CSS
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 label {
     margin-bottom: 0;
     cursor: pointer;
+}
+
+fa-icon {
+    padding-left: 5px;
+    padding-right: 10px;
+    color: black;
 }

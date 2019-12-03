@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RQMElementViewerComponent } from './rqmelement-viewer.component';
+import { RQMTracingComponent } from './rqmtracing.component';
 
-describe('RQMElementViewerComponent', () => {
-  let component: RQMElementViewerComponent;
-  let fixture: ComponentFixture<RQMElementViewerComponent>;
+describe('RQMTracingComponent', () => {
+  let component: RQMTracingComponent;
+  let fixture: ComponentFixture<RQMTracingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMElementViewerComponent ]
+      declarations: [ RQMTracingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RQMElementViewerComponent);
+    fixture = TestBed.createComponent(RQMTracingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,14 @@
+/*
+openrqm-client-desktop-nwjs
+RQMWorkspaceMenubar Component CSS
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
+.menu-icon {
+    padding: 0;
+}
+
+.menu-spacer {
+    flex: 1 1 auto;
+}

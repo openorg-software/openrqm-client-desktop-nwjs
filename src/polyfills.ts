@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+Polyfills
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.

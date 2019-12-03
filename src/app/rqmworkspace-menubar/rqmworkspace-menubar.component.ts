@@ -1,6 +1,13 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+/*
+openrqm-client-desktop-nwjs
+RQMWorkspaceMenubar Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { RQMWorkspace } from 'openrqm-api';
 
 @Component({
   selector: 'app-rqmworkspace-menubar',
@@ -8,10 +15,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   styleUrls: ['./rqmworkspace-menubar.component.css']
 })
 export class RQMWorkspaceMenubarComponent implements OnInit {
-  navbarOpen = false;
-  modalRef: BsModalRef;
 
-  constructor(private modalService: BsModalService) { }
+  navbarOpen = false;
+
+  closeResult: string;
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -20,7 +29,21 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
     this.navbarOpen = !this.navbarOpen;
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+  openModal(content: any) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
 }

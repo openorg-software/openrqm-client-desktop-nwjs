@@ -1,7 +1,13 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+/*
+openrqm-client-desktop-nwjs
+RQMDocumentMenubar Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-rqmdocument-menubar',
   templateUrl: './rqmdocument-menubar.component.html',
@@ -9,10 +15,13 @@ import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class RQMDocumentMenubarComponent implements OnInit {
   navbarOpen = false;
-  modalRef: BsModalRef;
   faCaret = faCaretLeft;
 
-  constructor(private modalService: BsModalService) { }
+  @ViewChild('exportModal', { static: false }) exportModal;
+
+
+  closeResult: string;
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -21,7 +30,21 @@ export class RQMDocumentMenubarComponent implements OnInit {
     this.navbarOpen = !this.navbarOpen;
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+  openModal(content: any) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
 }

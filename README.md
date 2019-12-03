@@ -1,14 +1,12 @@
 # OpenRQM Desktop Client
 
-
-# OpenRQM Desktop Client
+This OpenRQM Desktop Client is a [NW.js](https://nwjs.io/) project using [angular-cli](https://cli.angular.io/).
 
 [![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)  [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_shield)
 
 
 ## Content
 - [OpenRQM Desktop Client](#openrqm-desktop-client)
-- [OpenRQM Desktop Client](#openrqm-desktop-client-1)
   - [Content](#content)
   - [Hints for reading the OpenRQM Client documentation](#hints-for-reading-the-openrqm-client-documentation)
   - [How to run / build](#how-to-run--build)

@@ -1,7 +1,16 @@
+/*
+openrqm-client-desktop-nwjs
+RQMWorkspaceTree Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2019 Benjamin Schilling
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
-import { WorkspacesService, RQMWorkspaces } from 'openrqm-api';
+import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
+import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
+import { RQMSettingsService } from '../rqmsettings.service';
 @Component({
   selector: 'app-rqmworkspace-tree',
   templateUrl: './rqmworkspace-tree.component.html',
@@ -10,7 +19,7 @@ import { WorkspacesService, RQMWorkspaces } from 'openrqm-api';
 export class RQMWorkspaceTreeComponent implements OnInit {
 
   dropdownEnabled = true;
-  items: TreeviewItem[];
+  items: RQMWorkspaceTreeViewItem[];
   values: number[];
   config = TreeviewConfig.create({
     hasAllCheckBox: false,
@@ -19,7 +28,8 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     decoupleChildFromParent: false,
     maxHeight: 1000
   });
-  workspaceService: WorkspacesService;
+  workspacesService: WorkspacesService;
+  settingService: RQMSettingsService;
 
   buttonClasses = [
     'btn-outline-primary',
@@ -33,43 +43,60 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   ];
   buttonClass = this.buttonClasses[0];
 
-  constructor(workspaceService: WorkspacesService
-  ) { this.workspaceService = workspaceService; }
+  constructor(workspacesService: WorkspacesService, settingsService: RQMSettingsService
+  ) {
+    this.workspacesService = workspacesService;
+    this.settingService = settingsService;
+  }
 
   ngOnInit() {
-    this.workspaceService.getWorkspaces().subscribe(
+    this.workspacesService.configuration.basePath = this.settingService.getApiBasePath();
+    this.workspacesService.getWorkspaces().subscribe(
       (ws) => {
         console.log(ws);
         this.items = this.workspacesToTreeviewItems(ws);
+      },
+      err => {
+        console.log(err);
       }
     );
   }
 
-  workspacesToTreeviewItems(workspaces: RQMWorkspaces): TreeviewItem[] {
-    let rootItems: TreeviewItem[] = new Array();
+  workspacesToTreeviewItems(workspaces: RQMWorkspace[]): RQMWorkspaceTreeViewItem[] {
+    let rootItems: RQMWorkspaceTreeViewItem[] = new Array();
 
     workspaces.forEach(ws => {
       if (ws.workspaceId == 0) {
-        rootItems.push(new TreeviewItem({
-          text: ws.name, value: ws.id, collapsed: true,
-        }));
+        rootItems.push(new RQMWorkspaceTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveChildrenRecursively(ws), false
+        ));
       }
     });
 
-    rootItems.forEach(ri => {
-      let childrenItems: TreeviewItem[] = new Array();
-      workspaces.forEach(ws => {
-        if (ri.value == ws.workspaceId) {
-          childrenItems.push(new TreeviewItem({
-            text: ws.name, value: ws.id, collapsed: true
-          }))
-        }
-      });
-      ri.children = childrenItems;
-    });
     console.log(rootItems);
-
     return rootItems;
+  }
+
+  static resolveChildrenRecursively(rqmWorkspace: RQMWorkspace): RQMWorkspaceTreeViewItem[] {
+    let tvi: RQMWorkspaceTreeViewItem[] = new Array();
+    let workspaces: RQMWorkspaceTreeViewItem[] = new Array();
+    let documents: RQMWorkspaceTreeViewItem[] = new Array();
+
+    workspaces = RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(rqmWorkspace);
+    tvi = tvi.concat(workspaces);
+    tvi = tvi.concat(documents);
+    return tvi;
+  }
+
+  static resolveWorkspacesRecursively(rqmWorkspace: RQMWorkspace): RQMWorkspaceTreeViewItem[] {
+    let tvi: RQMWorkspaceTreeViewItem[] = new Array();
+    rqmWorkspace.workspaces.forEach((ws) => {
+      tvi.push(new RQMWorkspaceTreeViewItem(ws.name, ws.id, true, RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(ws), false
+      ));
+    });
+    rqmWorkspace.documents.forEach((doc) => {
+      tvi.push(new RQMWorkspaceTreeViewItem(doc.name, doc.id, true, null, true, doc.internalIdentifier));
+    });
+    return tvi;
   }
 
   onFilterChange(value: string) {
