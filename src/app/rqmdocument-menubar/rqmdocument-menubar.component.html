@@ -6,22 +6,22 @@ Copyright (C) 2019 Benjamin Schilling
 -->
 
 <ng-template #settingsModal let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Settings</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Settings</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
                     <span aria-hidden="true">&times;</span>
                 </button>
-    </div>
-    <app-rqmsettings></app-rqmsettings>
+  </div>
+  <app-rqmsettings></app-rqmsettings>
 </ng-template>
 <ng-template #exportModal let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Export</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Export</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
-    <app-rqmdocument-exporter></app-rqmdocument-exporter>
+  </div>
+  <app-rqmdocument-exporter></app-rqmdocument-exporter>
 </ng-template>
 <ng-template #reviewModal>
 </ng-template>
@@ -31,11 +31,11 @@ Copyright (C) 2019 Benjamin Schilling
 
 
 <mat-toolbar color="primary">
-    <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
-    <span>OpenRQM</span>
-    <button mat-button (click)="openModal(exportModal)">Export</button>
-    <button mat-button (click)="openModal(settingsModal)">Review</button>
-    <button mat-button (click)="openModal(settingsModal)">Tracing</button>
-    <span class="menu-spacer"></span>
-    <button mat-button (click)="openModal(settingsModal)">Settings</button>
+  <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
+  <span>OpenRQM</span>
+  <button mat-button (click)="openModal(exportModal)">Export</button>
+  <button mat-button (click)="openModal(settingsModal)">Review</button>
+  <button mat-button (click)="openModal(settingsModal)">Tracing</button>
+  <span class="menu-spacer"></span>
+  <button mat-button (click)="openModal(settingsModal)">Settings</button>
 </mat-toolbar>
