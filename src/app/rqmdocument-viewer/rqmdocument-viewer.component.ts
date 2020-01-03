@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { MatMenuTrigger } from '@angular/material'
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
-import { isBreakStatement } from 'typescript';
+import Base64UploaderPlugin from 'src/@ckeditor/Base64Upload';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -31,6 +31,11 @@ export class RQMDocumentViewerComponent implements OnInit {
   reloadSubscription: any;
 
   displayedColumns: string[] = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+
+  editorConfig = {
+    placeholder: 'Type the content here!',
+    extraPlugins: [Base64UploaderPlugin],
+  };
 
   // For context menu
   @ViewChild(MatMenuTrigger, { static: false })
@@ -65,6 +70,7 @@ export class RQMDocumentViewerComponent implements OnInit {
     this.elementService = elementService;
   }
 
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.elementsService.getElements(parseInt(this.id)).subscribe(
@@ -82,6 +88,7 @@ export class RQMDocumentViewerComponent implements OnInit {
       }
     );
   }
+
   // Add the first element of the document to initialize
   addFirstElement(): void {
     let aboveRank: string = "";
@@ -106,10 +113,11 @@ export class RQMDocumentViewerComponent implements OnInit {
       },
       () => {
         console.log('add element done');
+        this.elements.push(element);
       }
     );
-    //this.router.navigate(['/document-viewer', this.id]);
   }
+
 
   // Add an element after the current element
   addElementAfter(aboveElementId: number): void {
@@ -184,10 +192,13 @@ export class RQMDocumentViewerComponent implements OnInit {
       },
       () => {
         console.log('add element done');
+        this.elements.push(element);
       }
     );
-    this.router.navigate(['/document-viewer', this.id]);
+    //this.router.navigate(['/document-viewer', this.id]);
   }
+
+
   // Add an element below the current element
   addElementBelow(aboveElementId: number): void {
     console.log(aboveElementId);
@@ -227,10 +238,11 @@ export class RQMDocumentViewerComponent implements OnInit {
       },
       () => {
         console.log('add element done');
+        this.elements.push(element);
       }
     );
 
-    this.router.navigate(['/document-viewer', this.id]);
+    //this.router.navigate(['/document-viewer', this.id]);
   }
 
   // Add an element below the current element
@@ -255,9 +267,10 @@ export class RQMDocumentViewerComponent implements OnInit {
       },
       () => {
         console.log('delete element done');
+        this.elements.splice(this.elements.indexOf(element), 1);
       }
     );
-    this.router.navigate(['/document-viewer', this.id]);
+    //this.router.navigate(['/document-viewer', this.id]);
   }
 
   onBlurCKeditor({ editor }: ChangeEvent, elementId: number) {
@@ -302,9 +315,11 @@ export class RQMDocumentViewerComponent implements OnInit {
         },
         () => {
           console.log('patching element done');
+          let index: number = this.elements.findIndex(el => el.id == elementId);
+          this.elements[index] = element;
         }
       );
-      this.router.navigate(['/document-viewer', this.id]);
+      //this.router.navigate(['/document-viewer', this.id]);
     }
 
   }

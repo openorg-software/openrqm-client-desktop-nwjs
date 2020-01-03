@@ -23,6 +23,7 @@
     "@angular/router": "^8.2.8",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ckeditor/ckeditor5-build-inline": "^15.0.0",
+    "@ckeditor/ckeditor5-upload": "^16.0.0",
     "@editorjs/code": "^2.4.1",
     "@editorjs/editorjs": "^2.15.1",
     "@editorjs/embed": "^2.2.1",
