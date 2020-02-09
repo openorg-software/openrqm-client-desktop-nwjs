@@ -53,7 +53,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
       }
     );
     this.passBack();
-    window.location.reload();
+    //window.location.reload();
   }
 
   passBack() {

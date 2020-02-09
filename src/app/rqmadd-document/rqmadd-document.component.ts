@@ -42,7 +42,7 @@ export class RQMAddDocumentComponent implements OnInit {
     document.id = 0;
     document.workspaceId = this.parentId;
     document.internalIdentifier = 0;
-    document.externalIdentifier = this.documentName.externalIdentifier.value;
+    document.externalIdentifier = this.externalIdentifier.nativeElement.value;
     document.name = this.documentName.nativeElement.value;
     document.shortName = this.shortName.nativeElement.value;
     document.description = this.description.nativeElement.value;

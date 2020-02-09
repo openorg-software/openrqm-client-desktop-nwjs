@@ -83,7 +83,7 @@ export class RQMDocumentViewerComponent implements OnInit {
       () => {
         console.log(this.elements);
         if (this.elements.length == 0) {
-          this.addFirstElement();
+          // this.addFirstElement();
         }
       }
     );
@@ -91,8 +91,8 @@ export class RQMDocumentViewerComponent implements OnInit {
 
   // Add the first element of the document to initialize
   addFirstElement(): void {
-    let aboveRank: string = "";
-    let belowRank: string = "aaaaaaaaaaaaaaaaaaaa";
+    let aboveRank: string = "aaaaaaaaaaaaaaaaaaaa";
+    let belowRank: string = "";
 
     let element = {} as RQMElement;
     element.content = "";
@@ -131,36 +131,42 @@ export class RQMDocumentViewerComponent implements OnInit {
     for (let element of this.elements) {
       if (element.id == aboveElementId) {
         let aboveElement: RQMElement = element;
-        let belowElement: RQMElement = this.elements[this.elements.indexOf(aboveElement) + 1];
-        //if parentId of above is different from parent id of below
-        if (aboveElement.parentElementId != belowElement.parentElementId) {
-          //look for last child element of aboveElement and set as new aboveElement
-          let lastParentId: number = null;
-          let parentFound: Boolean = false;
-          let lastIndex: number = null;
-          for (let newElement of this.elements) {
-            // If the newElement has the aboveElement as the parent we are in the correct location in the tree
-            if (newElement.parentElementId == aboveElement.id) {
-              parentFound = true;
+        let belowElement: RQMElement = null;
+        if (this.elements.length > this.elements.indexOf(aboveElement) + 1) {
+          belowElement = this.elements[this.elements.indexOf(aboveElement) + 1];
+          //if parentId of above is different from parent id of below
+          if (aboveElement.parentElementId != belowElement.parentElementId) {
+            //look for last child element of aboveElement and set as new aboveElement
+            let lastParentId: number = null;
+            let parentFound: Boolean = false;
+            let lastIndex: number = null;
+            for (let newElement of this.elements) {
+              // If the newElement has the aboveElement as the parent we are in the correct location in the tree
+              if (newElement.parentElementId == aboveElement.id) {
+                parentFound = true;
+                lastParentId = newElement.parentElementId;
+                lastIndex = this.elements.indexOf(newElement);
+                continue;
+              }
+              // If we are in the correct location in the tree and the parentId changed, the newElement  in the belowElement and the last element is the above element.
+              if (parentFound && lastParentId != null && lastParentId != newElement.parentElementId) {
+                aboveElement = this.elements[lastIndex];
+                belowElement = newElement;
+                break;
+              }
               lastParentId = newElement.parentElementId;
               lastIndex = this.elements.indexOf(newElement);
-              continue;
             }
-            // If we are in the correct location in the tree and the parentId changed, the newElement  in the belowElement and the last element is the above element.
-            if (parentFound && lastParentId != null && lastParentId != newElement.parentElementId) {
-              aboveElement = this.elements[lastIndex];
-              belowElement = newElement;
-              break;
-            }
-            lastParentId = newElement.parentElementId;
-            lastIndex = this.elements.indexOf(newElement);
-          }
 
+          }
         }
+
         // if parentId of above and below is the same, take them
         parentElementId = element.parentElementId;
         aboveRank = aboveElement.rank;
-        belowRank = belowElement.rank;
+        if (belowElement != null) {
+          belowRank = belowElement.rank;
+        }
         console.log(aboveRank);
         console.log(belowRank);
         if (belowRank == null) {
@@ -170,8 +176,9 @@ export class RQMDocumentViewerComponent implements OnInit {
     }
     if (aboveRank == "" || belowRank == "" || parentElementId == -1) {
       console.log('could not determine aboveRank or belowRank');
-      return;
+      //return;
     }
+
 
     let element = {} as RQMElement;
     element.content = "";
@@ -195,7 +202,7 @@ export class RQMDocumentViewerComponent implements OnInit {
         this.elements.push(element);
       }
     );
-    //this.router.navigate(['/document-viewer', this.id]);
+    this.router.navigate(['/document-viewer', this.id]);
   }
 
 
@@ -208,15 +215,16 @@ export class RQMDocumentViewerComponent implements OnInit {
     for (let element of this.elements) {
       if (element.id == aboveElementId) {
         aboveRank = element.rank;
-        belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
-        if (belowRank == null) {
-          belowRank = "";
+
+        if (this.elements.length > this.elements.indexOf(element) + 1) {
+          belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
         }
+
       }
     }
     if (aboveRank == "" || belowRank == "" || aboveElementId == -1) {
       console.log('could not determine aboveId or belowId');
-      return;
+      //return;
     }
 
     let element = {} as RQMElement;
