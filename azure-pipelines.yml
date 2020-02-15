@@ -12,18 +12,19 @@ pool:
 
 steps:
 
+- script: |
+    sudo apt-get install npm debhelper
+    mkdir -p debian-packaging
+    rsync -av --exclude='debian-packaging' . debian-packaging/
+    cd debian-packaging
+    dpkg-buildpackage -uc -us
+    cd ..
+  displayName: 'Debian packaging'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-
-- script: |
-    mkdir -p debian
-    cp -r * debian/
-    cd debian
-    dpkg-buildpackage -uc -us
-    cd ..
-  displayName: 'Debian packaging'
 
 # First install angular-cli
 - script: |
@@ -98,3 +99,4 @@ steps:
          $(Build.Repository.LocalPath)/ARCHITECTURE.pdf
          $(Build.Repository.LocalPath)/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
+         $(Build.Repository.LocalPath)/openrqm-client_0.1.0-0_amd64.deb
