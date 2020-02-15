@@ -18,9 +18,9 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    mkdir -p debian
-    cp -r * debian/
-    cd debian
+    mkdir -p debian-packaging
+    cp -r * debian-packaging/
+    cd debian-packaging
     dpkg-buildpackage -uc -us
     cd ..
   displayName: 'Debian packaging'
