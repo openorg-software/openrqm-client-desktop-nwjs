@@ -1,0 +1,13 @@
+Source: openrqm-client
+Section: text
+Priority: optional
+Maintainer: Benjamin Schilling <benjamin.a.schilling@freenet.de>
+Build-Depends: npm
+Standards-Version: 4.0.0
+Homepage: https://github.com/openrqm/openrqm-client-desktop-nwjs
+
+Package: openrqm-client
+Architecture: any
+Suggests: openrqm-server
+Description: OpenRQM Client
+ Open Source Requirements Management System Client, implemented using Angular 8 and NW.js

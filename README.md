@@ -2,7 +2,7 @@
 
 This OpenRQM Desktop Client is a [NW.js](https://nwjs.io/) project using [angular-cli](https://cli.angular.io/).
 
-[![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)  [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_shield)
+[![Build Status](https://dev.azure.com/OpenRQM/OpenRQM/_apis/build/status/openrqm.openrqm-client-desktop-nwjs?branchName=development)](https://dev.azure.com/OpenRQM/OpenRQM/_build/latest?definitionId=4&branchName=development)  [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenrqm%2Fopenrqm-client-desktop-nwjs?ref=badge_shield) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=openrqm_openrqm-client-desktop-nwjs&metric=alert_status)](https://sonarcloud.io/dashboard?id=openrqm_openrqm-client-desktop-nwjs)
 
 
 ## Content
@@ -26,10 +26,6 @@ The documents can be read best using [Visual Studio Code](https://code.visualstu
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
 
-### Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
 ### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
@@ -39,6 +35,11 @@ Then the nw-package.json has to be copied to the `dist/openrqm-client-desktop-nw
 Afterwards running `<Path to nw.js>\nw.exe dist/openrqm-client-desktop-nwjs/.` on Windows or `<Path to nw>/nw dist/openrqm-client-desktop-nwjs/.` on Linux can be used to run the application.
 
 To package the software for release please follow the guildelines of [nw.js](http://docs.nwjs.io/en/latest/For%20Users/Package%20and%20Distribute/).
+
+### Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
 
 ## Design & Architecture
 

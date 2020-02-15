@@ -17,6 +17,14 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- script: |
+    mkdir -p debian
+    cp -r * debian/
+    cd debian
+    dpkg-buildpackage -uc -us
+    cd ..
+  displayName: 'Debian packaging'
+
 # First install angular-cli
 - script: |
     npm install -g @angular/cli
