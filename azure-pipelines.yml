@@ -15,7 +15,7 @@ steps:
 - script: |
     sudo apt-get install npm
     mkdir -p debian-packaging
-    cp -r * debian-packaging/
+    rsync -av --exclude='debian-packaging' . debian-packaging/
     cd debian-packaging
     dpkg-buildpackage -uc -us
     cd ..
