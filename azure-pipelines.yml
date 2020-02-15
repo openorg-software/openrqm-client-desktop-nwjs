@@ -99,3 +99,4 @@ steps:
          $(Build.Repository.LocalPath)/ARCHITECTURE.pdf
          $(Build.Repository.LocalPath)/WIREFRAME.pdf
          $(Build.Repository.LocalPath)/openrqm-client-desktop-nwjs.tar.gz
+         $(Build.Repository.LocalPath)/openrqm-client_0.1.0-0_amd64.deb
