@@ -45,3 +45,8 @@ testem.log
 .DS_Store
 Thumbs.db
 /build_and_run_windows.ps1
+
+debian/files
+debian/debhelper-build-stamp
+debian/openrqm-client.substvars
+debian/.debhelper/
