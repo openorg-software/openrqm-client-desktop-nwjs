@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { DocumentService, RQMDocument } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { RQMSettingsService } from '../rqmsettings.service';
 @Component({
   selector: 'app-rqmadd-document',
   templateUrl: './rqmadd-document.component.html',
@@ -16,6 +17,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RQMAddDocumentComponent implements OnInit {
 
+  settingService: RQMSettingsService;
   documentService: DocumentService;
 
   @ViewChild('documentName', { static: false }) documentName;
@@ -30,8 +32,11 @@ export class RQMAddDocumentComponent implements OnInit {
 
   @Input() public parentId: any;
 
-  constructor(documentSerivce: DocumentService, public activeModal: NgbActiveModal) {
-    this.documentService = documentSerivce;
+  constructor(documentSerivce: DocumentService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
+     
+    this.settingService = settingsService;
+    this.documentService = documentSerivce;   
+    this.documentService.configuration.basePath = this.settingService.getApiBasePath();
   }
 
   ngOnInit() {

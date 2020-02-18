@@ -32,7 +32,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 /// For OpenRQM API
-import { ApiModule, BASE_PATH } from 'openrqm-api';
+import { ApiModule } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
@@ -81,7 +81,6 @@ import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-tree
     RQMDocumentMenubarComponent,
     RQMWorkspaceTreeviewItemPropertiesComponent
   ],
-  providers: [{ provide: BASE_PATH, useValue: 'http://127.0.0.1:8090/api/v1' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

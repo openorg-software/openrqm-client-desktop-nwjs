@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { WorkspaceService, RQMWorkspace } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { RQMSettingsService } from '../rqmsettings.service';
 
 
 @Component({
@@ -18,13 +19,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RQMAddWorkspaceComponent implements OnInit {
 
+  settingService: RQMSettingsService;
   workspaceService: WorkspaceService;
 
   @ViewChild('workspaceName', { static: false }) workspaceName;
 
   @Input() public parentId: any;
 
-  constructor(workspaceService: WorkspaceService, public activeModal: NgbActiveModal) {
+  constructor(workspaceService: WorkspaceService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
+    this.settingService = settingsService;
+    this.workspaceService.configuration.basePath = this.settingService.getApiBasePath();
+  
     this.workspaceService = workspaceService;
   }
 

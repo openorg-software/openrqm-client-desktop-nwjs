@@ -12,6 +12,7 @@ import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { MatMenuTrigger } from '@angular/material'
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import Base64UploaderPlugin from 'src/@ckeditor/Base64Upload';
+import { RQMSettingsService } from '../rqmsettings.service';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -23,6 +24,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   public Editor = InlineEditor;
 
   detailViewRowCount = 9;
+  settingService: RQMSettingsService
   elementsService: ElementsService;
   elementService: ElementService;
   elements: RQMElement[] = [];
@@ -52,8 +54,12 @@ export class RQMDocumentViewerComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  constructor(elementsService: ElementsService, elementService: ElementService, private router: Router, private route: ActivatedRoute,
+  constructor(elementsService: ElementsService, elementService: ElementService, private router: Router, private route: ActivatedRoute, settingsService: RQMSettingsService
   ) {
+
+    this.settingService = settingsService;
+    this.elementsService.configuration.basePath = this.settingService.getApiBasePath();
+    this.elementService.configuration.basePath = this.settingService.getApiBasePath();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

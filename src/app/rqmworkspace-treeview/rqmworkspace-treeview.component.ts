@@ -19,6 +19,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
+import { RQMSettingsService } from '../rqmsettings.service';
 import { DocumentService, WorkspaceService } from 'openrqm-api';
 @Component({
   selector: 'app-rqmworkspace-treeview',
@@ -46,10 +47,15 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   /// Router for navigation to documents
   closeResult: string;
 
+  settingService: RQMSettingsService;
 
   constructor(
-    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentSerivce: DocumentService, private workspaceService: WorkspaceService,
+    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentService: DocumentService, private workspaceService: WorkspaceService, settingsService: RQMSettingsService
   ) {
+    
+    this.settingService = settingsService;
+    this.documentService.configuration.basePath = this.settingService.getApiBasePath();
+    this.workspaceService.configuration.basePath = this.settingService.getApiBasePath();
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
       hasCollapseExpand: false,
@@ -168,7 +174,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    this.documentSerivce.deleteDocument(item.value).subscribe(
+    this.documentService.deleteDocument(item.value).subscribe(
       next => {
         console.log('next');
         console.log(next);
