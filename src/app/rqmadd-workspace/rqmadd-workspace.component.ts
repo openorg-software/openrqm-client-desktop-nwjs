@@ -7,7 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
-import { WorkspaceService, RQMWorkspace } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMSettingsService } from '../rqmsettings.service';
 
@@ -20,13 +20,13 @@ import { RQMSettingsService } from '../rqmsettings.service';
 export class RQMAddWorkspaceComponent implements OnInit {
 
   settingService: RQMSettingsService;
-  workspaceService: WorkspaceService;
+  workspaceService: WorkspacesService;
 
   @ViewChild('workspaceName', { static: false }) workspaceName;
 
   @Input() public parentId: any;
 
-  constructor(workspaceService: WorkspaceService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
+  constructor(workspaceService: WorkspacesService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
     this.settingService = settingsService;
     this.workspaceService.configuration.basePath = this.settingService.getApiBasePath();
   

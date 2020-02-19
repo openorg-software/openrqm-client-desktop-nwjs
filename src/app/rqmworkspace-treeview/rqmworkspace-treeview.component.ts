@@ -20,7 +20,7 @@ import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.c
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMSettingsService } from '../rqmsettings.service';
-import { DocumentService, WorkspaceService } from 'openrqm-api';
+import { DocumentsService, WorkspacesService } from 'openrqm-api';
 @Component({
   selector: 'app-rqmworkspace-treeview',
   templateUrl: './rqmworkspace-treeview.component.html',
@@ -47,15 +47,13 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   /// Router for navigation to documents
   closeResult: string;
 
-  settingService: RQMSettingsService;
-
   constructor(
-    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentService: DocumentService, private workspaceService: WorkspaceService, settingsService: RQMSettingsService
+    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService
   ) {
     
-    this.settingService = settingsService;
-    this.documentService.configuration.basePath = this.settingService.getApiBasePath();
-    this.workspaceService.configuration.basePath = this.settingService.getApiBasePath();
+    this.settingsService = settingsService;
+    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
       hasCollapseExpand: false,
@@ -78,8 +76,21 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }
     console.log("select");
     console.log(item.value);
+
     if (item.isDocument) {
-      this.router.navigate(['/document-viewer', item.value]);
+        this.documentsService.getDocument(item.value).subscribe(
+          (doc) => {          
+            this.router.navigate(['/document-viewer', item.value, doc.shortName]);
+          },
+          err => {
+            console.log('err');
+            console.log(err);
+          },
+          () => {
+            console.log('getting document done');
+          }
+      );
+
     }
   }
 
@@ -174,7 +185,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    this.documentService.deleteDocument(item.value).subscribe(
+    this.documentsService.deleteDocument(item.value).subscribe(
       next => {
         console.log('next');
         console.log(next);

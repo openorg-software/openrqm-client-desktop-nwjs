@@ -8,7 +8,19 @@ Copyright (C) 2019 Benjamin Schilling
 <div class="modal-body">
   <div class="row">
     <div class="col-xs-3"><label>Exported file name:</label> <input class="form-control" /></div>
-    <div class="col-xs-3"><label>Template name:</label> <input class="form-control" /></div>
+  </div>
+  <div class="row">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Template</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01">
+        <option selected>Choose...</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="exportDocument()">Export</button>

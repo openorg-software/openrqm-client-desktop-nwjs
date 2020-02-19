@@ -17,6 +17,9 @@ export class RQMDocumentMenubarComponent implements OnInit {
   navbarOpen = false;
   faCaret = faCaretLeft;
 
+  typePdf = "pdf";
+  typeMarkdown = "markdown";
+
   @ViewChild('exportModal', { static: false }) exportModal;
 
 

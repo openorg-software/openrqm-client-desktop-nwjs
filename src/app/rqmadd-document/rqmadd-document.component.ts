@@ -7,7 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
-import { DocumentService, RQMDocument } from 'openrqm-api'
+import { DocumentsService, RQMDocument } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMSettingsService } from '../rqmsettings.service';
 @Component({
@@ -18,7 +18,7 @@ import { RQMSettingsService } from '../rqmsettings.service';
 export class RQMAddDocumentComponent implements OnInit {
 
   settingService: RQMSettingsService;
-  documentService: DocumentService;
+  documentService: DocumentsService;
 
   @ViewChild('documentName', { static: false }) documentName;
   @ViewChild('shortName', { static: false }) shortName;
@@ -32,7 +32,7 @@ export class RQMAddDocumentComponent implements OnInit {
 
   @Input() public parentId: any;
 
-  constructor(documentSerivce: DocumentService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
+  constructor(documentSerivce: DocumentsService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
      
     this.settingService = settingsService;
     this.documentService = documentSerivce;   

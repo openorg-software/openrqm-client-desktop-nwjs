@@ -7,7 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
-import { WorkspaceService, RQMWorkspace, DocumentService, RQMDocument } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 
@@ -19,18 +19,19 @@ import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreev
 export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
 
   // To update the workspace properties
-  workspaceService: WorkspaceService;
+  workspaceService: WorkspacesService;
   workspace: RQMWorkspace;
   // To fetch/update the document properties
-  documentService: DocumentService;
+  documentService: DocumentsService;
   document: RQMDocument;
 
   // Access the workspace variables
   @ViewChild('workspaceName', { static: false }) workspaceName;
 
+
   // Access the document variables
   @ViewChild('documentName', { static: false }) documentName;
-  @ViewChild('parentId', { static: false }) parentId;
+  @ViewChild('workspaceId', { static: false }) workspaceId;
   @ViewChild('shortName', { static: false }) shortName;
   @ViewChild('description', { static: false }) description;
   @ViewChild('confidentiality', { static: false }) confidentiality;
@@ -43,7 +44,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   // The item we want to manipulate
   @Input() public item: RQMWorkspaceTreeViewItem;
 
-  constructor(workspaceService: WorkspaceService, documentService: DocumentService, public activeModal: NgbActiveModal) {
+  constructor(workspaceService: WorkspacesService, documentService: DocumentsService, public activeModal: NgbActiveModal) {
     this.workspaceService = workspaceService;
     this.documentService = documentService;
   }
@@ -54,8 +55,14 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
         (doc) => {
           console.log(doc);
           this.document = doc;
-          this.parentId.nativeElement.value = this.document.workspaceId;
-          this.documentName.nativeElement.value = this.document.externalIdentifier;
+          if(this.document.approverId == 0){
+            this.document.approverId = null;
+          }
+          if(this.document.previousBaselineId == 0){
+            this.document.previousBaselineId = null;
+          }
+          this.workspaceId.nativeElement.value = this.document.workspaceId;
+          this.externalIdentifier.nativeElement.value = this.document.externalIdentifier;
           this.documentName.nativeElement.value = this.document.name;
           this.shortName.nativeElement.value = this.document.shortName;
           this.description.nativeElement.value = this.document.description;
@@ -73,6 +80,20 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
           console.log('getting document done');
         }
       );
+    } else {
+      this.workspaceService.getWorkspace(this.item.value).subscribe(
+        (workspace) => {
+          console.log(workspace);
+          this.workspace = workspace;
+        },
+        err => {
+          console.log('err');
+          console.log(err);
+        },
+        () => {
+          console.log('getting workspace done');
+        }
+      );
     }
   }
 
@@ -80,10 +101,9 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   updateWorkspace() {
     let workspace = {} as RQMWorkspace;
     workspace.name = this.workspaceName.nativeElement.value;
-    workspace.id = 0;
-    //workspace.workspaceId = this.parentId;
-    workspace.workspaces = null;
-    workspace.documents = null;
+    workspace.id = this.workspace.id;
+    workspace.workspaces = this.workspace.workspaces;
+    workspace.documents = this.workspace.documents;
     this.workspaceService.patchWorkspace(workspace).subscribe(
       next => {
         console.log('next');
@@ -98,15 +118,15 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
       }
     );
     this.passBack();
-    window.location.reload();
+   window.location.reload();
   }
 
   updateDocument() {
     let document = {} as RQMDocument;
-    document.id = 0;
-    document.workspaceId = this.parentId.documentName.externalIdentifier.value;
+    document.id = this.document.id;
+    document.workspaceId = this.workspaceId.nativeElement.value;
     document.internalIdentifier = 0;
-    document.externalIdentifier = this.documentName.externalIdentifier.value;
+    document.externalIdentifier = this.externalIdentifier.nativeElement.value;
     document.name = this.documentName.nativeElement.value;
     document.shortName = this.shortName.nativeElement.value;
     document.description = this.description.nativeElement.value;
@@ -122,7 +142,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
     document.baselineReview = 0;
     document.previousBaselineId = null;
 
-
+    console.log(document);
     this.documentService.patchDocument(document).subscribe(
       next => {
         console.log('next');

@@ -5,9 +5,9 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RQMSettingsService } from '../rqmsettings.service';
-import { DocumentService } from 'openrqm-api'
+import { ExportService } from 'openrqm-api'
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -19,14 +19,15 @@ export class RQMDocumentExporterComponent implements OnInit {
 
   closeResult: string;
   settingService: RQMSettingsService
-  rqmDocumentService: DocumentService;
+  rqmExportService: ExportService;
   documentId: String;
 
+  @Input() type: string;
 
-  constructor(rqmDocumentService: DocumentService, private route: ActivatedRoute, settingsService: RQMSettingsService) {
+  constructor(rqmExportService: ExportService, private route: ActivatedRoute, settingsService: RQMSettingsService) {
     this.settingService = settingsService;
-    this.rqmDocumentService.configuration.basePath = this.settingService.getApiBasePath();
-    this.rqmDocumentService = rqmDocumentService;
+    this.rqmExportService = rqmExportService;
+    this.rqmExportService.configuration.basePath = this.settingService.getApiBasePath();
   }
 
   ngOnInit() {
@@ -34,24 +35,39 @@ export class RQMDocumentExporterComponent implements OnInit {
   }
 
   exportDocument() {
-    console.log("export document");
-    this.rqmDocumentService.exportDocument(Number(this.documentId)).subscribe(
-      next => {
-        console.log(next);
-        const blob = new Blob([next], { type: 'application/pdf' });
-        const url = window.URL.createObjectURL(next);
-        window.open(url);
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-        console.log('export document done');
-      }
-    );
+    if(this.type == "pdf"){
+      console.log("export document");
+      this.rqmExportService.exportPdf(Number(this.documentId), 1).subscribe(
+        next => {
+          console.log(next);
+          const url = window.URL.createObjectURL(next);
+          window.open(url);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('export document done');
+        }
+      );
+    } else if (this.type == "markdown"){
+      console.log("export markdown");
+      this.rqmExportService.exportMarkdown(Number(this.documentId), 1).subscribe(
+        next => {
+          console.log(next);
+          const url = window.URL.createObjectURL(next);
+          window.open(url);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('export document done');
+        }
+      );
+    } else {
+      console.log("unhandled exporter");
+    }
   }
-
-
-
-
+  
 }

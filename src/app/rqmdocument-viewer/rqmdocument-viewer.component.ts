@@ -6,7 +6,7 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ElementsService, RQMElement, ElementService } from 'openrqm-api';
+import { ElementsService, RQMElement } from 'openrqm-api';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { MatMenuTrigger } from '@angular/material'
@@ -26,13 +26,14 @@ export class RQMDocumentViewerComponent implements OnInit {
   detailViewRowCount = 9;
   settingService: RQMSettingsService
   elementsService: ElementsService;
-  elementService: ElementService;
   elements: RQMElement[] = [];
   id: string;
 
   reloadSubscription: any;
 
   displayedColumns: string[] = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+
+  documentShortName: String;
 
   editorConfig = {
     placeholder: 'Type the content here!',
@@ -54,12 +55,13 @@ export class RQMDocumentViewerComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  constructor(elementsService: ElementsService, elementService: ElementService, private router: Router, private route: ActivatedRoute, settingsService: RQMSettingsService
+  constructor(elementsService: ElementsService, private router: Router, private route: ActivatedRoute, settingsService: RQMSettingsService
   ) {
 
     this.settingService = settingsService;
+    //Initialization
+    this.elementsService = elementsService;
     this.elementsService.configuration.basePath = this.settingService.getApiBasePath();
-    this.elementService.configuration.basePath = this.settingService.getApiBasePath();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -71,14 +73,12 @@ export class RQMDocumentViewerComponent implements OnInit {
       }
     });
 
-    //Initialization
-    this.elementsService = elementsService;
-    this.elementService = elementService;
   }
 
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.documentShortName = this.route.snapshot.paramMap.get('shortname');
     this.elementsService.getElements(parseInt(this.id)).subscribe(
       el => {
         this.elements = el;
@@ -108,7 +108,7 @@ export class RQMDocumentViewerComponent implements OnInit {
     element.id = 0;
     element.parentElementId = null;
 
-    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+    this.elementsService.postElement(aboveRank, belowRank, element).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -194,7 +194,7 @@ export class RQMDocumentViewerComponent implements OnInit {
     element.id = 0;
     element.parentElementId = parentElementId == 0 ? null : parentElementId;
 
-    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+    this.elementsService.postElement(aboveRank, belowRank, element).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -241,7 +241,7 @@ export class RQMDocumentViewerComponent implements OnInit {
     element.id = 0;
     element.parentElementId = aboveElementId;
 
-    this.elementService.postElement(aboveRank, belowRank, element).subscribe(
+    this.elementsService.postElement(aboveRank, belowRank, element).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -270,7 +270,7 @@ export class RQMDocumentViewerComponent implements OnInit {
       }
     }
     console.log(element);
-    this.elementService.deleteElement(element.id).subscribe(
+    this.elementsService.deleteElement(element.id).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -314,11 +314,14 @@ export class RQMDocumentViewerComponent implements OnInit {
     if (parent != null && element.parentElementId != parent) {
       element.parentElementId = parent;
       changed = true;
+    } 
+    if (element.parentElementId == 0) {
+      element.parentElementId = null;
     }
 
     if (changed == true) {
       console.log(element);
-      this.elementService.patchElement(element).subscribe(
+      this.elementsService.patchElement(element).subscribe(
         next => {
           console.log('next');
           console.log(next);

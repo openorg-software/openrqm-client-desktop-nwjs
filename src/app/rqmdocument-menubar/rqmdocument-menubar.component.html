@@ -14,18 +14,43 @@ Copyright (C) 2019 Benjamin Schilling
   </div>
   <app-rqmsettings></app-rqmsettings>
 </ng-template>
-<ng-template #exportModal let-modal>
+
+<ng-template #exportModalPDF let-modal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Export</h4>
+    <h4 class="modal-title pull-left">Export PDF</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
   </div>
-  <app-rqmdocument-exporter></app-rqmdocument-exporter>
+  <app-rqmdocument-exporter [type]="typePdf"></app-rqmdocument-exporter>
 </ng-template>
+
+<ng-template #exportModalMarkdown let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Export Markdown</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
+  <app-rqmdocument-exporter [type]="typeMarkdown"></app-rqmdocument-exporter>
+</ng-template>
+
 <ng-template #reviewModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Review</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
 </ng-template>
+
 <ng-template #tracingModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Tracing</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
 </ng-template>
 
 
@@ -33,9 +58,13 @@ Copyright (C) 2019 Benjamin Schilling
 <mat-toolbar color="primary">
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
   <span>OpenRQM</span>
-  <button mat-button (click)="openModal(exportModal)">Export</button>
+  <button mat-button [matMenuTriggerFor]="menu">Export</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openModal(exportModalPDF)">PDF</button>
+  <button mat-menu-item (click)="openModal(exportModalMarkdown)">Markdown</button>
+</mat-menu>
   <button mat-button (click)="openModal(settingsModal)">Review</button>
-  <button mat-button (click)="openModal(settingsModal)">Tracing</button>
+  <button mat-button (click)="openModal(reviewModal)">Tracing</button>
   <span class="menu-spacer"></span>
-  <button mat-button (click)="openModal(settingsModal)">Settings</button>
+  <button mat-button (click)="openModal(tracingModal)">Settings</button>
 </mat-toolbar>
