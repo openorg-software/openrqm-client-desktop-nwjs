@@ -43,6 +43,7 @@ import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.compo
 import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
 import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
+import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-tree
     RQMTracingComponent,
     RQMDocumentExporterComponent,
     RQMWorkspaceTreeviewItemPropertiesComponent,
+    RQMLoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,26 @@
+/*
+openrqm-client-desktop-nwjs
+RQMLogin Component CSS
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+*/
+
+.menu-icon {
+    padding: 0;
+}
+
+.menu-spacer {
+    flex: 1 1 auto;
+}
+
+.login-container {
+    margin-left: 100px;
+    margin-right: 100px;
+    align-content: center;
+}
+.login-label {
+    text-align: center;
+}
+.login-button {
+    align-self: center;
+}
