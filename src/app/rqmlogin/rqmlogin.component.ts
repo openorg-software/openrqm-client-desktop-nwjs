@@ -4,7 +4,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
-//import * as sha512 from 'sha.js';
+
+import * as jssha512 from 'js-sha512';
+
 @Component({
   selector: 'app-rqmlogin',
   templateUrl: './rqmlogin.component.html',
@@ -42,12 +44,7 @@ export class RQMLoginComponent implements OnInit {
   }
 
   login(){
-
-    console.log(this.emailLogin.nativeElement.value);
-    console.log(this.passwordLogin.nativeElement.value)
-    let  passwordHash: string = this.passwordLogin.nativeElement.value;
-
-    
+    let  passwordHash: string = jssha512.sha512(this.passwordLogin.nativeElement.value);
     this.userManagementService.login(passwordHash,this.emailLogin.nativeElement.value).subscribe(
       next => {
         console.log('next');
@@ -63,6 +60,4 @@ export class RQMLoginComponent implements OnInit {
       }
     );
   }
-
-
 }

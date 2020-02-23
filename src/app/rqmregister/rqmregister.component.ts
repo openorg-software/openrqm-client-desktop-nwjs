@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
-
+import * as jssha512 from 'js-sha512';
 @Component({
   selector: 'app-rqmregister',
   templateUrl: './rqmregister.component.html',
@@ -29,15 +29,15 @@ export class RQMRegisterComponent implements OnInit {
     user.name = this.nameRegister.nativeElement.value;
     user.surname = this.surnameRegister.nativeElement.value;
     user.department = this.departmentRegister.nativeElement.value;
-    let password: string = this.passwordRegister.nativeElement.value;
-    let passwordAgain: string = this.passwordAgainRegister.nativeElement.value;
 
-    if(password != passwordAgain){
+    let passwordHash: string = jssha512.sha512(this.passwordRegister.nativeElement.value);
+    let passwordAgainHash: string = jssha512.sha512(this.passwordAgainRegister.nativeElement.value);
+    if(passwordHash != passwordAgainHash){
       console.log('Error passwords dont match');
       return;
     }
 
-    this.userManagementService.register(password, user ).subscribe(
+    this.userManagementService.register(passwordHash, user ).subscribe(
       next => {
         console.log('next');
         console.log(next);
