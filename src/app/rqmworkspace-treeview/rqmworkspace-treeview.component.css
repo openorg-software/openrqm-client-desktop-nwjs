@@ -15,3 +15,7 @@ fa-icon {
     padding-right: 10px;
     color: black;
 }
+
+.dropdown-toggle::after{
+    visibility: hidden;
+}

@@ -41,7 +41,7 @@ export class RQMSettingsService {
         console.log("OpenRQM settings file available");
       } else {
         console.log("OpenRQM settings file not available, creating initial one.");
-        this.rqmSettingsModel = new RQMSettingsModel("192.168.2.108", 8090);
+        this.rqmSettingsModel = new RQMSettingsModel("192.168.2.106", 8090);
         this.saveSettings();
       }
     }
@@ -60,7 +60,7 @@ export class RQMSettingsService {
       });
     } else {*/
     console.log("NW.js not available, falling back to development mode, server at 192.168.2.108:8090.");
-    jsonString = "{\"serverIpAddress\":\"192.168.2.108\",\"serverPort\":8090}";
+    jsonString = "{\"serverIpAddress\":\"192.168.2.106\",\"serverPort\":8090}";
     let jsonObject: SettingsJsonObject = JSON.parse(jsonString);
     return new RQMSettingsModel(jsonObject.serverIpAddress, jsonObject.serverPort);
     //}
@@ -84,7 +84,7 @@ export class RQMSettingsService {
         this.rqmSettingsModel = data;
       }
     );
-    let serverIp: string = "192.168.2.108"; //this.rqmSettingsModel.serverIpAddress;
+    let serverIp: string = "192.168.0.106"; //this.rqmSettingsModel.serverIpAddress;
     let serverPort: Number = 8090; //this.rqmSettingsModel.serverPort;
     let path: string = 'http://' + serverIp + ':' + serverPort + '/api/v1';
     return path;

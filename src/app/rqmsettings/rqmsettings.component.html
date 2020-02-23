@@ -5,12 +5,28 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+
+
 <div class="modal-body">
     <div class="row">
-        <div class="col-xs-3"><label>Server IP:</label> <input class="form-control" #serverIpInputField /></div>
-        <div class="col-xs-3"><label>Server Port:</label> <input class="form-control" #serverPortInputField /></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Server IP</mat-label>
+                <input matInput #serverIpInputField >
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Server Port</mat-label>
+                <input matInput #serverPortInputField>
+            </mat-form-field>
+        
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="saveSettings()">Save</button>
+        <button  mat-raised-button (click)="saveSettings()">Save</button>
     </div>
 </div>

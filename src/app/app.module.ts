@@ -44,6 +44,7 @@ import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
 import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
+import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
     RQMDocumentExporterComponent,
     RQMWorkspaceTreeviewItemPropertiesComponent,
     RQMLoginComponent,
+    RQMRegisterComponent,
   ],
   imports: [
     BrowserModule,

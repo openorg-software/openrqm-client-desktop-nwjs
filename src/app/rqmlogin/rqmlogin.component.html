@@ -22,29 +22,7 @@ Copyright (C) 2019 Benjamin Schilling
                       <span aria-hidden="true">&times;</span>
                   </button>
     </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-xs-3"><label>EMail:</label> <input class="form-control" #serverIpInputField /></div>
-         </div>
-        <div class="row">
-            <div class="col-xs-3"><label>Password:</label> <input class="form-control" #serverPortInputField /></div>
-        </div>  
-        <div class="row">
-            <div class="col-xs-3"><label>Repeat Password:</label> <input class="form-control" #serverPortInputField /></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3"><label>Name:</label> <input class="form-control" #serverPortInputField /></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3"><label>Surname:</label> <input class="form-control" #serverPortInputField /></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3"><label>Department:</label> <input class="form-control" #serverPortInputField /></div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="register()">Register</button>
-        </div>
-    </div>
+    <app-rqmregister></app-rqmregister>
 </ng-template>
 
   
@@ -54,11 +32,16 @@ Copyright (C) 2019 Benjamin Schilling
     <button mat-button (click)="openModal(settingsModal)">Settings</button>
   </mat-toolbar>
 
+<form class="login-container">
+    <mat-form-field class="login-input-container">
+        <mat-label>E-Mail</mat-label>
+        <input matInput #emailLogin>
+    </mat-form-field>
+    <mat-form-field class="login-input-container">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput #passwordLogin>
+    </mat-form-field>
+    <div class="login-button-container"><button class="login-button"  mat-raised-button (click)="login()">Login</button></div>
+    <div class="login-button-container"><button  class="login-button" mat-raised-button (click)="openModal(registerModal)">Register</button></div>
 
-  <div class="login-container">
-    <div ><label class="login-label">EMail:</label> <input class="form-control" /></div>
-    <div><label class="login-label">Password:</label> <input class="form-control" /></div>
-    <div ><button class="login-button" mat-raised-button (click)="login()">Login</button></div>
-    <div ><button class="login-button" mat-raised-button (click)="openModal(registerModal)">Register</button></div>
-</div>
-  
+</form>

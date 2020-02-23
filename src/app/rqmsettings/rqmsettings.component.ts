@@ -30,8 +30,8 @@ export class RQMSettingsComponent implements OnInit {
 
   ///Set the values from the rqmSettingsService in the GUI
   ngAfterViewInit() {
-    this.serverIpInputField.nativeElement.value = this.rqmSettingsService.rqmSettingsModel.serverIpAddress;
-    this.serverPortInputField.nativeElement.value = this.rqmSettingsService.rqmSettingsModel.serverPort;
+    this.serverIpInputField.value = this.rqmSettingsService.rqmSettingsModel.serverIpAddress;
+    this.serverPortInputField.value = this.rqmSettingsService.rqmSettingsModel.serverPort;
   }
 
   ///Saves the currently set settings.
