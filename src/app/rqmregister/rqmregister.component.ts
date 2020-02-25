@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMRegister Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+*/
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserManagementService, RQMUser } from 'openrqm-api'

@@ -1,4 +1,9 @@
 
+# openrqm-client-desktop-nwjs
+# App Modules
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (C) 2019 Benjamin Schilling
+
 .PHONY: all build install clean uninstall
 
 all: clean build

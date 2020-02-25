@@ -1,8 +1,8 @@
 <!-- 
 openrqm-client-desktop-nwjs
-RQMDocumentMenubar Component Template
+RQMLogin Component Template
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2020 Benjamin Schilling
 -->
 
 <ng-template #settingsModal let-modal>
@@ -27,8 +27,9 @@ Copyright (C) 2019 Benjamin Schilling
 
   
   <mat-toolbar color="primary">
-    <span>OpenRQM</span>
+    <span>OpenRQM </span>
     <span class="menu-spacer"></span>
+    <span>v{{version}}</span>
     <button mat-button (click)="openModal(settingsModal)">Settings</button>
   </mat-toolbar>
 
@@ -43,5 +44,4 @@ Copyright (C) 2019 Benjamin Schilling
     </mat-form-field>
     <div class="login-button-container"><button class="login-button"  mat-raised-button (click)="login()">Login</button></div>
     <div class="login-button-container"><button  class="login-button" mat-raised-button (click)="openModal(registerModal)">Register</button></div>
-
 </form>
