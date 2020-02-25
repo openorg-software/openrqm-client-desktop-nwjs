@@ -22,6 +22,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   typeMarkdown: string = "markdown";
 
   @ViewChild('exportModal', { static: false }) exportModal: any;
+  linkingInProgress: boolean = false;
   @Output() doLinking = new EventEmitter<boolean>();
 
   constructor(private modalService: NgbModal) { }
@@ -52,7 +53,11 @@ export class RQMDocumentMenubarComponent implements OnInit {
   }
 
   startLinking(){
+    this.linkingInProgress = true;
     this.doLinking.emit(true);
   }
-
+  stopLinking(){
+    this.linkingInProgress = false;
+    this.doLinking.emit(false);
+  }
 }

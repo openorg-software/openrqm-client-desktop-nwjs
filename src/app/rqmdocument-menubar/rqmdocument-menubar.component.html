@@ -89,7 +89,8 @@ Copyright (C) 2019 Benjamin Schilling
   <!-- Linking -->
   <button mat-button [matMenuTriggerFor]="linkMenu">Links</button>
   <mat-menu #linkMenu="matMenu">
-    <button mat-menu-item (click)="startLinking()">Start Linking</button>
+    <button *ngIf="!linkingInProgress" mat-menu-item (click)="startLinking()">Start Linking</button>
+    <button *ngIf="linkingInProgress" mat-menu-item (click)="stopLinking()">Stop Linking</button>
     <button mat-menu-item (click)="openModal(tracingModal)">Tracing</button>
   </mat-menu>
 
