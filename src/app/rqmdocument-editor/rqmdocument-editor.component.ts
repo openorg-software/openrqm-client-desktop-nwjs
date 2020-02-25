@@ -9,7 +9,7 @@ import Base64UploaderPlugin from 'src/@ckeditor/Base64Upload';
 import { MatMenuTrigger } from '@angular/material'
 
 // OpenRQM
-import { ElementsService, RQMElement } from 'openrqm-api';
+import { ElementsService, RQMElement, RQMElementType } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 
 @Component({
@@ -34,6 +34,7 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   // For OpenRQM API
   elements: RQMElement[] = [];
+  elementTypes: RQMElementType[] = [];
   id: string;  
   documentShortName: String;
 
@@ -64,6 +65,19 @@ export class RQMDocumentEditorComponent implements OnInit {
         if (this.elements.length == 0) {
           // this.addFirstElement();
         }
+      }
+    );
+    this.elementsService.getElementTypes().subscribe(
+      types => {
+        types.forEach(element => {
+          this.elementTypes[element.id] = element;
+        });
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        console.log(this.elementTypes);
       }
     );
     
