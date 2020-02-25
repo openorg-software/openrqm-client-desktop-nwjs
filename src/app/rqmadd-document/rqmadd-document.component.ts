@@ -20,15 +20,15 @@ export class RQMAddDocumentComponent implements OnInit {
   settingService: RQMSettingsService;
   documentService: DocumentsService;
 
-  @ViewChild('documentName', { static: false }) documentName;
-  @ViewChild('shortName', { static: false }) shortName;
-  @ViewChild('description', { static: false }) description;
-  @ViewChild('confidentiality', { static: false }) confidentiality;
-  @ViewChild('authorId', { static: false }) authorId;
-  @ViewChild('reviewerText', { static: false }) reviewerText;
-  @ViewChild('approverId', { static: false }) approverId;
-  @ViewChild('languageId', { static: false }) languageId;
-  @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
+  @ViewChild('documentName', { static: false }) documentName: { nativeElement: { value: string; }; };
+  @ViewChild('shortName', { static: false }) shortName: { nativeElement: { value: string; }; };
+  @ViewChild('description', { static: false }) description: { nativeElement: { value: string; }; };
+  @ViewChild('confidentiality', { static: false }) confidentiality: { nativeElement: { value: string; }; };
+  @ViewChild('authorId', { static: false }) authorId: { nativeElement: { value: number; }; };
+  @ViewChild('reviewerText', { static: false }) reviewerText: { nativeElement: { value: string; }; };
+  @ViewChild('approverId', { static: false }) approverId: { nativeElement: { value: number; }; };
+  @ViewChild('languageId', { static: false }) languageId: { nativeElement: { value: number; }; };
+  @ViewChild('externalIdentifier', { static: false }) externalIdentifier: { nativeElement: { value: string; }; };
 
   @Input() public parentId: any;
 

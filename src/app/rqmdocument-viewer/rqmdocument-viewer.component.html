@@ -5,45 +5,14 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<app-rqmdocument-menubar></app-rqmdocument-menubar>
+<app-rqmdocument-menubar (doLinking)="onDoLinking($event)"></app-rqmdocument-menubar>
 <div class="container">
-  <table mat-table [dataSource]="elements">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)"> {{documentShortName}}_{{element.id}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="elementTypeId">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)"> {{element.elementTypeId}} </td>
-    </ng-container>
-    <ng-container matColumnDef="parentElementId">
-      <th mat-header-cell *matHeaderCellDef> Parent </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)"> {{element.parentElementId}} </td>
-    </ng-container>
-    <ng-container matColumnDef="content">
-      <th mat-header-cell *matHeaderCellDef> Content </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)">
-        <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="rank">
-      <th mat-header-cell *matHeaderCellDef> Rank </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id)"> {{element.rank}} </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-  <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+  <div [ngClass]="{'wrap': doLinking}" >
+    <div [ngClass]="{'box': doLinking}">
+      <app-rqmdocument-editor [linking]=true [linkFrom]="true" (createLink)="onCreateLinkFrom($event)"></app-rqmdocument-editor>
+    </div>
+    <div *ngIf="doLinking==true" class="box">
+        <app-rqmdocument-editor [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)"></app-rqmdocument-editor>
+    </div>
   </div>
-
-  <mat-menu #contextMenu="matMenu">
-    <ng-template matMenuContent let-elementId="elementId" let-parentId="parentId" let-content="content" let-typeId="typeId">
-      <button mat-menu-item (click)="addElementAfter(elementId,parentId)">Add element after</button>
-      <button mat-menu-item (click)="addElementBelow(elementId,parentId)">Add element below</button>
-      <button mat-menu-item (click)="deleteElement(elementId,parentId)">Delete element</button>
-      <button mat-menu-item (click)="saveElement(elementId,parentId, typeId, content )">Save element</button>
-    </ng-template>
-  </mat-menu>
 </div>

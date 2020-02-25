@@ -22,14 +22,12 @@ export class RQMAddWorkspaceComponent implements OnInit {
   settingService: RQMSettingsService;
   workspaceService: WorkspacesService;
 
-  @ViewChild('workspaceName', { static: false }) workspaceName;
-
+  @ViewChild('workspaceName', { static: false }) workspaceName: { nativeElement: { value: string; }; };
   @Input() public parentId: any;
 
   constructor(workspaceService: WorkspacesService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
     this.settingService = settingsService;
     this.workspaceService.configuration.basePath = this.settingService.getApiBasePath();
-  
     this.workspaceService = workspaceService;
   }
 

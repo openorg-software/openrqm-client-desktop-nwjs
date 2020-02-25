@@ -84,7 +84,7 @@ export class RQMSettingsService {
         this.rqmSettingsModel = data;
       }
     );
-    let serverIp: string = "192.168.0.106"; //this.rqmSettingsModel.serverIpAddress;
+    let serverIp: string = "192.168.0.113"; //this.rqmSettingsModel.serverIpAddress;
     let serverPort: Number = 8090; //this.rqmSettingsModel.serverPort;
     let path: string = 'http://' + serverIp + ':' + serverPort + '/api/v1';
     return path;

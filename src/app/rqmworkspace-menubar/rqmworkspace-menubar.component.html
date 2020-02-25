@@ -5,14 +5,23 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<ng-template #settingsModal let-modal>
+<ng-template #serverSettingsModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Settings</h4>
+        <h4 class="modal-title pull-left">Server Settings</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
                     <span aria-hidden="true">&times;</span>
                 </button>
     </div>
-    <app-rqmsettings></app-rqmsettings>
+    <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
+</ng-template>
+<ng-template #userSettingsModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">User Settings</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
 </ng-template>
 
 <mat-toolbar color="primary">
@@ -20,5 +29,9 @@ Copyright (C) 2019 Benjamin Schilling
     <button mat-button>File</button>
     <button mat-button>Edit</button>
     <span class="menu-spacer"></span>
-    <button mat-button (click)="openModal(settingsModal)">Settings</button>
+    <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
+    <mat-menu #settingsMenu="matMenu">
+      <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
+      <button mat-menu-item (click)="openModal(userSettingsModal)">User</button>
+    </mat-menu>
 </mat-toolbar>

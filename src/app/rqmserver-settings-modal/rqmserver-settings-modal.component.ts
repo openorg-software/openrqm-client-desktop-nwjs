@@ -1,6 +1,6 @@
 /*
 openrqm-client-desktop-nwjs
-RQMSettings Component Controller
+RQMServerSettingsModal Component Controller
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
@@ -9,11 +9,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RQMSettingsService } from '../rqmsettings.service';
 
 @Component({
-  selector: 'app-rqmsettings',
-  templateUrl: './rqmsettings.component.html',
-  styleUrls: ['./rqmsettings.component.css']
+  selector: 'app-rqmserver-settings-modal',
+  templateUrl: './rqmserver-settings-modal.component.html',
+  styleUrls: ['./rqmserver-settings-modal.component.css']
 })
-export class RQMSettingsComponent implements OnInit {
+export class RQMServerSettingsModalComponent implements OnInit {
 
   closeResult: string;
   rqmSettingsService: RQMSettingsService

@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -15,15 +15,15 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RQMDocumentMenubarComponent implements OnInit {
   navbarOpen = false;
-  faCaret = faCaretLeft;
-
-  typePdf = "pdf";
-  typeMarkdown = "markdown";
-
-  @ViewChild('exportModal', { static: false }) exportModal;
-
-
   closeResult: string;
+
+  faCaret = faCaretLeft;
+  typePdf: string = "pdf";
+  typeMarkdown: string = "markdown";
+
+  @ViewChild('exportModal', { static: false }) exportModal: any;
+  @Output() doLinking = new EventEmitter<boolean>();
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -40,6 +40,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -48,6 +49,10 @@ export class RQMDocumentMenubarComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  startLinking(){
+    this.doLinking.emit(true);
   }
 
 }

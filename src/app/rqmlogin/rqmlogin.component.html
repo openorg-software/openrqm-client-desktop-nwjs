@@ -5,14 +5,14 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 -->
 
-<ng-template #settingsModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Settings</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-    </div>
-    <app-rqmsettings></app-rqmsettings>
+<ng-template #serverSettingsModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Settings</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+  </div>
+  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
 </ng-template>
   
 <ng-template #registerModal let-modal>
@@ -30,7 +30,10 @@ Copyright (C) 2020 Benjamin Schilling
     <span>OpenRQM </span>
     <span class="menu-spacer"></span>
     <span>v{{version}}</span>
-    <button mat-button (click)="openModal(settingsModal)">Settings</button>
+    <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
+    <mat-menu #settingsMenu="matMenu">
+      <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
+    </mat-menu>
   </mat-toolbar>
 
 <form class="login-container">

@@ -36,7 +36,6 @@ export class RQMDocumentExporterComponent implements OnInit {
 
   exportDocument() {
     if(this.type == "pdf"){
-      console.log("export document");
       this.rqmExportService.exportPdf(Number(this.documentId), 1).subscribe(
         next => {
           console.log(next);
@@ -47,11 +46,10 @@ export class RQMDocumentExporterComponent implements OnInit {
           console.log(err);
         },
         () => {
-          console.log('export document done');
+          console.log('export PDF document done');
         }
       );
     } else if (this.type == "markdown"){
-      console.log("export markdown");
       this.rqmExportService.exportMarkdown(Number(this.documentId), 1).subscribe(
         next => {
           console.log(next);
@@ -62,7 +60,7 @@ export class RQMDocumentExporterComponent implements OnInit {
           console.log(err);
         },
         () => {
-          console.log('export document done');
+          console.log('export markdown document done');
         }
       );
     } else {

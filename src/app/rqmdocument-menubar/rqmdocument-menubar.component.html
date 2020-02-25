@@ -5,16 +5,29 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<ng-template #settingsModal let-modal>
+<!-- Server Settings Modal -->
+<ng-template #serverSettingsModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Settings</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
                     <span aria-hidden="true">&times;</span>
                 </button>
   </div>
-  <app-rqmsettings></app-rqmsettings>
+  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
 </ng-template>
 
+<!-- User Settings Modal -->
+<ng-template #userSettingsModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">User Settings</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+  </div>
+  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
+</ng-template>
+
+<!-- Export PDF Modal -->
 <ng-template #exportModalPDF let-modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Export PDF</h4>
@@ -25,6 +38,7 @@ Copyright (C) 2019 Benjamin Schilling
   <app-rqmdocument-exporter [type]="typePdf"></app-rqmdocument-exporter>
 </ng-template>
 
+<!-- Export Markdown Modal -->
 <ng-template #exportModalMarkdown let-modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Export Markdown</h4>
@@ -35,7 +49,8 @@ Copyright (C) 2019 Benjamin Schilling
   <app-rqmdocument-exporter [type]="typeMarkdown"></app-rqmdocument-exporter>
 </ng-template>
 
-<ng-template #reviewModal>
+<!-- Review Modal -->
+<ng-template #reviewModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Review</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -44,12 +59,16 @@ Copyright (C) 2019 Benjamin Schilling
   </div>
 </ng-template>
 
-<ng-template #tracingModal>
+<!-- Tracing Modal -->
+<ng-template #tracingModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Tracing</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
+  </div>
+  <div class="modal-body">
+
   </div>
 </ng-template>
 
@@ -57,14 +76,28 @@ Copyright (C) 2019 Benjamin Schilling
 
 <mat-toolbar color="primary">
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
+  
   <span>OpenRQM</span>
-  <button mat-button [matMenuTriggerFor]="menu">Export</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="openModal(exportModalPDF)">PDF</button>
-  <button mat-menu-item (click)="openModal(exportModalMarkdown)">Markdown</button>
-</mat-menu>
-  <button mat-button (click)="openModal(settingsModal)">Review</button>
-  <button mat-button (click)="openModal(reviewModal)">Tracing</button>
+  <!-- Document Export -->
+  <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
+  <mat-menu #exportMenu="matMenu">
+    <button mat-menu-item (click)="openModal(exportModalPDF)">PDF</button>
+    <button mat-menu-item (click)="openModal(exportModalMarkdown)">Markdown</button>
+  </mat-menu>
+  <!-- Document Review -->
+  <button mat-button (click)="openModal(reviewModal)">Review</button>
+  <!-- Linking -->
+  <button mat-button [matMenuTriggerFor]="linkMenu">Links</button>
+  <mat-menu #linkMenu="matMenu">
+    <button mat-menu-item (click)="startLinking()">Start Linking</button>
+    <button mat-menu-item (click)="openModal(tracingModal)">Tracing</button>
+  </mat-menu>
+
   <span class="menu-spacer"></span>
-  <button mat-button (click)="openModal(tracingModal)">Settings</button>
+  <!-- Settings -->
+  <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
+  <mat-menu #settingsMenu="matMenu">
+    <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
+    <button mat-menu-item (click)="openModal(userSettingsModal)">User</button>
+  </mat-menu>
 </mat-toolbar>

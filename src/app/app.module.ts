@@ -37,7 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
 import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-menubar.component';
-import { RQMSettingsComponent } from './rqmsettings/rqmsettings.component';
+import { RQMServerSettingsModalComponent } from './rqmserver-settings-modal/rqmserver-settings-modal.component';
 import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
 import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
@@ -45,6 +45,8 @@ import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
 import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
+import { RQMUserSettingsModalComponent } from './rqmuser-settings-modal/rqmuser-settings-modal.component';
+import { RQMDocumentEditorComponent } from './rqmdocument-editor/rqmdocument-editor.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,7 @@ import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
     RQMWorkspaceMenubarComponent,
     RQMDocumentViewerComponent,
     RQMDocumentMenubarComponent,
-    RQMSettingsComponent,
+    RQMServerSettingsModalComponent,
     RQMAddWorkspaceComponent,
     RQMAddDocumentComponent,
     RQMTracingComponent,
@@ -63,6 +65,8 @@ import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
     RQMWorkspaceTreeviewItemPropertiesComponent,
     RQMLoginComponent,
     RQMRegisterComponent,
+    RQMUserSettingsModalComponent,
+    RQMDocumentEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,7 @@ import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
     CKEditorModule,
   ],
   entryComponents: [
-    RQMSettingsComponent,
+    RQMServerSettingsModalComponent,
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,
     RQMDocumentMenubarComponent,
