@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RQMMaterialModule } from './material-module'

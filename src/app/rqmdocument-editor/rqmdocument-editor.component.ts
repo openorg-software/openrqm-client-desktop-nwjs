@@ -69,9 +69,7 @@ export class RQMDocumentEditorComponent implements OnInit {
     );
     this.elementsService.getElementTypes().subscribe(
       types => {
-        types.forEach(element => {
-          this.elementTypes[element.id] = element;
-        });
+          this.elementTypes = types;
       },
       err => {
         console.log(err);
@@ -293,6 +291,11 @@ export class RQMDocumentEditorComponent implements OnInit {
     const data = editor.getData();
     console.log(data);
     this.saveElement(elementId, null, data, null);
+  }
+
+  onElementTypeChange(typeDropdownEvent, elementId: number){
+    console.log(typeDropdownEvent.value);
+    this.saveElement(elementId, typeDropdownEvent.value, null, null );
   }
 
   saveElement(elementId: number, type: number, content: string, parent: number) {
