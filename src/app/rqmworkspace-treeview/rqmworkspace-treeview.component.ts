@@ -36,6 +36,10 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Output() valueChange = new EventEmitter<any>();
   @ViewChild(TreeviewComponent, { read: false, static: false }) treeviewComponent: TreeviewComponent;
 
+  // For linking
+  @Input() linking: boolean = false;
+  @Output() selectedDocument = new EventEmitter<number>();
+
   private dropdownTreeviewSelectI18n: RQMWorkspaceTreeviewI18n;
 
   /// Font Awesome Icons used in Template
@@ -78,6 +82,10 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     console.log(item.value);
 
     if (item.isDocument) {
+      if(this.linking){
+        console.log("Emit from treeview: " + item.value);
+        this.selectedDocument.emit(item.value);
+      } else {
         this.documentsService.getDocument(item.value).subscribe(
           (doc) => {          
             this.router.navigate(['/document-viewer', item.value, doc.shortName]);
@@ -89,8 +97,8 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
           () => {
             console.log('getting document done');
           }
-      );
-
+       );  
+      }    
     }
   }
 

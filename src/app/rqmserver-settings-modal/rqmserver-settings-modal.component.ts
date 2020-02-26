@@ -7,6 +7,8 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RQMSettingsService } from '../rqmsettings.service';
+// To display application version
+import { version } from '../../../package.json';
 
 @Component({
   selector: 'app-rqmserver-settings-modal',
@@ -14,7 +16,7 @@ import { RQMSettingsService } from '../rqmsettings.service';
   styleUrls: ['./rqmserver-settings-modal.component.css']
 })
 export class RQMServerSettingsModalComponent implements OnInit {
-
+  public version: string = version;
   closeResult: string;
   rqmSettingsService: RQMSettingsService
 

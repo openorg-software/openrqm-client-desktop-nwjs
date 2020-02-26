@@ -9,7 +9,7 @@ import Base64UploaderPlugin from 'src/@ckeditor/Base64Upload';
 import { MatMenuTrigger } from '@angular/material'
 
 // OpenRQM
-import { ElementsService, RQMElement, RQMElementType } from 'openrqm-api';
+import { ElementsService, RQMElement, RQMElementType, DocumentsService } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 
 @Component({
@@ -35,25 +35,42 @@ export class RQMDocumentEditorComponent implements OnInit {
   // For OpenRQM API
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
-  id: string;  
-  documentShortName: String;
+  id: number;  
+  documentShortName: String = "";
 
   // For linking
   @Input() linking: boolean = false;
+  @Input() linkingDocumentId: number = -1;
   @Input() linkTo: boolean = false;
   @Input() linkFrom: boolean = false;
   @Output() createLink = new EventEmitter<number>();
 
-  constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService) {
+  constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
     //Initialization
     this.elementsService = elementsService;
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
    }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.documentShortName = this.route.snapshot.paramMap.get('shortname');
-    this.elementsService.getElements(parseInt(this.id)).subscribe(
+    if(this.linking && this.linkingDocumentId != -1){
+      this.id = this.linkingDocumentId;
+    } else {
+      this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+    }
+
+    this.documentsSerivce.getDocument(this.id).subscribe(
+      doc => {
+        this.documentShortName = doc.shortName;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        console.log(this.documentShortName);
+      }
+    );
+    
+    this.elementsService.getElements(this.id).subscribe(
       el => {
         this.elements = el;
       },
@@ -63,7 +80,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log(this.elements);
         if (this.elements.length == 0) {
-          // this.addFirstElement();
+           this.addFirstElement();
         }
       }
     );

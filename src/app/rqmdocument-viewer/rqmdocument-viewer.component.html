@@ -13,11 +13,12 @@ Copyright (C) 2019 Benjamin Schilling
         <app-rqmdocument-editor [linking]=true [linkFrom]="true" (createLink)="onCreateLinkFrom($event)"></app-rqmdocument-editor>
       </div>
       <div *ngIf="doLinking==false">
-        <app-rqmdocument-editor [linking]=false [linkFrom]="true" (createLink)="onCreateLinkFrom($event)"></app-rqmdocument-editor>
+        <app-rqmdocument-editor [linking]=false [linkFrom]="true" ></app-rqmdocument-editor>
       </div>
     </div>
     <div *ngIf="doLinking==true" class="box">
-        <app-rqmdocument-editor [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)"></app-rqmdocument-editor>
+      <app-rqmworkspace-tree *ngIf="showDocumentEditor==false" [noMenuBar]=true [linking]=true (selectedDocument)="onSelectedDocument($event)"></app-rqmworkspace-tree>
+      <app-rqmdocument-editor *ngIf="showDocumentEditor==true" [linkingDocumentId]=linkingDocumentId [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)"></app-rqmdocument-editor>
     </div>
   </div>
 </div>

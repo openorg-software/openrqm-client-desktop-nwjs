@@ -27,9 +27,9 @@ Copyright (C) 2020 Benjamin Schilling
 
   
   <mat-toolbar color="primary">
+    <img src="assets/img/logo_transparent.png">
     <span>OpenRQM </span>
     <span class="menu-spacer"></span>
-    <span>v{{version}}</span>
     <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
     <mat-menu #settingsMenu="matMenu">
       <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>

@@ -28,6 +28,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   // For linking
   doLinking: boolean = false;  
   startLinkElement: number = 0;
+  showDocumentEditor: boolean = false;
+  linkingDocumentId: number = -1;
 
   constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService
   ) {
@@ -81,5 +83,11 @@ export class RQMDocumentViewerComponent implements OnInit {
         console.log('linking elements done');
       }
     );
+  }
+
+  onSelectedDocument(documentId: number) {
+    console.log("Show document editor");
+    this.showDocumentEditor = true;
+    this.linkingDocumentId = documentId;
   }
 }

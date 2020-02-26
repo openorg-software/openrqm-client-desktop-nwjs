@@ -33,3 +33,8 @@ Copyright (C) 2020 Benjamin Schilling
 .login-button {
     width: 100%;
 }
+
+img {
+    max-height: 40px;
+    margin-right: 5px;
+}

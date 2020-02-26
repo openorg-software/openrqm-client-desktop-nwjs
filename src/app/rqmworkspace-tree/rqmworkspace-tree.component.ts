@@ -5,8 +5,8 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit } from '@angular/core';
-import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TreeviewConfig } from 'ngx-treeview';
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
 import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
@@ -42,6 +42,11 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     'btn-outline-dark'
   ];
   buttonClass = this.buttonClasses[0];
+
+  // For linking
+  @Input() linking: boolean = false;
+  @Input() noMenuBar: boolean = false;
+  @Output() selectedDocument = new EventEmitter<number>();
 
   constructor(workspacesService: WorkspacesService, settingsService: RQMSettingsService
   ) {
@@ -101,6 +106,11 @@ export class RQMWorkspaceTreeComponent implements OnInit {
 
   onFilterChange(value: string) {
     console.log('filter:', value);
+  }
+
+  onSelectedDocument(documentId: number) {
+    console.log("Emit from tree: " + documentId);
+    this.selectedDocument.emit(documentId);
   }
 
 }

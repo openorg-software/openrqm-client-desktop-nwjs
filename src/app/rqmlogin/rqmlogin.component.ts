@@ -14,18 +14,12 @@ import { RQMSettingsService } from '../rqmsettings.service';
 
 import * as jssha512 from 'js-sha512';
 
-// To display application version
-import { version } from '../../../package.json';
-
 @Component({
   selector: 'app-rqmlogin',
   templateUrl: './rqmlogin.component.html',
   styleUrls: ['./rqmlogin.component.css']
 })
 export class RQMLoginComponent implements OnInit {
-
-  
-  public version: string = version;
   
   // Login
   @ViewChild('emailLogin', { static: false }) emailLogin;

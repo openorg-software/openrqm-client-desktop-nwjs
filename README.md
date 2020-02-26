@@ -48,8 +48,8 @@ The design and architecture is described in the documents in the `doc` directory
 | Feature                                    | Status  | Release |
 | ------------------------------------------ | ------- | ------- |
 | Basic workspace explorer & document viewer | done    | MVP     |
-| User management                            |         | MVP     |
-| Linking                                    |         | MVP     |
+| User management                            | done    | MVP     |
+| Linking                                    | done    | MVP     |
 | PDF export                                 | done    | MVP     |
 | Multiple views per document                |         |         |
 | Baselining                                 |         |         |
