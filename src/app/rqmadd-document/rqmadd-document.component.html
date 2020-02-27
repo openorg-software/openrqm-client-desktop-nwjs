@@ -13,34 +13,81 @@ Copyright (C) 2019 Benjamin Schilling
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-xs-3"><label>Document Name:</label> <input class="form-control" #documentName/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Document Name</mat-label>
+                <input matInput #documentName >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Workspace: {{parentId}}</label></div>
+        <div class="col-xs-3">
+            <label>Workspace: {{parentId}}</label>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Short Name:</label> <input class="form-control" #shortName/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Short Name</mat-label>
+                <input matInput #shortName >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Description:</label> <input class="form-control" #description/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Description</mat-label>
+                <input matInput #description >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Confidentiality:</label> <input class="form-control" #confidentiality/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Confidentiality</mat-label>
+                <input matInput #confidentiality >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Author:</label> <input class="form-control" #authorId/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Author</mat-label>
+                <input matInput type="number" #authorId >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Reviewer:</label> <input class="form-control" #reviewerText/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Reviewer</mat-label>
+                <input matInput type="text" #reviewerText >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Approver:</label> <input class="form-control" #approverId/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Approver</mat-label>
+                <input matInput type="number" #approverId >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>Language:</label> <input class="form-control" #languageId/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>Language</mat-label>
+                <input matInput type="number" #languageId >
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xs-3"><label>External Identifier:</label> <input class="form-control" #externalIdentifier/></div>
+        <div class="col-xs-3">
+            <mat-form-field >
+                <mat-label>External Identifier</mat-label>
+                <input matInput  #externalIdentifier >
+            </mat-form-field>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="addDocument()">Add</button>

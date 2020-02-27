@@ -12,24 +12,22 @@ Copyright (C) 2019 Benjamin Schilling
         <div class="col-xs-3">
             <mat-form-field >
                 <mat-label>Server IP</mat-label>
-                <input matInput #serverIpInputField >
+                <input matInput #serverIpInputField value="{{serverIp}}" >
             </mat-form-field>
         </div>
     </div>
     <div class="row">
-
         <div class="col-xs-3">
             <mat-form-field >
                 <mat-label>Server Port</mat-label>
-                <input matInput #serverPortInputField>
+                <input matInput #serverPortInputField value="{{serverPort}}">
             </mat-form-field>
         
         </div>
     </div>
     <div class="modal-footer">
-        
-    <span>v{{version}}</span>
-    <span class="menu-spacer"></span>
+        <span>v{{version}}</span>
+        <span class="menu-spacer"></span>
         <button  mat-raised-button (click)="saveSettings()">Save</button>
     </div>
 </div>

@@ -36,7 +36,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
   id: number;  
-  documentShortName: String = "";
+  documentShortName: string = "";
 
   // For linking
   @Input() linking: boolean = false;
@@ -48,9 +48,9 @@ export class RQMDocumentEditorComponent implements OnInit {
   constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
     //Initialization
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
-   }
-
-  ngOnInit() {
+    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
+    
+    
     if(this.linking && this.linkingDocumentId != -1){
       this.id = this.linkingDocumentId;
     } else {
@@ -68,7 +68,10 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log(this.documentShortName);
       }
     );
-    
+   }
+
+  ngOnInit() {
+
     this.elementsService.getElements(this.id).subscribe(
       el => {
         this.elements = el;
@@ -98,7 +101,7 @@ export class RQMDocumentEditorComponent implements OnInit {
     if(this.linking){
       this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
     } else {
-      this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+      this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
     }
   }
 
@@ -138,6 +141,7 @@ export class RQMDocumentEditorComponent implements OnInit {
         this.elements.push(element);
       }
     );
+    this.reloadPage();
   }
 
 
@@ -224,7 +228,7 @@ export class RQMDocumentEditorComponent implements OnInit {
         this.elements.push(element);
       }
     );
-    this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
+    this.reloadPage();
   }
 
 
@@ -272,7 +276,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       }
     );
 
-    //this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
+    this.reloadPage();
   }
 
   // Add an element below the current element
@@ -300,7 +304,7 @@ export class RQMDocumentEditorComponent implements OnInit {
         this.elements.splice(this.elements.indexOf(element), 1);
       }
     );
-    //this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
+    this.reloadPage();
   }
 
   onBlurCKeditor({ editor }: ChangeEvent, elementId: number) {
@@ -357,7 +361,6 @@ export class RQMDocumentEditorComponent implements OnInit {
           this.elements[index] = element;
         }
       );
-      //this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
     }
 
   }
@@ -367,4 +370,8 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.createLink.emit(id);
   }
 
+
+  reloadPage(){
+    this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
+  }
 }

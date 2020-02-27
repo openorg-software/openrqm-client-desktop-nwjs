@@ -22,34 +22,31 @@ export class RQMSettingsService {
   private DEVELOPMENT_MODE_OFF: boolean = false;
   public developmentMode: boolean = false;
 
-  public rqmSettingsModel: RQMSettingsModel;
+  public rqmSettingsModel: RQMSettingsModel = new RQMSettingsModel("", -1);
   static settingsFileName = 'openrqm-settings.json';
   filePath: string;
-
-  serverIp: string = "";
-  serverPort: Number = -1;
   serverUrl: string = '';
 
   constructor(){
-    console.log('rqmsettings constructor');
     this.filePath = RQMSettingsService.getFilePath();
     this.developmentMode = this.checkSettingsFile();
-    if(this.developmentMode == this.DEVELOPMENT_MODE_OFF){
-        this.rqmSettingsModel = this.loadSettings();
-        this.serverUrl = 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1'
-        console.log('Using this server url: ' + this.serverUrl);
-    } else {
-        console.log("NW.js not available, falling back to development mode, server at 192.168.0.115 with port 8090.");
-        this.serverUrl = 'http://' +  '192.168.0.115' + ':' + '8090' + '/api/v1'
+    if(this.developmentMode == this.DEVELOPMENT_MODE_ON){
+      this.rqmSettingsModel.serverIpAddress = "192.168.0.115";
+      this.rqmSettingsModel.serverPort = 8090;
     }
   }
 
   getApiBasePath(): string {
-    return this.serverUrl;
+    if(this.developmentMode == this.DEVELOPMENT_MODE_OFF){
+      this.rqmSettingsModel = this.loadSettings();
+      return 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
+    } else {
+        console.log("NW.js not available, falling back to development mode, server at " + this.rqmSettingsModel.serverIpAddress + " with port " + this.rqmSettingsModel.serverPort);
+        return 'http://' +  this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
+    }
   }
 
-  private checkSettingsFile() :boolean {
-    console.log('rqmsettings checkSettingsFile');
+  private checkSettingsFile(): boolean {
     if (window.nw) {
       console.log("NW.js available, when checking settings file");
       if (window.nw.require('fs').existsSync(this.filePath)) {
@@ -65,10 +62,7 @@ export class RQMSettingsService {
   }
 
   private loadSettings(): RQMSettingsModel {
-    console.log('rqmsettings loadSettings');
     let jsonString: string;
-    console.log("NW.js available when loading settings.");
-    console.log(this.filePath);
     window.nw.require('fs').readFileSync(this.filePath, (err, data) => {
       if (err) throw err;
       jsonString = data;
@@ -78,32 +72,33 @@ export class RQMSettingsService {
   }
 
   saveServerIpAddress(serverIpAddres: string) {
-    console.log('rqmsettings saveServerIpAddress');
     this.rqmSettingsModel.serverIpAddress = serverIpAddres;
     this.saveSettings();
   }
 
   saveServerPort(serverPort: number) {
-    console.log('rqmsettings saveServerPort');
     this.rqmSettingsModel.serverPort = serverPort;
     this.saveSettings();
   }
 
   saveSettings() {
-    console.log('rqmsettings saveSettings');
-    window.nw.require('fs').writeFileSync(this.filePath, JSON.stringify(this.rqmSettingsModel), function (err) {
-      if (err) {
-        console.info("There was an error attempting to save your data.");
-        console.warn(err.message);
-        return;
-      } else {
-        console.log("Saved settings");
-      }
-    });
+    if(this.developmentMode == this.DEVELOPMENT_MODE_OFF){
+      window.nw.require('fs').writeFileSync(this.filePath, JSON.stringify(this.rqmSettingsModel), function (err) {
+        if (err) {
+          console.info("There was an error attempting to save your data.");
+          console.warn(err.message);
+          return;
+        } else {
+          console.log("Saved settings");
+        }
+      });
+    } else {
+    console.log('save settings while development mode is on');
+    }
+    
   }
 
   static getFilePath(): string {
-    console.log('rqmsettings getFilePath');
     if (window.nw) {
       return window.nw.require('path').join(window.nw.App.dataPath, RQMSettingsService.settingsFileName);
     } else {
