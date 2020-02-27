@@ -35,7 +35,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   // For OpenRQM API
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
-  id: number;  
+  documentId: number;  
   documentShortName: string = "";
 
   // For linking
@@ -44,6 +44,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() linkTo: boolean = false;
   @Input() linkFrom: boolean = false;
   @Output() createLink = new EventEmitter<number>();
+  selectedId: number = -1;
 
   constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
     //Initialization
@@ -51,13 +52,16 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
     
     
+   }
+
+  ngOnInit() {
     if(this.linking && this.linkingDocumentId != -1){
-      this.id = this.linkingDocumentId;
+      this.documentId = this.linkingDocumentId;
     } else {
-      this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+      this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
     }
 
-    this.documentsSerivce.getDocument(this.id).subscribe(
+    this.documentsSerivce.getDocument(this.documentId).subscribe(
       doc => {
         this.documentShortName = doc.shortName;
       },
@@ -68,11 +72,8 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log(this.documentShortName);
       }
     );
-   }
 
-  ngOnInit() {
-
-    this.elementsService.getElements(this.id).subscribe(
+    this.elementsService.getElements(this.documentId).subscribe(
       el => {
         this.elements = el;
       },
@@ -367,11 +368,15 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   link(id: number){
     console.log('Link ' + (this.linkTo ? 'to' : 'from') + ' ' + id);
-    this.createLink.emit(id);
+    if(this.selectedId != id && !this.linkFrom){
+      this.selectedId = -1;
+    } else {
+      this.selectedId = id;
+      this.createLink.emit(id);
+    }
   }
 
-
   reloadPage(){
-    this.router.navigate(['/document-viewer', this.id, this.documentShortName]);
+    this.router.navigate(['/document-viewer', this.documentId, this.documentShortName]);
   }
 }

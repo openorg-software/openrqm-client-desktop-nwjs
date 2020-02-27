@@ -85,7 +85,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   onSelectedDocument(documentId: number) {
-    console.log("Show document editor");
+    console.log("Show document editor, document id: " + documentId);
     this.showDocumentEditor = true;
     this.linkingDocumentId = documentId;
   }

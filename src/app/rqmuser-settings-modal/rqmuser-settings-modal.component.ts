@@ -10,6 +10,11 @@ import * as jssha512 from 'js-sha512';
 })
 export class RQMUserSettingsModalComponent implements OnInit {
 
+  email: string;
+  name: string;
+  surname: string;
+  department: string;
+
   @ViewChild('emailRegister', { static: false }) emailRegister;
   @ViewChild('oldPassword', { static: false }) oldPassword;
   @ViewChild('newPassword', { static: false }) newPassword;
@@ -23,6 +28,7 @@ export class RQMUserSettingsModalComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   logout(){

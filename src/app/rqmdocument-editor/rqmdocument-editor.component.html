@@ -4,8 +4,8 @@
             <div *ngIf="linkTo"> Link to</div>
             <div *ngIf="linkFrom"> Link from </div>
         </th>
-        <td mat-cell *matCellDef="let element">
-            <button mat-raised-button (click)="link(element.id)">here</button>
+        <td  mat-cell *matCellDef="let element">
+            <button mat-raised-button [ngClass]="{'linkFromClass': selectedId == element.id}" (click)="link(element.id)">here</button>
         </td>
     </ng-container>
     <ng-container matColumnDef="id">
@@ -15,13 +15,16 @@
     <ng-container matColumnDef="elementTypeId">
       <th mat-header-cell *matHeaderCellDef> Type </th>
       <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)">
-        <mat-form-field>
-            <mat-select [value]="element.elementTypeId" (selectionChange)="onElementTypeChange($event, element.id)">
-              <mat-option *ngFor="let type of elementTypes" [value]="type.id">
-                {{type.name}}
-              </mat-option>
-            </mat-select>
-        </mat-form-field> 
+        <div>
+          <div [ngClass]="{'reqTypeRequirement': element.elementTypeId == 1, 'reqTypeProse': element.elementTypeId == 2}"></div>
+          <mat-form-field style="width: 95%">
+              <mat-select [value]="element.elementTypeId" (selectionChange)="onElementTypeChange($event, element.id)">
+                <mat-option *ngFor="let type of elementTypes" [value]="type.id">
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field> 
+        </div>
       </td>
     </ng-container>
     <ng-container matColumnDef="parentElementId">
