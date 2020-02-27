@@ -25,7 +25,9 @@ export class RQMRegisterComponent implements OnInit {
     @ViewChild('surnameRegister', { static: false }) surnameRegister;
     @ViewChild('departmentRegister', { static: false }) departmentRegister;
 
-  constructor(private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { }
+  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { 
+    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+  }
 
   ngOnInit() {
   }
@@ -57,7 +59,5 @@ export class RQMRegisterComponent implements OnInit {
         console.log('register done');
       }
     );
-
   }
-
 }

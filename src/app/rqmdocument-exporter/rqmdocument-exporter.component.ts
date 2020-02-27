@@ -18,16 +18,12 @@ import { ActivatedRoute } from '@angular/router';
 export class RQMDocumentExporterComponent implements OnInit {
 
   closeResult: string;
-  settingService: RQMSettingsService
-  rqmExportService: ExportService;
   documentId: String;
 
   @Input() type: string;
 
-  constructor(rqmExportService: ExportService, private route: ActivatedRoute, settingsService: RQMSettingsService) {
-    this.settingService = settingsService;
-    this.rqmExportService = rqmExportService;
-    this.rqmExportService.configuration.basePath = this.settingService.getApiBasePath();
+  constructor(private rqmExportService: ExportService, private route: ActivatedRoute, private settingsService: RQMSettingsService) {
+    this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {

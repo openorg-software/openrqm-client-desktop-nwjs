@@ -18,13 +18,11 @@ import { version } from '../../../package.json';
 export class RQMServerSettingsModalComponent implements OnInit {
   public version: string = version;
   closeResult: string;
-  rqmSettingsService: RQMSettingsService
 
   @ViewChild('serverIpInputField', { static: false }) serverIpInputField;
   @ViewChild('serverPortInputField', { static: false }) serverPortInputField;
 
-  constructor(rqmSettingsService: RQMSettingsService) {
-    this.rqmSettingsService = rqmSettingsService;
+  constructor(private rqmSettingsService: RQMSettingsService) {
   }
 
   ngOnInit() {

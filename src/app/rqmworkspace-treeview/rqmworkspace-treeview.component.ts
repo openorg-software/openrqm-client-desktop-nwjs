@@ -54,8 +54,6 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   constructor(
     public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService
   ) {
-    
-    this.settingsService = settingsService;
     this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.config = TreeviewConfig.create({

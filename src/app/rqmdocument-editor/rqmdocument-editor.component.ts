@@ -47,7 +47,6 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
     //Initialization
-    this.elementsService = elementsService;
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
    }
 

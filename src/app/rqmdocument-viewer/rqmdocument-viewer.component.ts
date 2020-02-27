@@ -33,8 +33,7 @@ export class RQMDocumentViewerComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService
   ) {
-
-    this.settingsService = settingsService;
+    this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

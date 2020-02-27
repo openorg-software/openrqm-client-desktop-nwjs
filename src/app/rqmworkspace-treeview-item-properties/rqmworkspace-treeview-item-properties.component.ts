@@ -10,6 +10,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
+import { RQMSettingsService } from '../rqmsettings.service';
 
 @Component({
   selector: 'app-rqmworkspace-treeview-item-properties',
@@ -18,11 +19,8 @@ import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreev
 })
 export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
 
-  // To update the workspace properties
-  workspaceService: WorkspacesService;
   workspace: RQMWorkspace;
   // To fetch/update the document properties
-  documentService: DocumentsService;
   document: RQMDocument;
 
   // Access the workspace variables
@@ -44,9 +42,9 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   // The item we want to manipulate
   @Input() public item: RQMWorkspaceTreeViewItem;
 
-  constructor(workspaceService: WorkspacesService, documentService: DocumentsService, public activeModal: NgbActiveModal) {
-    this.workspaceService = workspaceService;
-    this.documentService = documentService;
+  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService,  public activeModal: NgbActiveModal, private settingsService: RQMSettingsService) {
+    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {

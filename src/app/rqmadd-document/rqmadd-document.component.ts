@@ -17,9 +17,6 @@ import { RQMSettingsService } from '../rqmsettings.service';
 })
 export class RQMAddDocumentComponent implements OnInit {
 
-  settingService: RQMSettingsService;
-  documentService: DocumentsService;
-
   @ViewChild('documentName', { static: false }) documentName: { nativeElement: { value: string; }; };
   @ViewChild('shortName', { static: false }) shortName: { nativeElement: { value: string; }; };
   @ViewChild('description', { static: false }) description: { nativeElement: { value: string; }; };
@@ -32,11 +29,8 @@ export class RQMAddDocumentComponent implements OnInit {
 
   @Input() public parentId: any;
 
-  constructor(documentSerivce: DocumentsService, public activeModal: NgbActiveModal, settingsService: RQMSettingsService) {
-     
-    this.settingService = settingsService;
-    this.documentService = documentSerivce;   
-    this.documentService.configuration.basePath = this.settingService.getApiBasePath();
+  constructor(private documentsSerivce: DocumentsService, public activeModal: NgbActiveModal, private settingsService: RQMSettingsService) {
+    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {
@@ -63,7 +57,7 @@ export class RQMAddDocumentComponent implements OnInit {
     document.baselineReview = 0;
     document.previousBaselineId = null;
 
-    this.documentService.postDocument(document).subscribe(
+    this.documentsSerivce.postDocument(document).subscribe(
       next => {
         console.log('next');
         console.log(next);

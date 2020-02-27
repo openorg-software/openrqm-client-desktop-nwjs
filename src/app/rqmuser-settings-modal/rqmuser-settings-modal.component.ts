@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserManagementService, RQMUser } from 'openrqm-api'
+import { RQMSettingsService } from '../rqmsettings.service';
 
 import * as jssha512 from 'js-sha512';
 @Component({
@@ -17,7 +18,9 @@ export class RQMUserSettingsModalComponent implements OnInit {
   @ViewChild('surnameRegister', { static: false }) surnameRegister;
   @ViewChild('departmentRegister', { static: false }) departmentRegister;
 
-  constructor(private userManagementService: UserManagementService) { }
+  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { 
+    this.userManagementService.configuration.basePath = this.settingsService.serverUrl;
+  }
 
   ngOnInit() {
   }

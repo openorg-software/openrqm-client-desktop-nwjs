@@ -28,8 +28,6 @@ export class RQMWorkspaceTreeComponent implements OnInit {
     decoupleChildFromParent: false,
     maxHeight: 1000
   });
-  workspacesService: WorkspacesService;
-  settingService: RQMSettingsService;
 
   buttonClasses = [
     'btn-outline-primary',
@@ -48,14 +46,12 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   @Input() noMenuBar: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();
 
-  constructor(workspacesService: WorkspacesService, settingsService: RQMSettingsService
+  constructor(private workspacesService: WorkspacesService, private settingsService: RQMSettingsService
   ) {
-    this.workspacesService = workspacesService;
-    this.settingService = settingsService;
+    this.workspacesService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {
-    this.workspacesService.configuration.basePath = this.settingService.getApiBasePath();
     this.workspacesService.getWorkspaces().subscribe(
       (ws) => {
         console.log(ws);
