@@ -46,15 +46,19 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Output() createLink = new EventEmitter<number>();
   selectedId: number = -1;
 
+  // For View
+  @Input() requirementColor: string;
+  @Input() proseColor: string;
+
   constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
     //Initialization
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
-    
-    
+    console.log("constr req color: " + this.requirementColor);
    }
 
   ngOnInit() {
+    console.log("onInit req color: " + this.requirementColor);
     if(this.linking && this.linkingDocumentId != -1){
       this.documentId = this.linkingDocumentId;
     } else {

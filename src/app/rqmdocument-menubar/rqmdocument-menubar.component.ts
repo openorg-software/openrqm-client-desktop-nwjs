@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -21,9 +21,16 @@ export class RQMDocumentMenubarComponent implements OnInit {
   typePdf: string = "pdf";
   typeMarkdown: string = "markdown";
 
+  // For Linking
   @ViewChild('exportModal', { static: false }) exportModal: any;
   linkingInProgress: boolean = false;
   @Output() doLinking = new EventEmitter<boolean>();
+
+  // For View
+  @Output() requirementColorChange = new EventEmitter<string>();
+  @Output() proseColorChange = new EventEmitter<string>();
+  @Input() requirementColor: string = "";
+  @Input() proseColor: string = "";
 
   constructor(private modalService: NgbModal) { }
 
@@ -59,5 +66,15 @@ export class RQMDocumentMenubarComponent implements OnInit {
   stopLinking(){
     this.linkingInProgress = false;
     this.doLinking.emit(false);
+  }
+
+  onRequirementColorChange(color: string){
+    this.requirementColor = color;
+    this.requirementColorChange.emit(color);
+  }
+
+  onProseColorChange(color: string){
+    this.proseColor = color;
+    this.proseColorChange.emit(color);
   }
 }

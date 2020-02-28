@@ -31,6 +31,10 @@ export class RQMDocumentViewerComponent implements OnInit {
   showDocumentEditor: boolean = false;
   linkingDocumentId: number = -1;
 
+  // For View
+  requirementColor: string = "#acecde";
+  proseColor: string = "#adadad";
+
   constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService
   ) {
     this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
@@ -88,5 +92,13 @@ export class RQMDocumentViewerComponent implements OnInit {
     console.log("Show document editor, document id: " + documentId);
     this.showDocumentEditor = true;
     this.linkingDocumentId = documentId;
+  }
+
+  onRequirementColorChange(color: string) {
+    this.requirementColor = color;
+  }
+
+  onProseColorChange(color: string) {
+    this.proseColor = color;
   }
 }

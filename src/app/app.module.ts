@@ -47,6 +47,7 @@ import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
 import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
 import { RQMUserSettingsModalComponent } from './rqmuser-settings-modal/rqmuser-settings-modal.component';
 import { RQMDocumentEditorComponent } from './rqmdocument-editor/rqmdocument-editor.component';
+import { RQMDocumentViewComponent } from './rqmdocument-view/rqmdocument-view.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { RQMDocumentEditorComponent } from './rqmdocument-editor/rqmdocument-edi
     RQMRegisterComponent,
     RQMUserSettingsModalComponent,
     RQMDocumentEditorComponent,
+    RQMDocumentViewComponent,
   ],
   imports: [
     BrowserModule,

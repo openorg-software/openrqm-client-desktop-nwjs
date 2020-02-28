@@ -31,7 +31,7 @@ export class RQMSettingsService {
     this.filePath = RQMSettingsService.getFilePath();
     this.developmentMode = this.checkSettingsFile();
     if(this.developmentMode == this.DEVELOPMENT_MODE_ON){
-      this.rqmSettingsModel.serverIpAddress = "192.168.0.107";
+      this.rqmSettingsModel.serverIpAddress = "192.168.0.110";
       this.rqmSettingsModel.serverPort = 8090;
     }
   }

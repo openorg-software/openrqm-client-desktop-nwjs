@@ -5,26 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<!-- Server Settings Modal -->
-<ng-template #serverSettingsModal let-modal>
+<!-- View Modal -->
+<ng-template #viewModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Settings</h4>
+    <h4 class="modal-title pull-left">View</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
   </div>
-  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
-</ng-template>
-
-<!-- User Settings Modal -->
-<ng-template #userSettingsModal let-modal>
-  <div class="modal-header">
-      <h4 class="modal-title pull-left">User Settings</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-  </div>
-  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
+  <app-rqmdocument-view [reqColor]="requirementColor" [proColor]="proseColor" (requirementColorOutput)="onRequirementColorChange($event)" (proseColorOutput)="onProseColorChange($event)"></app-rqmdocument-view>
 </ng-template>
 
 <!-- Export PDF Modal -->
@@ -72,12 +61,36 @@ Copyright (C) 2019 Benjamin Schilling
   </div>
 </ng-template>
 
+<!-- Server Settings Modal -->
+<ng-template #serverSettingsModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Settings</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+  </div>
+  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
+</ng-template>
+
+<!-- User Settings Modal -->
+<ng-template #userSettingsModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">User Settings</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+  </div>
+  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
+</ng-template>
+
 
 
 <mat-toolbar color="primary">
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
   
   <span>OpenRQM</span>
+  <!-- Views -->
+  <button mat-button (click)="openModal(viewModal)">View</button>
   <!-- Document Export -->
   <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
   <mat-menu #exportMenu="matMenu">

@@ -5,20 +5,20 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<app-rqmdocument-menubar (doLinking)="onDoLinking($event)"></app-rqmdocument-menubar>
+<app-rqmdocument-menubar (doLinking)="onDoLinking($event)" (requirementColorChange)="onRequirementColorChange($event)" (proseColorChange)="onProseColorChange($event)"></app-rqmdocument-menubar>
 <div class="container">
   <div [ngClass]="{'wrap': doLinking}" >
     <div [ngClass]="{'box': doLinking}">
       <div *ngIf="doLinking==true">
-        <app-rqmdocument-editor [linking]=true [linkFrom]="true" (createLink)="onCreateLinkFrom($event)"></app-rqmdocument-editor>
+        <app-rqmdocument-editor [linking]=true [linkFrom]=true (createLink)="onCreateLinkFrom($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
       </div>
       <div *ngIf="doLinking==false">
-        <app-rqmdocument-editor [linking]=false [linkFrom]="true" ></app-rqmdocument-editor>
+        <app-rqmdocument-editor [linking]=false [requirementColor]="requirementColor" [proseColor]="proseColor" ></app-rqmdocument-editor>
       </div>
     </div>
     <div *ngIf="doLinking==true" class="box">
       <app-rqmworkspace-tree *ngIf="showDocumentEditor==false" [noMenuBar]=true [linking]=true (selectedDocument)="onSelectedDocument($event)"></app-rqmworkspace-tree>
-      <app-rqmdocument-editor *ngIf="showDocumentEditor==true" [linkingDocumentId]=linkingDocumentId [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)"></app-rqmdocument-editor>
+      <app-rqmdocument-editor *ngIf="showDocumentEditor==true" [linkingDocumentId]=linkingDocumentId [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
     </div>
   </div>
 </div>

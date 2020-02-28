@@ -6,15 +6,7 @@ table {
   background-color: gray;
 }
 
-.reqTypeRequirement {
-  background-color: #40ff2f8e;
-  height: 50px;
-  width: 5px;
-  float: left;
-}
-
-.reqTypeProse {
-  background-color: rgba(0, 0, 255, 0.562);
+.elementTypeColor{
   height: 50px;
   width: 5px;
   float: left;
