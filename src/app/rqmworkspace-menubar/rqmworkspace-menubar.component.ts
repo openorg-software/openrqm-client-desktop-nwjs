@@ -25,10 +25,6 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleNavbar() {
-    this.navbarOpen = !this.navbarOpen;
-  }
-
   openModal(content: any) {
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -36,6 +32,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

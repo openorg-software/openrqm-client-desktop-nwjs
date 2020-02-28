@@ -40,6 +40,9 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Input() linking: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();
 
+  // For adding workspaces & documents
+  itemId: number = -1;
+
   private dropdownTreeviewSelectI18n: RQMWorkspaceTreeviewI18n;
 
   /// Font Awesome Icons used in Template
@@ -124,15 +127,12 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }
   }
 
-  openAddWorkspace(item: RQMWorkspaceTreeViewItem) {
+  openModal(content: any, item: RQMWorkspaceTreeViewItem) {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    const modalRef = this.modalService.open(RQMAddWorkspaceComponent);
-    console.log("givin item value to modal");
-    console.log(item.value);
-    modalRef.componentInstance.parentId = item.value;
-    modalRef.result.then((result) => {
+    this.itemId = item.value;
+    this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

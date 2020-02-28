@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 
@@ -23,6 +23,9 @@ export class RQMUserSettingsModalComponent implements OnInit {
   @ViewChild('surnameRegister', { static: false }) surnameRegister;
   @ViewChild('departmentRegister', { static: false }) departmentRegister;
 
+  // For user management
+  @Output() logoutEvent = new EventEmitter<any>();
+
   constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { 
     this.userManagementService.configuration.basePath = this.settingsService.serverUrl;
   }
@@ -33,6 +36,7 @@ export class RQMUserSettingsModalComponent implements OnInit {
 
   logout(){
     this.userManagementService.logout(0);
+    this.logoutEvent.emit();
   }
 
   updateUser() {

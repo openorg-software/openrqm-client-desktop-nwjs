@@ -5,6 +5,16 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
+<ng-template #newWorkspaceModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Workspace</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <app-rqmadd-workspace [parentId]=itemId></app-rqmadd-workspace>
+</ng-template>
+
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item" ngbDropdown #treeViewDropdown="ngbDropdown" (click)="onCollapseExpand() " (contextmenu)="onContextMenu($event, treeViewDropdown);">
         <!-- If the item has children a black folder icon shall be displayed -->
@@ -19,7 +29,7 @@ Copyright (C) 2019 Benjamin Schilling
         </label>
         <!-- Dropdown when clicking on a treeview item -->
         <div ngbDropdownMenu aria-labelledby="dropdownManual" autoClose="true">
-            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddWorkspace(item)">Add Workspace</button>
+            <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openModal(newWorkspaceModal, item)">Add Workspace</button>
             <button *ngIf="!item.isDocument " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
             <button ngbDropdownItem (click)="openProperties(item)">Properties</button>
             <button *ngIf="!item.isDocument " ngbDropdownItem (click)="deleteWorkspace(item)">Delete Workspace</button>
