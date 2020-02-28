@@ -45,8 +45,9 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() linkFrom: boolean = false;
   @Output() createLink = new EventEmitter<number>();
   selectedId: number = -1;
+  oldSelectedId: number = -1;
 
-  // For View
+  // For Theme
   @Input() requirementColor: string;
   @Input() proseColor: string;
 
@@ -372,12 +373,10 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   link(id: number){
     console.log('Link ' + (this.linkTo ? 'to' : 'from') + ' ' + id);
-    if(this.selectedId != id && !this.linkFrom){
-      this.selectedId = -1;
-    } else {
+    if(this.linkFrom){
       this.selectedId = id;
-      this.createLink.emit(id);
     }
+    this.createLink.emit(id);
   }
 
   reloadPage(){

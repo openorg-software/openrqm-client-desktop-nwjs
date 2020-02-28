@@ -73,7 +73,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
   onCreateLinkTo(elementId: number) {
     console.log('create link to ' + elementId);
-    this.linksService.linkElement(this.startLinkElement, elementId, 0).subscribe(
+    this.linksService.linkElement(this.startLinkElement, elementId, 1).subscribe(
       next => {
         console.log('next');
         console.log(next);

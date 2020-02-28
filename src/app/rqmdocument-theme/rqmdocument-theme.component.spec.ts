@@ -1,27 +1,27 @@
 /*
 openrqm-client-desktop-nwjs
-RQMDocumentView Component Tests
+RQMDocumentTheme Component Tests
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RQMDocumentViewComponent } from './rqmdocument-view.component';
+import { RQMDocumentThemeComponent } from './rqmdocument-theme.component';
 
-describe('RQMDocumentViewComponent', () => {
-  let component: RQMDocumentViewComponent;
-  let fixture: ComponentFixture<RQMDocumentViewComponent>;
+describe('RQMDocumentThemeComponent', () => {
+  let component: RQMDocumentThemeComponent;
+  let fixture: ComponentFixture<RQMDocumentThemeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RQMDocumentViewComponent ]
+      declarations: [ RQMDocumentThemeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RQMDocumentViewComponent);
+    fixture = TestBed.createComponent(RQMDocumentThemeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

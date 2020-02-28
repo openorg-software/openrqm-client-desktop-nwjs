@@ -5,15 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<!-- View Modal -->
-<ng-template #viewModal let-modal>
+<!-- Theme Modal -->
+<ng-template #themeModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">View</h4>
+    <h4 class="modal-title pull-left">Theme</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
   </div>
-  <app-rqmdocument-view [reqColor]="requirementColor" [proColor]="proseColor" (requirementColorOutput)="onRequirementColorChange($event)" (proseColorOutput)="onProseColorChange($event)"></app-rqmdocument-view>
+  <app-rqmdocument-theme [reqColor]="requirementColor" [proColor]="proseColor" (requirementColorOutput)="onRequirementColorChange($event)" (proseColorOutput)="onProseColorChange($event)"></app-rqmdocument-theme>
 </ng-template>
 
 <!-- Export PDF Modal -->
@@ -89,8 +89,8 @@ Copyright (C) 2019 Benjamin Schilling
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
   
   <span>OpenRQM</span>
-  <!-- Views -->
-  <button mat-button (click)="openModal(viewModal)">View</button>
+  <!-- Themes -->
+  <button mat-button (click)="openModal(themeModal)">Theme</button>
   <!-- Document Export -->
   <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
   <mat-menu #exportMenu="matMenu">

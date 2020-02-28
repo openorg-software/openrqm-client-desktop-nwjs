@@ -1,6 +1,6 @@
 /*
 openrqm-client-desktop-nwjs
-RQMDocumentView Component Controller
+RQMDocumentTheme Component Controller
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
@@ -8,11 +8,11 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-rqmdocument-view',
-  templateUrl: './rqmdocument-view.component.html',
-  styleUrls: ['./rqmdocument-view.component.css']
+  selector: 'app-rqmdocument-theme',
+  templateUrl: './rqmdocument-theme.component.html',
+  styleUrls: ['./rqmdocument-theme.component.css']
 })
-export class RQMDocumentViewComponent implements OnInit {
+export class RQMDocumentThemeComponent implements OnInit {
 
 
   @Output() requirementColorOutput = new EventEmitter<string>();

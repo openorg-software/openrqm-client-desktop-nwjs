@@ -26,7 +26,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   linkingInProgress: boolean = false;
   @Output() doLinking = new EventEmitter<boolean>();
 
-  // For View
+  // For Theme
   @Output() requirementColorChange = new EventEmitter<string>();
   @Output() proseColorChange = new EventEmitter<string>();
   @Input() requirementColor: string = "";
