@@ -75,8 +75,8 @@ Copyright (C) 2019 Benjamin Schilling
 <!-- User Settings Modal -->
 <ng-template #userSettingsModal let-modal>
   <div class="modal-header">
-      <h4 class="modal-title pull-left">User Settings</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h4 class="modal-title pull-left">User Settings</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
                   <span aria-hidden="true">&times;</span>
               </button>
   </div>
@@ -87,7 +87,9 @@ Copyright (C) 2019 Benjamin Schilling
 
 <mat-toolbar color="primary">
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
-  
+  <!-- SONARQUBE HTML IGNORE START -->
+  <img src="assets/img/logo_transparent.png">
+  <!-- SONARQUBE HTML IGNORE END -->
   <span>OpenRQM</span>
   <!-- Themes -->
   <button mat-button (click)="openModal(themeModal)">Theme</button>
