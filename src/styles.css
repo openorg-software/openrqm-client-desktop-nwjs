@@ -18,6 +18,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+
+/** SONARQUBE IGNORE START **/
+
 app-root {
   height: 100%;
 }
@@ -33,6 +36,9 @@ app-rqmworkspace-tree {
 app-rqmworkspace-treeview {
   height: 100%;
 }
+
+
+/** SONARQUBE IGNORE END **/
 
 #treeview {
   height: 100%;

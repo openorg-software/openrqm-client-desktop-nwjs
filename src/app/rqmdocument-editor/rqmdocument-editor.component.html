@@ -1,48 +1,49 @@
+<!-- SONARQUBE HTML IGNORE START -->
 <table mat-table [dataSource]="elements">
-    <ng-container matColumnDef="link"  *ngIf="linking">
-        <th mat-header-cell *matHeaderCellDef >
-            <div *ngIf="linkTo"> Link to</div>
-            <div *ngIf="linkFrom"> Link from </div>
-        </th>
-        <td  mat-cell *matCellDef="let element">
-            <button mat-raised-button [ngClass]="{'linkFromClass': selectedId == element.id}" (click)="link(element.id)">here</button>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)"> {{documentShortName}}_{{element.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="elementTypeId">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)">
-        <div>
-          <div class="elementTypeColor" [ngStyle]="{'background-color': element.elementTypeId == 1 ? requirementColor : (element.elementTypeId == 2 ? proseColor : null) }"></div>
-          <mat-form-field style="width: 95%">
-              <mat-select [value]="element.elementTypeId" (selectionChange)="onElementTypeChange($event, element.id)">
-                <mat-option *ngFor="let type of elementTypes" [value]="type.id">
-                  {{type.name}}
-                </mat-option>
-              </mat-select>
-          </mat-form-field> 
-        </div>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="parentElementId">
-      <th mat-header-cell *matHeaderCellDef> Parent </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)"> {{element.parentElementId}} </td>
-    </ng-container>
-    <ng-container matColumnDef="content">
-      <th mat-header-cell *matHeaderCellDef> Content </th>
-      <td mat-cell *matCellDef="let element" style="width: 100%" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)">
-        <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
-      </td>
-    </ng-container>
-    <ng-container *ngIf="!linking" matColumnDef="rank">
-      <th mat-header-cell *matHeaderCellDef> Rank </th>
-      <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id)"> {{element.rank}} </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <ng-container matColumnDef="link" *ngIf="linking">
+    <th mat-header-cell *matHeaderCellDef>
+      <div *ngIf="linkTo"> Link to</div>
+      <div *ngIf="linkFrom"> Link from </div>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button [ngClass]="{'linkFromClass': selectedId == element.id}" (click)="link(element.id)">here</button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)"> {{documentShortName}}_{{element.id}} </td>
+  </ng-container>
+  <ng-container matColumnDef="elementTypeId">
+    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)">
+      <div>
+        <div class="elementTypeColor" [ngStyle]="{'background-color': element.elementTypeId == 1 ? requirementColor : (element.elementTypeId == 2 ? proseColor : null) }"></div>
+        <mat-form-field style="width: 95%">
+          <mat-select [value]="element.elementTypeId" (selectionChange)="onElementTypeChange($event, element.id)">
+            <mat-option *ngFor="let type of elementTypes" [value]="type.id">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="parentElementId">
+    <th mat-header-cell *matHeaderCellDef> Parent </th>
+    <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)"> {{element.parentElementId}} </td>
+  </ng-container>
+  <ng-container matColumnDef="content">
+    <th mat-header-cell *matHeaderCellDef> Content </th>
+    <td mat-cell *matCellDef="let element" style="width: 100%" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)">
+      <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
+    </td>
+  </ng-container>
+  <ng-container *ngIf="!linking" matColumnDef="rank">
+    <th mat-header-cell *matHeaderCellDef> Rank </th>
+    <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id)"> {{element.rank}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
 </div>
@@ -55,3 +56,4 @@
     <button mat-menu-item (click)="saveElement(elementId,parentId, typeId, content )">Save element</button>
   </ng-template>
 </mat-menu>
+<!-- SONARQUBE HTML IGNORE END -->
