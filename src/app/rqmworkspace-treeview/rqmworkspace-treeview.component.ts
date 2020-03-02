@@ -16,7 +16,6 @@ import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetree
 import { Router } from '@angular/router';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -70,6 +69,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (isNil(this.value)) {
+      console.log("onChanges");
     } else {
       this.updateSelectedItem();
     }
@@ -83,12 +83,12 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     console.log(item.value);
 
     if (item.isDocument) {
-      if(this.linking){
+      if (this.linking) {
         console.log("Emit from treeview: " + item.value);
         this.selectedDocument.emit(item.value);
       } else {
         this.documentsService.getDocument(item.value).subscribe(
-          (doc) => {          
+          (doc) => {
             this.router.navigate(['/document-viewer', item.value, doc.shortName]);
           },
           err => {
@@ -98,8 +98,8 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
           () => {
             console.log('getting document done');
           }
-       );  
-      }    
+        );
+      }
     }
   }
 

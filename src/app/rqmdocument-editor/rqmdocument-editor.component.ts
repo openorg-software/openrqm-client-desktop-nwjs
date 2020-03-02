@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // CKEditor
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import Base64UploaderPlugin from 'src/@ckeditor/Base64Upload';
+import Base64UploaderPlugin from 'src/@ckeditor/Base64UploaderPlugin';
 // Material Design
 import { MatMenuTrigger } from '@angular/material'
 
@@ -35,7 +35,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   // For OpenRQM API
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
-  documentId: number;  
+  documentId: number;
   documentShortName: string = "";
 
   // For linking
@@ -56,11 +56,11 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
     console.log("constr req color: " + this.requirementColor);
-   }
+  }
 
   ngOnInit() {
     console.log("onInit req color: " + this.requirementColor);
-    if(this.linking && this.linkingDocumentId != -1){
+    if (this.linking && this.linkingDocumentId != -1) {
       this.documentId = this.linkingDocumentId;
     } else {
       this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -88,13 +88,13 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log(this.elements);
         if (this.elements.length == 0) {
-           this.addFirstElement();
+          this.addFirstElement();
         }
       }
     );
     this.elementsService.getElementTypes().subscribe(
       types => {
-          this.elementTypes = types;
+        this.elementTypes = types;
       },
       err => {
         console.log(err);
@@ -103,8 +103,8 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log(this.elementTypes);
       }
     );
-    
-    if(this.linking){
+
+    if (this.linking) {
       this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
     } else {
       this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
@@ -120,8 +120,8 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-   // Add the first element of the document to initialize
-   addFirstElement(): void {
+  // Add the first element of the document to initialize
+  addFirstElement(): void {
     let aboveRank: string = "aaaaaaaaaaaaaaaaaaaa";
     let belowRank: string = "";
 
@@ -160,9 +160,9 @@ export class RQMDocumentEditorComponent implements OnInit {
 
 
     // go through all elements, if element id matches aboveElementId 
-    for (let element of this.elements) {
-      if (element.id == aboveElementId) {
-        let aboveElement: RQMElement = element;
+    for (let tempElement of this.elements) {
+      if (tempElement.id == aboveElementId) {
+        let aboveElement: RQMElement = tempElement;
         let belowElement: RQMElement = null;
         if (this.elements.length > this.elements.indexOf(aboveElement) + 1) {
           belowElement = this.elements[this.elements.indexOf(aboveElement) + 1];
@@ -170,7 +170,7 @@ export class RQMDocumentEditorComponent implements OnInit {
           if (aboveElement.parentElementId != belowElement.parentElementId) {
             //look for last child element of aboveElement and set as new aboveElement
             let lastParentId: number = null;
-            let parentFound: Boolean = false;
+            let parentFound: boolean = false;
             let lastIndex: number = null;
             for (let newElement of this.elements) {
               // If the newElement has the aboveElement as the parent we are in the correct location in the tree
@@ -194,7 +194,7 @@ export class RQMDocumentEditorComponent implements OnInit {
         }
 
         // if parentId of above and below is the same, take them
-        parentElementId = element.parentElementId;
+        parentElementId = tempElement.parentElementId;
         aboveRank = aboveElement.rank;
         if (belowElement != null) {
           belowRank = belowElement.rank;
@@ -244,12 +244,12 @@ export class RQMDocumentEditorComponent implements OnInit {
     let aboveRank: string = "";
     let belowRank: string = "";
 
-    for (let element of this.elements) {
-      if (element.id == aboveElementId) {
-        aboveRank = element.rank;
+    for (let tempElement of this.elements) {
+      if (tempElement.id == aboveElementId) {
+        aboveRank = tempElement.rank;
 
-        if (this.elements.length > this.elements.indexOf(element) + 1) {
-          belowRank = this.elements[this.elements.indexOf(element) + 1].rank;
+        if (this.elements.length > this.elements.indexOf(tempElement) + 1) {
+          belowRank = this.elements[this.elements.indexOf(tempElement) + 1].rank;
         }
 
       }
@@ -319,14 +319,14 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.saveElement(elementId, null, data, null);
   }
 
-  onElementTypeChange(typeDropdownEvent, elementId: number){
+  onElementTypeChange(typeDropdownEvent, elementId: number) {
     console.log(typeDropdownEvent.value);
-    this.saveElement(elementId, typeDropdownEvent.value, null, null );
+    this.saveElement(elementId, typeDropdownEvent.value, null, null);
   }
 
   saveElement(elementId: number, type: number, content: string, parent: number) {
     console.log(elementId);
-    let changed: Boolean = false;
+    let changed: boolean = false;
     let element: RQMElement;
     for (let tempElement of this.elements) {
       if (tempElement.id == elementId) {
@@ -345,7 +345,7 @@ export class RQMDocumentEditorComponent implements OnInit {
     if (parent != null && element.parentElementId != parent) {
       element.parentElementId = parent;
       changed = true;
-    } 
+    }
     if (element.parentElementId == 0) {
       element.parentElementId = null;
     }
@@ -371,15 +371,15 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   }
 
-  link(id: number){
+  link(id: number) {
     console.log('Link ' + (this.linkTo ? 'to' : 'from') + ' ' + id);
-    if(this.linkFrom){
+    if (this.linkFrom) {
       this.selectedId = id;
     }
     this.createLink.emit(id);
   }
 
-  reloadPage(){
+  reloadPage() {
     this.router.navigate(['/document-viewer', this.documentId, this.documentShortName]);
   }
 }

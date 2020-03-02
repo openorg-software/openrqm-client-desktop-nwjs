@@ -79,10 +79,8 @@ export class RQMWorkspaceTreeComponent implements OnInit {
 
   static resolveChildrenRecursively(rqmWorkspace: RQMWorkspace): RQMWorkspaceTreeViewItem[] {
     let tvi: RQMWorkspaceTreeViewItem[] = new Array();
-    let workspaces: RQMWorkspaceTreeViewItem[] = new Array();
     let documents: RQMWorkspaceTreeViewItem[] = new Array();
-
-    workspaces = RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(rqmWorkspace);
+    let workspaces: RQMWorkspaceTreeViewItem[] = RQMWorkspaceTreeComponent.resolveWorkspacesRecursively(rqmWorkspace);
     tvi = tvi.concat(workspaces);
     tvi = tvi.concat(documents);
     return tvi;

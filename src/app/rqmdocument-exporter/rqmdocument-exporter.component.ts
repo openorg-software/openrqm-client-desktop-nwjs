@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class RQMDocumentExporterComponent implements OnInit {
 
   closeResult: string;
-  documentId: String;
+  documentId: string;
 
   @Input() type: string;
 
@@ -31,7 +31,7 @@ export class RQMDocumentExporterComponent implements OnInit {
   }
 
   exportDocument() {
-    if(this.type == "pdf"){
+    if (this.type == "pdf") {
       this.rqmExportService.exportPdf(Number(this.documentId), 1).subscribe(
         next => {
           console.log(next);
@@ -45,7 +45,7 @@ export class RQMDocumentExporterComponent implements OnInit {
           console.log('export PDF document done');
         }
       );
-    } else if (this.type == "markdown"){
+    } else if (this.type == "markdown") {
       this.rqmExportService.exportMarkdown(Number(this.documentId), 1).subscribe(
         next => {
           console.log(next);
@@ -63,5 +63,5 @@ export class RQMDocumentExporterComponent implements OnInit {
       console.log("unhandled exporter");
     }
   }
-  
+
 }

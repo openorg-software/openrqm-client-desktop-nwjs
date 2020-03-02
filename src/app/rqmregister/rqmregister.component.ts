@@ -6,7 +6,6 @@ Copyright (C) 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import * as jssha512 from 'js-sha512';
@@ -17,22 +16,22 @@ import * as jssha512 from 'js-sha512';
 })
 export class RQMRegisterComponent implements OnInit {
 
-    //Register
-    @ViewChild('emailRegister', { static: false }) emailRegister;
-    @ViewChild('passwordRegister', { static: false }) passwordRegister;
-    @ViewChild('passwordAgainRegister', { static: false }) passwordAgainRegister;
-    @ViewChild('nameRegister', { static: false }) nameRegister;
-    @ViewChild('surnameRegister', { static: false }) surnameRegister;
-    @ViewChild('departmentRegister', { static: false }) departmentRegister;
+  //Register
+  @ViewChild('emailRegister', { static: false }) emailRegister;
+  @ViewChild('passwordRegister', { static: false }) passwordRegister;
+  @ViewChild('passwordAgainRegister', { static: false }) passwordAgainRegister;
+  @ViewChild('nameRegister', { static: false }) nameRegister;
+  @ViewChild('surnameRegister', { static: false }) surnameRegister;
+  @ViewChild('departmentRegister', { static: false }) departmentRegister;
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { 
+  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) {
     this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {
   }
 
-  register(){
+  register() {
     let user = {} as RQMUser;
     user.email = this.emailRegister.nativeElement.value;
     user.name = this.nameRegister.nativeElement.value;
@@ -41,12 +40,12 @@ export class RQMRegisterComponent implements OnInit {
 
     let passwordHash: string = jssha512.sha512(this.passwordRegister.nativeElement.value);
     let passwordAgainHash: string = jssha512.sha512(this.passwordAgainRegister.nativeElement.value);
-    if(passwordHash != passwordAgainHash){
+    if (passwordHash != passwordAgainHash) {
       console.log('Error passwords dont match');
       return;
     }
 
-    this.userManagementService.register(passwordHash, user ).subscribe(
+    this.userManagementService.register(passwordHash, user).subscribe(
       next => {
         console.log('next');
         console.log(next);

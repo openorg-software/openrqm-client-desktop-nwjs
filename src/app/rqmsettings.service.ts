@@ -27,22 +27,22 @@ export class RQMSettingsService {
   filePath: string;
   serverUrl: string = '';
 
-  constructor(){
+  constructor() {
     this.filePath = RQMSettingsService.getFilePath();
     this.developmentMode = this.checkSettingsFile();
-    if(this.developmentMode == this.DEVELOPMENT_MODE_ON){
-      this.rqmSettingsModel.serverIpAddress = "192.168.0.104";
+    if (this.developmentMode == this.DEVELOPMENT_MODE_ON) {
+      this.rqmSettingsModel.serverIpAddress = "127.0.0.1";
       this.rqmSettingsModel.serverPort = 8090;
     }
   }
 
   getApiBasePath(): string {
-    if(this.developmentMode == this.DEVELOPMENT_MODE_OFF){
+    if (this.developmentMode == this.DEVELOPMENT_MODE_OFF) {
       this.rqmSettingsModel = this.loadSettings();
       return 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
     } else {
-        console.log("NW.js not available, falling back to development mode, server at " + this.rqmSettingsModel.serverIpAddress + " with port " + this.rqmSettingsModel.serverPort);
-        return 'http://' +  this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
+      console.log("NW.js not available, falling back to development mode, server at " + this.rqmSettingsModel.serverIpAddress + " with port " + this.rqmSettingsModel.serverPort);
+      return 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
     }
   }
 
@@ -82,7 +82,7 @@ export class RQMSettingsService {
   }
 
   saveSettings() {
-    if(this.developmentMode == this.DEVELOPMENT_MODE_OFF){
+    if (this.developmentMode == this.DEVELOPMENT_MODE_OFF) {
       window.nw.require('fs').writeFileSync(this.filePath, JSON.stringify(this.rqmSettingsModel), function (err) {
         if (err) {
           console.info("There was an error attempting to save your data.");
@@ -93,9 +93,9 @@ export class RQMSettingsService {
         }
       });
     } else {
-    console.log('save settings while development mode is on');
+      console.log('save settings while development mode is on');
     }
-    
+
   }
 
   static getFilePath(): string {

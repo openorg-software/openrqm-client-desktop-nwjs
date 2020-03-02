@@ -8,7 +8,6 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMSettingsService } from '../rqmsettings.service';
 
 
@@ -28,7 +27,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.parentId != null){
+    if (this.parentId != null) {
       this.workspaceService.getWorkspace(this.parentId).subscribe(
         workspace => {
           console.log(workspace);
