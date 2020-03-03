@@ -6,8 +6,12 @@ Copyright (C) 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+
 import * as jssha512 from 'js-sha512';
 @Component({
   selector: 'app-rqmregister',
@@ -24,7 +28,7 @@ export class RQMRegisterComponent implements OnInit {
   @ViewChild('surnameRegister', { static: false }) surnameRegister;
   @ViewChild('departmentRegister', { static: false }) departmentRegister;
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) {
+  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
     this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
@@ -46,9 +50,11 @@ export class RQMRegisterComponent implements OnInit {
     }
 
     this.userManagementService.register(passwordHash, user).subscribe(
-      next => {
-        console.log('next');
-        console.log(next);
+      user => {
+        console.log('user');
+        console.log(user);
+        this.userService.setId(user.id);
+        this.userService.setToken(user.token);
       },
       err => {
         console.log('err');
@@ -56,6 +62,7 @@ export class RQMRegisterComponent implements OnInit {
       },
       () => {
         console.log('register done');
+        this.router.navigate(['/workspace-tree']);
       }
     );
   }

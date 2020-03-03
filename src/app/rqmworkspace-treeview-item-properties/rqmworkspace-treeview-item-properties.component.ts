@@ -11,6 +11,7 @@ import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from '
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 
 @Component({
   selector: 'app-rqmworkspace-treeview-item-properties',
@@ -42,9 +43,14 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   // The item we want to manipulate
   @Input() public item: RQMWorkspaceTreeViewItem;
 
-  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService,  public activeModal: NgbActiveModal, private settingsService: RQMSettingsService) {
+  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService, public activeModal: NgbActiveModal, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.workspaceService.configuration.apiKeys = {};
+    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
+
     this.documentService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentService.configuration.apiKeys = {};
+    this.documentService.configuration.apiKeys['token'] = this.userService.getToken();
   }
 
   ngOnInit() {
@@ -53,10 +59,10 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
         (doc) => {
           console.log(doc);
           this.document = doc;
-          if(this.document.approverId == 0){
+          if (this.document.approverId == 0) {
             this.document.approverId = null;
           }
-          if(this.document.previousBaselineId == 0){
+          if (this.document.previousBaselineId == 0) {
             this.document.previousBaselineId = null;
           }
           this.workspaceId.nativeElement.value = this.document.workspaceId;
@@ -116,7 +122,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
       }
     );
     this.passBack();
-   window.location.reload();
+    window.location.reload();
   }
 
   updateDocument() {

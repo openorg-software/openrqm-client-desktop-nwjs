@@ -11,6 +11,7 @@ import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
 import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 @Component({
   selector: 'app-rqmworkspace-tree',
   templateUrl: './rqmworkspace-tree.component.html',
@@ -46,9 +47,11 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   @Input() noMenuBar: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();
 
-  constructor(private workspacesService: WorkspacesService, private settingsService: RQMSettingsService
+  constructor(private workspacesService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
     this.workspacesService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.workspacesService.configuration.apiKeys = {};
+    this.workspacesService.configuration.apiKeys['token'] = this.userService.getToken();
   }
 
   ngOnInit() {

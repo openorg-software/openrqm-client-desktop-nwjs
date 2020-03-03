@@ -11,6 +11,7 @@ import { MatMenuTrigger } from '@angular/material'
 // OpenRQM
 import { ElementsService, RQMElement, RQMElementType, DocumentsService } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 
 @Component({
   selector: 'app-rqmdocument-editor',
@@ -51,10 +52,14 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() requirementColor: string;
   @Input() proseColor: string;
 
-  constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService) {
+  constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private userService: RQMUserService) {
     //Initialization
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.elementsService.configuration.apiKeys = {};
+    this.elementsService.configuration.apiKeys['token'] = this.userService.getToken();
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentsSerivce.configuration.apiKeys = {};
+    this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
     console.log("constr req color: " + this.requirementColor);
   }
 

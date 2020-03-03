@@ -8,8 +8,10 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { UserManagementService } from 'openrqm-api'
+import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+
 
 import * as jssha512 from 'js-sha512';
 
@@ -19,15 +21,15 @@ import * as jssha512 from 'js-sha512';
   styleUrls: ['./rqmlogin.component.css']
 })
 export class RQMLoginComponent implements OnInit {
-  
+
   // Login
   @ViewChild('emailLogin', { static: false }) emailLogin;
   @ViewChild('passwordLogin', { static: false }) passwordLogin;
 
   closeResult: string;
-  constructor(private modalService: NgbModal, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService) {
+  constructor(private modalService: NgbModal, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
-   }
+  }
 
   ngOnInit() {
   }
@@ -49,12 +51,14 @@ export class RQMLoginComponent implements OnInit {
     }
   }
 
-  login(){
-    let  passwordHash: string = jssha512.sha512(this.passwordLogin.nativeElement.value);
-    this.userManagementService.login(passwordHash,this.emailLogin.nativeElement.value).subscribe(
-      next => {
-        console.log('next');
-        console.log(next);
+  login() {
+    let passwordHash: string = jssha512.sha512(this.passwordLogin.nativeElement.value);
+    this.userManagementService.login(passwordHash, this.emailLogin.nativeElement.value).subscribe(
+      user => {
+        console.log('user');
+        console.log(user);
+        this.userService.setId(user.id);
+        this.userService.setToken(user.token);
       },
       err => {
         console.log('err');

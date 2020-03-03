@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 
 import * as jssha512 from 'js-sha512';
 @Component({
@@ -26,15 +27,17 @@ export class RQMUserSettingsModalComponent implements OnInit {
   // For user management
   @Output() logoutEvent = new EventEmitter<any>();
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService) { 
-    this.userManagementService.configuration.basePath = this.settingsService.serverUrl;
+  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.userManagementService.configuration.apiKeys = {};
+    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
   }
 
   ngOnInit() {
 
   }
 
-  logout(){
+  logout() {
     this.userManagementService.logout(0);
     this.logoutEvent.emit();
   }
@@ -50,7 +53,7 @@ export class RQMUserSettingsModalComponent implements OnInit {
     let oldPasswordHash: string = jssha512.sha512(this.oldPassword.nativeElement.value);
     let newPasswordHash: string = jssha512.sha512(this.newPassword.nativeElement.value);
     let newPasswordHashAgain: string = jssha512.sha512(this.newPasswordAgain.nativeElement.value);
-    if(newPasswordHash != newPasswordHashAgain){
+    if (newPasswordHash != newPasswordHashAgain) {
       console.log('Error passwords dont match');
       return;
     }

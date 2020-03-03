@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 
 
 @Component({
@@ -22,8 +23,10 @@ export class RQMAddWorkspaceComponent implements OnInit {
   @Input() public parentId: number = -1;
   parentName: string = "";
 
-  constructor(private workspaceService: WorkspacesService, private settingsService: RQMSettingsService) {
+  constructor(private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.workspaceService.configuration.apiKeys = {};
+    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
   }
 
   ngOnInit() {

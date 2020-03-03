@@ -12,6 +12,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 // OpenRQM
 import { LinksService } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -26,7 +27,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   reloadSubscription: any;
 
   // For linking
-  doLinking: boolean = false;  
+  doLinking: boolean = false;
   startLinkElement: number = 0;
   showDocumentEditor: boolean = false;
   linkingDocumentId: number = -1;
@@ -35,9 +36,11 @@ export class RQMDocumentViewerComponent implements OnInit {
   requirementColor: string = "#acecde";
   proseColor: string = "#adadad";
 
-  constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService
+  constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
     this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.linksService.configuration.apiKeys = {};
+    this.linksService.configuration.apiKeys['token'] = this.userService.getToken();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -52,7 +55,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   // For reloading the page

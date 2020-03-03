@@ -6,9 +6,11 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { RQMSettingsService } from '../rqmsettings.service';
-import { ExportService } from 'openrqm-api'
 import { ActivatedRoute } from '@angular/router';
+
+import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+import { ExportService } from 'openrqm-api'
 
 @Component({
   selector: 'app-rqmdocument-exporter',
@@ -22,8 +24,10 @@ export class RQMDocumentExporterComponent implements OnInit {
 
   @Input() type: string;
 
-  constructor(private rqmExportService: ExportService, private route: ActivatedRoute, private settingsService: RQMSettingsService) {
+  constructor(private rqmExportService: ExportService, private route: ActivatedRoute, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.rqmExportService.configuration.apiKeys = {};
+    this.rqmExportService.configuration.apiKeys['token'] = this.userService.getToken();
   }
 
   ngOnInit() {

@@ -19,6 +19,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
 import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
 @Component({
   selector: 'app-rqmworkspace-treeview',
@@ -54,10 +55,14 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   closeResult: string;
 
   constructor(
-    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService
+    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
     this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentsService.configuration.apiKeys = {};
+    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.workspaceService.configuration.apiKeys = {};
+    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
     this.config = TreeviewConfig.create({
       hasAllCheckBox: false,
       hasCollapseExpand: false,
