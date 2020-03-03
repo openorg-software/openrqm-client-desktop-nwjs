@@ -50,11 +50,11 @@ export class RQMRegisterComponent implements OnInit {
     }
 
     this.userManagementService.register(passwordHash, user).subscribe(
-      user => {
+      retUser => {
         console.log('user');
         console.log(user);
-        this.userService.setId(user.id);
-        this.userService.setToken(user.token);
+        this.userService.setId(retUser.id);
+        this.userService.setToken(retUser.token);
       },
       err => {
         console.log('err');

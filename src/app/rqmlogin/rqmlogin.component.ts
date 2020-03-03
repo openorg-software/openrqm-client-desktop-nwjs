@@ -8,7 +8,7 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { UserManagementService, RQMUser } from 'openrqm-api'
+import { UserManagementService } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
