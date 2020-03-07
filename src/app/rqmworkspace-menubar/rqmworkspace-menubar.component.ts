@@ -24,8 +24,8 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   ngOnInit() {
   }
 
-  openModal(content: any) {
-    this.modalService.open(content).result.then((result) => {
+  openModal(content: any, ) {
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

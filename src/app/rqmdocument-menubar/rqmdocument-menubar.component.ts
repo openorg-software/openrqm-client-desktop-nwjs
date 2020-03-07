@@ -42,7 +42,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   }
 
   openModal(content: any) {
-    this.modalService.open(content).result.then((result) => {
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -59,21 +59,21 @@ export class RQMDocumentMenubarComponent implements OnInit {
     }
   }
 
-  startLinking(){
+  startLinking() {
     this.linkingInProgress = true;
     this.doLinking.emit(true);
   }
-  stopLinking(){
+  stopLinking() {
     this.linkingInProgress = false;
     this.doLinking.emit(false);
   }
 
-  onRequirementColorChange(color: string){
+  onRequirementColorChange(color: string) {
     this.requirementColor = color;
     this.requirementColorChange.emit(color);
   }
 
-  onProseColorChange(color: string){
+  onProseColorChange(color: string) {
     this.proseColor = color;
     this.proseColorChange.emit(color);
   }

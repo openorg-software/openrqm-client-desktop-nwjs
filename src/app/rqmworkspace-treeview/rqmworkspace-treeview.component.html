@@ -26,6 +26,20 @@ Copyright (C) 2019 Benjamin Schilling
   <app-rqmworkspace-treeview-item-properties [item]=tempTreeViewItem (logoutEvent)="modal.dismiss('Cross click')"></app-rqmworkspace-treeview-item-properties>
 </ng-template>
 
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="tempTreeViewItem.isDocument " class="modal-title pull-left">Delete Document</h4>
+    <h4 *ngIf=" !tempTreeViewItem.isDocument " class="modal-title pull-left">Delete Workspace</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf=" tempTreeViewItem.isDocument " mat-raised-button (click)="deleteDocument(tempTreeViewItem)">Confirm</button>
+    <button *ngIf=" !tempTreeViewItem.isDocument " mat-raised-button (click)="deleteWorkspace(tempTreeViewItem)">Confirm</button>
+  </div>
+</ng-template>
+
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
   <div class="form-inline row-item" ngbDropdown #treeViewDropdown="ngbDropdown" (click)="onCollapseExpand() " (contextmenu)="onContextMenu($event, treeViewDropdown);">
     <!-- If the item has children a black folder icon shall be displayed -->
@@ -43,8 +57,8 @@ Copyright (C) 2019 Benjamin Schilling
       <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="openModal(newWorkspaceModal, item)">Add Workspace</button>
       <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
       <button ngbDropdownItem (click)="openModal(propertiesModal, item)">Properties</button>
-      <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="deleteWorkspace(item)">Delete Workspace</button>
-      <button *ngIf="item.isItemDocument() " ngbDropdownItem (click)="deleteDocument(item)">Delete Document</button>
+      <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="openModal(deleteModal, item)">Delete Workspace</button>
+      <button *ngIf="item.isItemDocument() " ngbDropdownItem (click)="openModal(deleteModal, item)">Delete Document</button>
     </div>
   </div>
 </ng-template>

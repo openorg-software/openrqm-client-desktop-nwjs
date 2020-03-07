@@ -8,7 +8,6 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';

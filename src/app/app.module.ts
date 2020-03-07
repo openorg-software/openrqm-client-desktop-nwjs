@@ -48,6 +48,9 @@ import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
 import { RQMUserSettingsModalComponent } from './rqmuser-settings-modal/rqmuser-settings-modal.component';
 import { RQMDocumentEditorComponent } from './rqmdocument-editor/rqmdocument-editor.component';
 import { RQMDocumentThemeComponent } from './rqmdocument-theme/rqmdocument-theme.component';
+import { RQMAccessControlListComponent } from './rqmaccess-control-list/rqmaccess-control-list.component';
+import { RQMAssignUsersComponent } from './rqmassign-users/rqmassign-users.component';
+import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassign-access-group.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { RQMDocumentThemeComponent } from './rqmdocument-theme/rqmdocument-theme
     RQMUserSettingsModalComponent,
     RQMDocumentEditorComponent,
     RQMDocumentThemeComponent,
+    RQMAccessControlListComponent,
+    RQMAssignUsersComponent,
+    RQMAssignAccessGroupComponent,
   ],
   imports: [
     BrowserModule,

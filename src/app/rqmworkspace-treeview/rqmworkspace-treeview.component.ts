@@ -142,7 +142,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }
     this.itemId = item.value;
     this.tempTreeViewItem = item;
-    this.modalService.open(content).result.then((result) => {
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -153,7 +153,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    const modalRef = this.modalService.open(RQMAddDocumentComponent);
+    const modalRef = this.modalService.open(RQMAddDocumentComponent, { size: 'xl' });
     console.log("givin item value to modal");
     console.log(item.value);
     modalRef.componentInstance.parentId = item.value;
@@ -198,7 +198,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
         console.log(err);
       },
       () => {
-        console.log('delete workspace done');
+        console.log('delete document done');
       }
     );
     this.router.navigate(['/workspace-tree']);
