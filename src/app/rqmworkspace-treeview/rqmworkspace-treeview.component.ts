@@ -40,8 +40,9 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Input() linking: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();
 
-  // For adding workspaces & documents
+  // For modals
   itemId: number = -1;
+  tempTreeViewItem: RQMWorkspaceTreeViewItem = null;
 
   private dropdownTreeviewSelectI18n: RQMWorkspaceTreeviewI18n;
 
@@ -115,11 +116,15 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
 
   private updateSelectedItem() {
     if (!isNil(this.items)) {
-      let selectedItem: RQMWorkspaceTreeViewItem = TreeviewHelper.findItemInList(this.items, this.value);
+      let selectedItem: RQMWorkspaceTreeViewItem = this.findRQMWorkspaceTreeViewItem(this.value);
       if (selectedItem) {
         this.selectItem(selectedItem);
       }
     }
+  }
+
+  private findRQMWorkspaceTreeViewItem(itemValue: number) {
+    return this.items.find(item => item.value == itemValue);
   }
 
   private selectItem(item: RQMWorkspaceTreeViewItem) {
@@ -137,6 +142,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
       this.selectItem(item);
     }
     this.itemId = item.value;
+    this.tempTreeViewItem = item;
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -152,19 +158,6 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     console.log("givin item value to modal");
     console.log(item.value);
     modalRef.componentInstance.parentId = item.value;
-    modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openProperties(item: RQMWorkspaceTreeViewItem) {
-    if (item.children === undefined) {
-      this.selectItem(item);
-    }
-    const modalRef = this.modalService.open(RQMWorkspaceTreeviewItemPropertiesComponent);
-    modalRef.componentInstance.item = item;
     modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

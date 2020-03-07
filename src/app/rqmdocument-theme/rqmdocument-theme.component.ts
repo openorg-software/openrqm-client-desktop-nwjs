@@ -58,7 +58,7 @@ export class RQMDocumentThemeComponent implements OnInit {
     this.proseColor.nativeElement.value = this.proColor;
   }
 
-  saveView() {
+  saveTheme() {
     this.requirementColorOutput.emit(this.requirementColor.nativeElement.value);
     this.proseColorOutput.emit(this.proseColor.nativeElement.value);
   }

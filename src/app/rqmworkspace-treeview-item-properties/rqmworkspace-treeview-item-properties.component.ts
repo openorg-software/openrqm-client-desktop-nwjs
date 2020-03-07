@@ -26,6 +26,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
 
   // Access the workspace variables
   @ViewChild('workspaceName', { static: false }) workspaceName;
+  @ViewChild('parentWorkspace', { static: false }) parentWorkspace;
 
 
   // Access the document variables
@@ -43,7 +44,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   // The item we want to manipulate
   @Input() public item: RQMWorkspaceTreeViewItem;
 
-  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService, public activeModal: NgbActiveModal, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
@@ -89,6 +90,8 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
         (workspace) => {
           console.log(workspace);
           this.workspace = workspace;
+          this.workspaceName.nativeElement.value = this.workspace.name;
+          this.parentWorkspace.nativeElement.value = this.workspace.workspaceId;
         },
         err => {
           console.log('err');
@@ -104,8 +107,9 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
 
   updateWorkspace() {
     let workspace = {} as RQMWorkspace;
-    workspace.name = this.workspaceName.nativeElement.value;
     workspace.id = this.workspace.id;
+    workspace.name = this.workspaceName.nativeElement.value;
+    workspace.workspaceId = this.parentWorkspace.nativeElement.value;
     workspace.workspaces = this.workspace.workspaces;
     workspace.documents = this.workspace.documents;
     this.workspaceService.patchWorkspace(workspace).subscribe(
@@ -121,7 +125,6 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
         console.log('patching workspace done');
       }
     );
-    this.passBack();
     window.location.reload();
   }
 
@@ -160,12 +163,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
         console.log('patching document done');
       }
     );
-    this.passBack();
     window.location.reload();
-  }
-
-  passBack() {
-    this.activeModal.close();
   }
 
 }
