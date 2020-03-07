@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // CKEditor
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import Base64UploaderPlugin from 'src/@ckeditor/Base64UploaderPlugin';
+import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
 // Material Design
 import { MatMenuTrigger } from '@angular/material'
 

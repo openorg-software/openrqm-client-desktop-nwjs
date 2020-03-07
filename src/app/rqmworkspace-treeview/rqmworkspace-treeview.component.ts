@@ -7,7 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { isNil } from 'lodash';
-import { TreeviewI18n, TreeviewConfig, TreeviewHelper } from 'ngx-treeview';
+import { TreeviewI18n, TreeviewConfig } from 'ngx-treeview';
 import { RQMWorkspaceTreeviewI18n } from './rqmworkspace-treeview-i18n';
 import { TreeviewComponent } from 'ngx-treeview';
 import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
-import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
