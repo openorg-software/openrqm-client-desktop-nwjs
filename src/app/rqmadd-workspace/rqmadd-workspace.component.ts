@@ -30,7 +30,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.parentId != null) {
+    if (this.parentId != -1) {
       this.workspaceService.getWorkspace(this.parentId).subscribe(
         workspace => {
           console.log(workspace);
@@ -44,6 +44,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
         }
       );
     } else {
+      this.parentId = null;
       this.parentName = "Root";
     }
   }

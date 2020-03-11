@@ -5,20 +5,19 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019-2020 Benjamin Schilling
 -->
 
+<h4 mat-dialog-title>Server Settings</h4>
 
+<mat-dialog-content>
+  <mat-list-item>
+    <mat-form-field>
+      <mat-label>Server URL</mat-label>
+      <input matInput #serverUrlInputField value="{{serverUrl}}">
+    </mat-form-field>
+  </mat-list-item>
+</mat-dialog-content>
 
-<div class="modal-body">
-  <div class="row">
-    <div class="col-xs-3">
-      <mat-form-field>
-        <mat-label>Server URL</mat-label>
-        <input matInput #serverUrlInputField value="{{serverUrl}}">
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <span>v{{version}}</span>
-    <span class="menu-spacer"></span>
-    <button mat-raised-button (click)="saveSettings()">Save</button>
-  </div>
-</div>
+<mat-dialog-actions align="end">
+  <span>v{{version}}</span>
+  <button mat-raised-button mat-dialog-close (click)="saveSettings()">Save</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

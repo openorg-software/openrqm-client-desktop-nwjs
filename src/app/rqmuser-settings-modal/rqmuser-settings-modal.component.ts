@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+
 import { UserManagementService, RQMUser } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
@@ -27,7 +28,8 @@ export class RQMUserSettingsModalComponent implements OnInit {
   // For user management
   @Output() logoutEvent = new EventEmitter<any>();
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(
+    private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
     this.userManagementService.configuration.apiKeys = {};
     this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();

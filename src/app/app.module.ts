@@ -95,7 +95,10 @@ import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassig
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,
     RQMDocumentMenubarComponent,
-    RQMWorkspaceTreeviewItemPropertiesComponent
+    RQMWorkspaceTreeviewItemPropertiesComponent,
+    RQMUserSettingsModalComponent,
+    RQMDocumentExporterComponent,
+    RQMDocumentThemeComponent
   ],
   bootstrap: [AppComponent]
 })

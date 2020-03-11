@@ -5,86 +5,6 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<!-- Theme Modal -->
-<ng-template #themeModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Theme</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <app-rqmdocument-theme [reqColor]="requirementColor" [proColor]="proseColor" (requirementColorOutput)="onRequirementColorChange($event)" (proseColorOutput)="onProseColorChange($event)"></app-rqmdocument-theme>
-</ng-template>
-
-<!-- Export PDF Modal -->
-<ng-template #exportModalPDF let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Export PDF</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <app-rqmdocument-exporter [type]="typePdf"></app-rqmdocument-exporter>
-</ng-template>
-
-<!-- Export Markdown Modal -->
-<ng-template #exportModalMarkdown let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Export Markdown</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <app-rqmdocument-exporter [type]="typeMarkdown"></app-rqmdocument-exporter>
-</ng-template>
-
-<!-- Review Modal -->
-<ng-template #reviewModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Review</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-</ng-template>
-
-<!-- Tracing Modal -->
-<ng-template #tracingModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Tracing</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <div class="modal-body">
-
-  </div>
-</ng-template>
-
-<!-- Server Settings Modal -->
-<ng-template #serverSettingsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-  </div>
-  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
-</ng-template>
-
-<!-- User Settings Modal -->
-<ng-template #userSettingsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">User Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-  </div>
-  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
-</ng-template>
-
-
-
 <mat-toolbar color="primary">
   <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
   <!-- SONARQUBE HTML IGNORE START -->
@@ -92,29 +12,29 @@ Copyright (C) 2019 Benjamin Schilling
   <!-- SONARQUBE HTML IGNORE END -->
   <span>OpenRQM</span>
   <!-- Themes -->
-  <button mat-button (click)="openModal(themeModal)">Theme</button>
+  <button mat-button (click)="openDialogDocumentTheme()">Theme</button>
   <!-- Document Export -->
   <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
   <mat-menu #exportMenu="matMenu">
-    <button mat-menu-item (click)="openModal(exportModalPDF)">PDF</button>
-    <button mat-menu-item (click)="openModal(exportModalMarkdown)">Markdown</button>
+    <button mat-menu-item (click)="openDialogExportModalPDF()">PDF</button>
+    <button mat-menu-item (click)="openDialogExportModalMarkdown()">Markdown</button>
   </mat-menu>
   <!-- Document Review -->
-  <button mat-button (click)="openModal(reviewModal)">Review</button>
+  <button mat-button>Review</button>
   <!-- Linking -->
   <button mat-button [matMenuTriggerFor]="linkMenu">Links</button>
   <mat-menu #linkMenu="matMenu">
     <button *ngIf="!linkingInProgress" mat-menu-item (click)="startLinking()">Start Linking</button>
     <button *ngIf="linkingInProgress" mat-menu-item (click)="stopLinking()">Stop Linking</button>
-    <button mat-menu-item (click)="openModal(tracingModal)">Tracing</button>
+    <button mat-menu-item>Tracing</button>
   </mat-menu>
 
   <span class="menu-spacer"></span>
   <!-- Settings -->
   <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
   <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
-    <button mat-menu-item (click)="openModal(userSettingsModal)">User</button>
+    <button mat-menu-item (click)="openDialogServerSettings()">Server</button>
+    <button mat-menu-item (click)="openDialogUserSettings()">User</button>
     <button mat-menu-item (click)="logout()" routerLink="/login" routerLinkActive="active">Logout</button>
   </mat-menu>
 </mat-toolbar>

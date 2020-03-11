@@ -4,37 +4,6 @@ RQMWorkspaceMenubar Component Template
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
-
-<ng-template #serverSettingsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Server Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-  </div>
-  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
-</ng-template>
-
-<ng-template #userSettingsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">User Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-  </div>
-  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
-</ng-template>
-
-<ng-template #newWorkspaceModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Add Workspace</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <app-rqmadd-workspace [parentId]=null></app-rqmadd-workspace>
-</ng-template>
-
 <mat-toolbar color="primary">
   <!-- SONARQUBE HTML IGNORE START -->
   <img src="assets/img/logo_transparent.png">
@@ -42,14 +11,14 @@ Copyright (C) 2019 Benjamin Schilling
   <span>OpenRQM</span>
   <button mat-button [matMenuTriggerFor]="fileMenu">File</button>
   <mat-menu #fileMenu="matMenu">
-    <button mat-menu-item (click)="openModal(newWorkspaceModal)">New Workspace</button>
+    <button mat-menu-item (click)="openDialogNewWorkspace()">New Workspace</button>
   </mat-menu>
   <button mat-button>Edit</button>
   <span class="menu-spacer"></span>
   <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
   <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
-    <button mat-menu-item (click)="openModal(userSettingsModal)">User</button>
+    <button mat-menu-item (click)="openDialogServerSettings()">Server</button>
+    <button mat-menu-item (click)="openDialogUserSettings()">User</button>
     <button mat-menu-item (click)="logout()" routerLink="/login" routerLinkActive="active">Logout</button>
   </mat-menu>
 </mat-toolbar>

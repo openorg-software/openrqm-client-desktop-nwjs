@@ -60,7 +60,6 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsSerivce.configuration.apiKeys = {};
     this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
-    console.log("constr req color: " + this.requirementColor);
   }
 
   ngOnInit() {

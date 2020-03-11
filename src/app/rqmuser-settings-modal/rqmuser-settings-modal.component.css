@@ -4,3 +4,7 @@ RQMUserSettingsModal Component CSS
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
+
+.mat-dialog-content {
+  overflow: unset;
+}

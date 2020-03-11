@@ -5,8 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
@@ -29,17 +31,19 @@ export class RQMDocumentThemeComponent implements OnInit {
   @ViewChild('requirementColor', { static: false }) requirementColor: { nativeElement: { value: string; }; };
   @ViewChild('proseColor', { static: false }) proseColor: { nativeElement: { value: string; }; };
 
-  @Input() reqColor: string = "";
-  @Input() proColor: string = "";
+  public reqColor: string = "";
+  public proColor: string = "";
 
-  constructor(private themesService: ThemesService, private userService: RQMUserService, private settingsService: RQMSettingsService, private route: ActivatedRoute) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private themesService: ThemesService, private userService: RQMUserService, private settingsService: RQMSettingsService, private route: ActivatedRoute) {
     this.themesService.configuration.basePath = this.settingsService.getApiBasePath();
     this.themesService.configuration.apiKeys = {};
     this.themesService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.proColor = data.proseColor;
+    this.reqColor = data.reqColor;
+    this.documentId = data.documentId;
   }
 
   ngOnInit() {
-    this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.themesService.getThemes(this.documentId).subscribe(
       themes => {
         console.log(themes);
@@ -51,11 +55,6 @@ export class RQMDocumentThemeComponent implements OnInit {
       () => {
       }
     );
-  }
-
-  ngAfterViewInit() {
-    this.requirementColor.nativeElement.value = this.reqColor;
-    this.proseColor.nativeElement.value = this.proColor;
   }
 
   saveTheme() {
