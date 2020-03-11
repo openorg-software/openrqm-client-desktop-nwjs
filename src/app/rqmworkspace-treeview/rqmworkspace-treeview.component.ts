@@ -14,9 +14,11 @@ import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome
 import { faFolder as faFolderRegular } from '@fortawesome/free-regular-svg-icons';
 import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
+import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
@@ -54,7 +56,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   /// Router for navigation to documents
   closeResult: string;
 
-  constructor(
+  constructor(public dialog: MatDialog,
     public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
     this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
@@ -212,6 +214,19 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  openDialogNewWorkspace(item: RQMWorkspaceTreeViewItem) {
+    const dialogRef = this.dialog.open(RQMAddWorkspaceComponent, {
+      width: '80vw',
+      data: {
+        parentId: item.value
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

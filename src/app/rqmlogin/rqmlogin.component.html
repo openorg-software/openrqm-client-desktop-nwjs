@@ -5,27 +5,6 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 -->
 
-<ng-template #serverSettingsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Settings</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-  </div>
-  <app-rqmserver-settings-modal></app-rqmserver-settings-modal>
-</ng-template>
-
-<ng-template #registerModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Register</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-  </div>
-  <app-rqmregister></app-rqmregister>
-</ng-template>
-
-
 <mat-toolbar color="primary">
   <!-- SONARQUBE HTML IGNORE START -->
   <img src="assets/img/logo_transparent.png">
@@ -34,7 +13,7 @@ Copyright (C) 2020 Benjamin Schilling
   <span class="menu-spacer"></span>
   <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
   <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
+    <button mat-menu-item (click)="openDialogServerSettings()">Server</button>
   </mat-menu>
 </mat-toolbar>
 
@@ -48,5 +27,5 @@ Copyright (C) 2020 Benjamin Schilling
     <input type="password" autocomplete="current-password" matInput #passwordLogin>
   </mat-form-field>
   <div class="login-button-container"><button class="login-button" mat-raised-button (click)="login()">Login</button></div>
-  <div class="login-button-container"><button class="login-button" mat-raised-button (click)="openModal(registerModal)">Register</button></div>
+  <div class="login-button-container"><button class="login-button" mat-raised-button (click)="openDialogRegister()">Register</button></div>
 </form>

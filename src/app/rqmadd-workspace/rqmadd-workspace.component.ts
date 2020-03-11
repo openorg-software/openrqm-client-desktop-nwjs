@@ -5,7 +5,9 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -20,13 +22,14 @@ import { RQMUserService } from '../rqmuser.service';
 export class RQMAddWorkspaceComponent implements OnInit {
 
   @ViewChild('workspaceName', { static: false }) workspaceName: { nativeElement: { value: string; }; };
-  @Input() public parentId: number = -1;
+  private parentId: number = -1;
   parentName: string = "";
 
-  constructor(private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.parentId = data.parentId;
   }
 
   ngOnInit() {

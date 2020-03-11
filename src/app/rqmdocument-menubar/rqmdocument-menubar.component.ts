@@ -164,6 +164,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
   openDialogUserSettings() {
     const dialogRef = this.openDialog(RQMUserSettingsModalComponent);
 
