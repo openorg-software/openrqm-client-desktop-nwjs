@@ -37,11 +37,6 @@ export class RQMUserSettingsModalComponent implements OnInit {
 
   }
 
-  logout() {
-    this.userManagementService.logout(0);
-    this.logoutEvent.emit();
-  }
-
   updateUser() {
 
     let user = {} as RQMUser;

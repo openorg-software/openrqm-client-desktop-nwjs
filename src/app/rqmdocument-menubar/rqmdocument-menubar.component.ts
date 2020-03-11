@@ -8,6 +8,12 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
+
+import { UserManagementService } from 'openrqm-api'
+import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+
 @Component({
   selector: 'app-rqmdocument-menubar',
   templateUrl: './rqmdocument-menubar.component.html',
@@ -32,7 +38,11 @@ export class RQMDocumentMenubarComponent implements OnInit {
   @Input() requirementColor: string = "";
   @Input() proseColor: string = "";
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.userManagementService.configuration.apiKeys = {};
+    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+  }
 
   ngOnInit() {
   }
@@ -76,5 +86,10 @@ export class RQMDocumentMenubarComponent implements OnInit {
   onProseColorChange(color: string) {
     this.proseColor = color;
     this.proseColorChange.emit(color);
+  }
+
+
+  logout() {
+    this.userManagementService.logout(0);
   }
 }

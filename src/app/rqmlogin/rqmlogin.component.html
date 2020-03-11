@@ -41,11 +41,11 @@ Copyright (C) 2020 Benjamin Schilling
 <form class="login-container">
   <mat-form-field class="login-input-container">
     <mat-label>E-Mail</mat-label>
-    <input matInput #emailLogin>
+    <input matInput autocomplete="email" #emailLogin>
   </mat-form-field>
   <mat-form-field class="login-input-container">
     <mat-label>Password</mat-label>
-    <input type="password" matInput #passwordLogin>
+    <input type="password" autocomplete="current-password" matInput #passwordLogin>
   </mat-form-field>
   <div class="login-button-container"><button class="login-button" mat-raised-button (click)="login()">Login</button></div>
   <div class="login-button-container"><button class="login-button" mat-raised-button (click)="openModal(registerModal)">Register</button></div>

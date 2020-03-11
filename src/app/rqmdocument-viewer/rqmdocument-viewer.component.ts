@@ -68,6 +68,10 @@ export class RQMDocumentViewerComponent implements OnInit {
   onDoLinking(doLinking: boolean) {
     console.log('emitted doLinking');
     this.doLinking = doLinking;
+    if (this.doLinking == false) {
+      this.showDocumentEditor = false;
+      this.linkingDocumentId = -1;
+    }
   }
 
   onCreateLinkFrom(elementId: number) {

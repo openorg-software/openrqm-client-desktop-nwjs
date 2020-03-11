@@ -22,7 +22,7 @@ Copyright (C) 2019 Benjamin Schilling
                     <span aria-hidden="true">&times;</span>
                 </button>
   </div>
-  <app-rqmuser-settings-modal (logoutEvent)="modal.dismiss('Cross click')"></app-rqmuser-settings-modal>
+  <app-rqmuser-settings-modal></app-rqmuser-settings-modal>
 </ng-template>
 
 <ng-template #newWorkspaceModal let-modal>
@@ -50,5 +50,6 @@ Copyright (C) 2019 Benjamin Schilling
   <mat-menu #settingsMenu="matMenu">
     <button mat-menu-item (click)="openModal(serverSettingsModal)">Server</button>
     <button mat-menu-item (click)="openModal(userSettingsModal)">User</button>
+    <button mat-menu-item (click)="logout()" routerLink="/login" routerLinkActive="active">Logout</button>
   </mat-menu>
 </mat-toolbar>

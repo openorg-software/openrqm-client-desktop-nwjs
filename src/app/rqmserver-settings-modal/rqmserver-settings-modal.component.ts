@@ -19,27 +19,20 @@ export class RQMServerSettingsModalComponent implements OnInit {
   public version: string = version;
   closeResult: string;
 
-  @ViewChild('serverIpInputField', { static: false }) serverIpInputField;
-  @ViewChild('serverPortInputField', { static: false }) serverPortInputField;
-  serverIp: string = "";
-  serverPort: number = -1;
+  @ViewChild('serverUrlInputField', { static: false }) serverUrlInputField;
+  serverUrl: string = "";
 
   constructor(private rqmSettingsService: RQMSettingsService) {
-    this.serverIp = this.rqmSettingsService.rqmSettingsModel.serverIpAddress;
-    this.serverPort = this.rqmSettingsService.rqmSettingsModel.serverPort;
+    this.serverUrl = this.rqmSettingsService.rqmSettingsModel.serverUrl;
   }
 
   ngOnInit() {
-    
+
   }
 
   ///Saves the currently set settings.
   saveSettings() {
-    this.rqmSettingsService.rqmSettingsModel.serverIpAddress = this.serverIpInputField.nativeElement.value;
-    this.rqmSettingsService.rqmSettingsModel.serverPort = this.serverPortInputField.nativeElement.value;
+    this.rqmSettingsService.rqmSettingsModel.serverUrl = this.serverUrlInputField.nativeElement.value;
     this.rqmSettingsService.saveSettings();
   }
-
-
-
 }

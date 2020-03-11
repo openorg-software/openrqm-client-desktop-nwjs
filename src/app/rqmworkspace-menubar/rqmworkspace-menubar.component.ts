@@ -8,6 +8,10 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
+import { UserManagementService } from 'openrqm-api'
+import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+
 @Component({
   selector: 'app-rqmworkspace-menubar',
   templateUrl: './rqmworkspace-menubar.component.html',
@@ -19,7 +23,11 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
 
   closeResult: string;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.userManagementService.configuration.apiKeys = {};
+    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+  }
 
   ngOnInit() {
   }
@@ -40,6 +48,10 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  logout() {
+    this.userManagementService.logout(0);
   }
 
 }
