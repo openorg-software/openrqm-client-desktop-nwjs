@@ -85,14 +85,14 @@ steps:
   displayName: 'Set Release Tag if development branch'
 
 - task: GithubRelease@0 
-  condition: or(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development')))
+  condition: succeeded()
   displayName: 'Create GitHub Release'      
   inputs:
     gitHubConnection: benjaminSchilling33
     repositoryName: openrqm/openrqm-client-desktop-nwjs
     action: edit
     tagSource: manual
-    tag: $(releasetag) 
+    tag: user-and-access-groups
     assetUploadMode: replace
     assets: |
          $(Build.Repository.LocalPath)/README.pdf
