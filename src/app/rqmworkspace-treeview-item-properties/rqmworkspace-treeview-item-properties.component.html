@@ -5,132 +5,90 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<div class="modal-body">
-  <div class="row">
-    <div class="col-sm-6">
-      <div *ngIf=" item.isDocument ">
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Document Name</mat-label>
-              <input matInput #documentName>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Workspace</mat-label>
-              <input matInput #workspaceId>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Short Name</mat-label>
-              <input matInput #shortName>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Description</mat-label>
-              <input matInput #description>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Confidentiality</mat-label>
-              <input matInput #confidentiality>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Author</mat-label>
-              <input matInput type="number" #authorId>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Reviewer</mat-label>
-              <input matInput type="text" #reviewerText>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Approver</mat-label>
-              <input matInput type="number" #approverId>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Language</mat-label>
-              <input matInput type="number" #languageId>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>External Identifier</mat-label>
-              <input matInput #externalIdentifier>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div *ngIf=" !item.isDocument ">
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-label>Workspace Id: </mat-label>
-            <mat-label>{{item.value}}</mat-label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Workspace Name</mat-label>
-              <input matInput #workspaceName>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-3">
-            <mat-form-field>
-              <mat-label>Parent Workspace</mat-label>
-              <input matInput #parentWorkspace>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="row">
-        <div class="col-sm-10">
-          Access Control List
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-10">
-          <app-rqmaccess-control-list></app-rqmaccess-control-list>
-        </div>
-      </div>
-    </div>
-  </div>
+<h4 mat-dialog-title *ngIf="item.isItemDocument()">Document Properties</h4>
+<h4 mat-dialog-title *ngIf="item.isItemWorkspace()">Workspace Properties</h4>
 
-  <div class="modal-footer">
-    <button *ngIf=" item.isDocument " mat-raised-button (click)="updateDocument()">Update Document</button>
-    <button *ngIf=" !item.isDocument " mat-raised-button (click)="updateWorkspace()">Update Workspace</button>
+<mat-dialog-content>
+  <!-- If a document is viewed-->
+  <div *ngIf=" item.isItemDocument()">
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Document Name</mat-label>
+        <input matInput #documentName>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Workspace</mat-label>
+        <input matInput #workspaceId>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Short Name</mat-label>
+        <input matInput #shortName>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput #description>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Confidentiality</mat-label>
+        <input matInput #confidentiality>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Author</mat-label>
+        <input matInput type="number" #authorId>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Reviewer</mat-label>
+        <input matInput type="text" #reviewerText>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Approver</mat-label>
+        <input matInput type="number" #approverId>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>Language</mat-label>
+        <input matInput type="number" #languageId>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label>External Identifier</mat-label>
+        <input matInput #externalIdentifier>
+      </mat-form-field>
+    </mat-list-item>
   </div>
-</div>
+  <!-- If a workspace is viewed-->
+  <div *ngIf=" item.isItemWorkspace()">
+    <mat-label>Workspace Id: </mat-label>
+    <mat-label>{{item.value}}</mat-label>
+    <mat-form-field>
+      <mat-label>Workspace Name</mat-label>
+      <input matInput #workspaceName>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Parent Workspace</mat-label>
+      <input matInput #parentWorkspace>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close *ngIf=" item.isItemDocument()" (click)="updateDocument()">Update Document</button>
+  <button mat-raised-button mat-dialog-close *ngIf=" item.isItemWorkspace()" (click)="updateWorkspace()">Update Workspace</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

@@ -36,6 +36,8 @@ export class RQMUserSettingsModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    //TODO
+    // use user/info when it is available this.userManagementService.
 
   }
 

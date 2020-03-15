@@ -36,10 +36,19 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialogNewWorkspace() {
-    const dialogRef = this.dialog.open(RQMAddWorkspaceComponent, {
-      width: '80vw'
+  openDialog(component: any, dataValue?: any): any {
+    return this.dialog.open(component, {
+      width: '80vw',
+      data: dataValue
     });
+  }
+
+  openDialogNewWorkspace() {
+    const dialogRef = this.openDialog(RQMAddWorkspaceComponent,
+      {
+        parentId: null,
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -47,8 +56,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   }
 
   openDialogServerSettings() {
-    const dialogRef = this.dialog.open(RQMServerSettingsModalComponent, {
-      width: '80vw'
+    const dialogRef = this.openDialog(RQMServerSettingsModalComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -56,8 +64,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
     });
   }
   openDialogUserSettings() {
-    const dialogRef = this.dialog.open(RQMUserSettingsModalComponent, {
-      width: '80vw'
+    const dialogRef = this.openDialog(RQMUserSettingsModalComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {

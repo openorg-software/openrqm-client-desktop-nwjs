@@ -2,10 +2,11 @@
 openrqm-client-desktop-nwjs
 RQMAddWorkspace Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -25,7 +26,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
   private parentId: number = -1;
   parentName: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
@@ -33,7 +34,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.parentId != -1) {
+    if (this.parentId != -1 && this.parentId != null) {
       this.workspaceService.getWorkspace(this.parentId).subscribe(
         workspace => {
           console.log(workspace);
@@ -68,8 +69,8 @@ export class RQMAddWorkspaceComponent implements OnInit {
       },
       () => {
         console.log('add workspace done');
+        this.router.navigate(['/workspace-tree']);
       }
     );
-    //window.location.reload();
   }
 }

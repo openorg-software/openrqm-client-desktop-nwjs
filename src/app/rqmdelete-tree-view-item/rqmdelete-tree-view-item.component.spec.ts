@@ -1,27 +1,27 @@
 /*
 openrqm-client-desktop-nwjs
-RQMAssignAccessGroup Component Tests
+RQMDeleteTreeViewItem Component Tests
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RQMAssignAccessGroupComponent } from './rqmassign-access-group.component';
+import { RQMDeleteTreeViewItemComponent } from './rqmdelete-tree-view-item.component';
 
-describe('RQMAssignAccessGroupComponent', () => {
-  let component: RQMAssignAccessGroupComponent;
-  let fixture: ComponentFixture<RQMAssignAccessGroupComponent>;
+describe('RQMDeleteTreeViewItemComponent', () => {
+  let component: RQMDeleteTreeViewItemComponent;
+  let fixture: ComponentFixture<RQMDeleteTreeViewItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RQMAssignAccessGroupComponent]
+      declarations: [RQMDeleteTreeViewItemComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RQMAssignAccessGroupComponent);
+    fixture = TestBed.createComponent(RQMDeleteTreeViewItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

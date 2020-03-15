@@ -5,7 +5,9 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
@@ -18,6 +20,8 @@ import { RQMUserService } from '../rqmuser.service';
   styleUrls: ['./rqmworkspace-treeview-item-properties.component.css']
 })
 export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
+
+  private item: RQMWorkspaceTreeViewItem;
 
   workspace: RQMWorkspace;
   // To fetch/update the document properties
@@ -40,22 +44,24 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   @ViewChild('languageId', { static: false }) languageId;
   @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
 
-  // The item we want to manipulate
-  @Input() public item: RQMWorkspaceTreeViewItem;
-
-  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
 
-    this.documentService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentService.configuration.apiKeys = {};
-    this.documentService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentsService.configuration.apiKeys = {};
+    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
+    if (data.item != null) {
+      this.item = data.item;
+    } else {
+      console.log("Data.item is null");
+    }
   }
 
   ngOnInit() {
-    if (this.item.isDocument) {
-      this.documentService.getDocument(this.item.value).subscribe(
+    if (this.item.isItemDocument()) {
+      this.documentsService.getDocument(this.item.value).subscribe(
         (doc) => {
           console.log(doc);
           this.document = doc;
@@ -149,7 +155,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
     document.previousBaselineId = null;
 
     console.log(document);
-    this.documentService.patchDocument(document).subscribe(
+    this.documentsService.patchDocument(document).subscribe(
       next => {
         console.log('next');
         console.log(next);

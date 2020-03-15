@@ -1,0 +1,19 @@
+<!-- 
+openrqm-client-desktop-nwjs
+RQMDeleteTreeViewItem Component Template
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+-->
+
+<h4 mat-dialog-title *ngIf="item.isItemDocument() ">Delete Document</h4>
+<h4 mat-dialog-title *ngIf=" item.isItemWorkspace() ">Delete Workspace</h4>
+
+<mat-dialog-content>
+  <mat-label>Do you really want to delete this object?</mat-label>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close *ngIf=" item.isItemDocument() " (click)="deleteDocument()">Confirm</button>
+  <button mat-raised-button mat-dialog-close *ngIf=" item.isItemWorkspace() " (click)="deleteWorkspace()">Confirm</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

@@ -5,10 +5,12 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { DocumentsService, RQMDocument } from 'openrqm-api'
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -29,12 +31,13 @@ export class RQMAddDocumentComponent implements OnInit {
   @ViewChild('languageId', { static: false }) languageId: { nativeElement: { value: number; }; };
   @ViewChild('externalIdentifier', { static: false }) externalIdentifier: { nativeElement: { value: string; }; };
 
-  @Input() public parentId: any;
+  public parentId: any;
 
-  constructor(private documentsSerivce: DocumentsService, public activeModal: NgbActiveModal, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsSerivce.configuration.apiKeys = {};
     this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
+    this.parentId = data.parentId;
   }
 
   ngOnInit() {
@@ -72,14 +75,9 @@ export class RQMAddDocumentComponent implements OnInit {
       },
       () => {
         console.log('add document done');
+        this.router.navigate(['/workspace-tree']);
       }
     );
-    this.passBack();
-    window.location.reload();
-  }
-
-  passBack() {
-    this.activeModal.close();
   }
 
 }

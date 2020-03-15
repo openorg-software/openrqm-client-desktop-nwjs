@@ -51,6 +51,7 @@ import { RQMDocumentThemeComponent } from './rqmdocument-theme/rqmdocument-theme
 import { RQMAccessControlListComponent } from './rqmaccess-control-list/rqmaccess-control-list.component';
 import { RQMAssignUsersComponent } from './rqmassign-users/rqmassign-users.component';
 import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassign-access-group.component';
+import { RQMDeleteTreeViewItemComponent } from './rqmdelete-tree-view-item/rqmdelete-tree-view-item.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassig
     RQMAccessControlListComponent,
     RQMAssignUsersComponent,
     RQMAssignAccessGroupComponent,
+    RQMDeleteTreeViewItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +101,9 @@ import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassig
     RQMUserSettingsModalComponent,
     RQMDocumentExporterComponent,
     RQMDocumentThemeComponent,
-    RQMRegisterComponent
+    RQMRegisterComponent,
+    RQMDeleteTreeViewItemComponent,
+    RQMAddDocumentComponent
   ],
   bootstrap: [AppComponent]
 })

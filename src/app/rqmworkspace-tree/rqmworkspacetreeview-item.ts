@@ -7,9 +7,10 @@ Copyright (C) 2019-2020 Benjamin Schilling
 
 import { TreeviewItem } from 'ngx-treeview';
 export class RQMWorkspaceTreeViewItem extends TreeviewItem {
-    public isDocument?: boolean;
+    private isDocument?: boolean;
     public internalIdentifier?: number;
     public children: RQMWorkspaceTreeViewItem[];
+
     constructor(text?: string, value?: number, collapsed?: boolean, children?: RQMWorkspaceTreeViewItem[], isDocument?: boolean, internalIdentifier?: number) {
         super({
             text: text, value: value, collapsed: collapsed
