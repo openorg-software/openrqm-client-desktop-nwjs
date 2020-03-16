@@ -5,14 +5,24 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-.col-xs-3 {
-  width: 100%;
-}
-
 mat-form-field {
   width: 100%;
 }
 
-.col-lg-1 {
-  width: 100%;
+.grid-container {
+  display: grid;
+}
+
+.grid-left {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.grid-right {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+mat-dialog-content {
+  height: 70vh;
 }

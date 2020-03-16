@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -26,7 +27,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
   private parentId: number = -1;
   parentName: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
@@ -70,7 +71,14 @@ export class RQMAddWorkspaceComponent implements OnInit {
       () => {
         console.log('add workspace done');
         this.router.navigate(['/workspace-tree']);
+        this.openSnackBar("Added workspace " + workspace.name + ".");
       }
     );
+  }
+
+  openSnackBar(message: string) {
+    let snackBarRef = this._snackBar.open(message, null, {
+      duration: 2000,
+    });
   }
 }

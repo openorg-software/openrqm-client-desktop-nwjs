@@ -9,6 +9,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
 import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
@@ -27,7 +28,7 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
 
   private item: RQMWorkspaceTreeViewItem;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
 
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
@@ -63,6 +64,7 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
       () => {
         console.log('delete workspace done');
         this.router.navigate(['/workspace-tree']);
+        this.openSnackBar("Deleted workspace " + this.item.text + ".");
       }
     );
   }
@@ -80,8 +82,14 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
       () => {
         console.log('delete document done');
         this.router.navigate(['/workspace-tree']);
+        this.openSnackBar("Deleted document " + this.item.text + ".");
       }
     );
   }
 
+  openSnackBar(message: string) {
+    let snackBarRef = this._snackBar.open(message, null, {
+      duration: 2000,
+    });
+  }
 }

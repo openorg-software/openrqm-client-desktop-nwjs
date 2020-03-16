@@ -16,8 +16,8 @@ import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { UserManagementService } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { RQMUserSettingsModalComponent } from '../rqmuser-settings-modal/rqmuser-settings-modal.component';
-import { RQMServerSettingsModalComponent } from '../rqmserver-settings-modal/rqmserver-settings-modal.component';
+import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
+import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 import { RQMDocumentExporterComponent } from '../rqmdocument-exporter/rqmdocument-exporter.component';
 import { RQMDocumentThemeComponent } from '../rqmdocument-theme/rqmdocument-theme.component';
@@ -158,7 +158,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   }
 
   openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsModalComponent);
+    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -166,7 +166,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   }
 
   openDialogUserSettings() {
-    const dialogRef = this.openDialog(RQMUserSettingsModalComponent);
+    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

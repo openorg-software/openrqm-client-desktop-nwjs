@@ -14,7 +14,7 @@ import { UserManagementService } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
-import { RQMServerSettingsModalComponent } from '../rqmserver-settings-modal/rqmserver-settings-modal.component';
+import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
 import { RQMRegisterComponent } from '../rqmregister/rqmregister.component'
 
 import * as jssha512 from 'js-sha512';
@@ -47,7 +47,7 @@ export class RQMLoginComponent implements OnInit {
   }
 
   openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsModalComponent);
+    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

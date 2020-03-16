@@ -7,6 +7,7 @@ import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
 // Material Design
 import { MatMenuTrigger } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
 import { ElementsService, RQMElement, RQMElementType, DocumentsService } from 'openrqm-api';
@@ -52,7 +53,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() requirementColor: string;
   @Input() proseColor: string;
 
-  constructor(private elementsService: ElementsService, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private userService: RQMUserService) {
+  constructor(private elementsService: ElementsService, private _snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private userService: RQMUserService) {
     //Initialization
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.elementsService.configuration.apiKeys = {};
@@ -63,56 +64,66 @@ export class RQMDocumentEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("onInit req color: " + this.requirementColor);
     if (this.linking && this.linkingDocumentId != -1) {
       this.documentId = this.linkingDocumentId;
     } else {
       this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
     }
 
-    this.documentsSerivce.getDocument(this.documentId).subscribe(
-      doc => {
-        this.documentShortName = doc.shortName;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-        console.log(this.documentShortName);
-      }
-    );
-
-    this.elementsService.getElements(this.documentId).subscribe(
-      el => {
-        this.elements = el;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-        console.log(this.elements);
-        if (this.elements.length == 0) {
-          this.addFirstElement();
+    if (this.documentShortName == null || this.documentShortName == "") {
+      console.log("fetched short name");
+      this.documentsSerivce.getDocument(this.documentId).subscribe(
+        doc => {
+          this.documentShortName = doc.shortName;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log(this.documentShortName);
         }
-      }
-    );
-    this.elementsService.getElementTypes().subscribe(
-      types => {
-        this.elementTypes = types;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-        console.log(this.elementTypes);
-      }
-    );
-
-    if (this.linking) {
-      this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
-    } else {
-      this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
+      );
     }
+
+    if (this.elements == null || this.elements.length == 0) {
+      console.log("fetched elements");
+      this.elementsService.getElements(this.documentId).subscribe(
+        el => {
+          this.elements = el;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log(this.elements);
+          if (this.elements.length == 0) {
+            this.addFirstElement();
+          }
+        }
+      );
+    }
+    if (this.elementTypes == null || this.elementTypes.length == 0) {
+      console.log("fetched element types");
+      this.elementsService.getElementTypes().subscribe(
+        types => {
+          this.elementTypes = types;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log(this.elementTypes);
+        }
+      );
+    }
+    if (this.displayedColumns == null || this.displayedColumns.length == 0) {
+      if (this.linking) {
+        this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
+      } else {
+        this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
+      }
+    }
+
   }
 
   onContextMenu(event: MouseEvent, elementId: number) {
@@ -236,9 +247,10 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('add element done');
         this.elements.push(element);
+        this.openSnackBar("Added element after " + this.documentShortName + aboveElementId + ".");
       }
     );
-    this.reloadPage();
+    // this.reloadPage();
   }
 
 
@@ -283,8 +295,10 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('add element done');
         this.elements.push(element);
+        this.openSnackBar("Added element below " + this.documentShortName + aboveElementId + ".");
       }
     );
+
 
     this.reloadPage();
   }
@@ -312,6 +326,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('delete element done');
         this.elements.splice(this.elements.indexOf(element), 1);
+        this.openSnackBar("Deleted element " + this.documentShortName + elementId + ".");
       }
     );
     this.reloadPage();
@@ -369,6 +384,7 @@ export class RQMDocumentEditorComponent implements OnInit {
           console.log('patching element done');
           let index: number = this.elements.findIndex(el => el.id == elementId);
           this.elements[index] = element;
+          this.openSnackBar("Saved element " + this.documentShortName + elementId);
         }
       );
     }
@@ -385,5 +401,12 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   reloadPage() {
     this.router.navigate(['/document-viewer', this.documentId, this.documentShortName]);
+  }
+
+  openSnackBar(message: string) {
+    console.log("Open SnackBar: " + message);
+    let snackBarRef = this._snackBar.open(message, null, {
+      duration: 2000,
+    });
   }
 }

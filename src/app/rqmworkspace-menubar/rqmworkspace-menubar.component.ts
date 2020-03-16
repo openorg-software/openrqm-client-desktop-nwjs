@@ -12,8 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserManagementService } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { RQMUserSettingsModalComponent } from '../rqmuser-settings-modal/rqmuser-settings-modal.component';
-import { RQMServerSettingsModalComponent } from '../rqmserver-settings-modal/rqmserver-settings-modal.component';
+import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
+import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
 
 @Component({
@@ -56,7 +56,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   }
 
   openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsModalComponent, {
+    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -64,7 +64,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
     });
   }
   openDialogUserSettings() {
-    const dialogRef = this.openDialog(RQMUserSettingsModalComponent, {
+    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {

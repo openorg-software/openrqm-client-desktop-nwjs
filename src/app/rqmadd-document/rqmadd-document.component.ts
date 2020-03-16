@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DocumentsService, RQMDocument } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -33,7 +34,7 @@ export class RQMAddDocumentComponent implements OnInit {
 
   public parentId: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsSerivce.configuration.apiKeys = {};
     this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
@@ -75,9 +76,16 @@ export class RQMAddDocumentComponent implements OnInit {
       },
       () => {
         console.log('add document done');
+        this.openSnackBar("Added document " + document.name + ".");
         this.router.navigate(['/workspace-tree']);
       }
     );
+  }
+
+  openSnackBar(message: string) {
+    let snackBarRef = this._snackBar.open(message, null, {
+      duration: 2000,
+    });
   }
 
 }
