@@ -15,6 +15,7 @@ import { RQMUserService } from '../rqmuser.service';
 import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
 import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
 import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
+import { RQMManageAccessGroupsComponent } from '../rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @Component({
   selector: 'app-rqmworkspace-menubar',
@@ -55,6 +56,15 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
     });
   }
 
+  openDialogManageAccessGroups() {
+    const dialogRef = this.openDialog(RQMManageAccessGroupsComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   openDialogServerSettings() {
     const dialogRef = this.openDialog(RQMServerSettingsDialogComponent, {
     });
@@ -63,6 +73,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
   openDialogUserSettings() {
     const dialogRef = this.openDialog(RQMUserSettingsDialogComponent, {
     });

@@ -10,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 // OpenRQM
-import { LinksService } from 'openrqm-api';
+import { LinksService, RQMLink } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
+import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
+import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -29,6 +31,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   // For linking
   doLinking: boolean = false;
   startLinkElement: number = 0;
+  startLinkDocument: number = 0;
   showDocumentEditor: boolean = false;
   linkingDocumentId: number = -1;
 
@@ -74,13 +77,21 @@ export class RQMDocumentViewerComponent implements OnInit {
     }
   }
 
-  onCreateLinkFrom(elementId: number) {
-    console.log('create link from ' + elementId);
-    this.startLinkElement = elementId;
+  onCreateLinkFrom(wrappedLink: LinkWrapper) {
+    console.log('create link from document ' + wrappedLink.documentId + ' with element id' + wrappedLink.elementId);
+    this.startLinkElement = wrappedLink.elementId;
+    this.startLinkDocument = wrappedLink.documentId;
   }
-  onCreateLinkTo(elementId: number) {
-    console.log('create link to ' + elementId);
-    this.linksService.linkElement(this.startLinkElement, elementId, 1).subscribe(
+
+  onCreateLinkTo(wrappedLink: LinkWrapper) {
+    console.log('create link to document ' + wrappedLink.documentId + ' with element id' + wrappedLink.elementId);
+    let newLink = {} as RQMLink;
+    newLink.fromElementId = this.startLinkElement;
+    newLink.fromDocumentId = this.startLinkDocument;
+    newLink.toElementId = wrappedLink.elementId;
+    newLink.toDocumentId = wrappedLink.documentId;
+    newLink.linkTypeId = 1;
+    this.linksService.linkElement(newLink).subscribe(
       next => {
         console.log('next');
         console.log(next);

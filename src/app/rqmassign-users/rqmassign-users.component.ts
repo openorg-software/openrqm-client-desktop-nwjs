@@ -43,7 +43,11 @@ export class RQMAssignUsersComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loadData();
+  }
 
+  loadData() {
+    this.initialized = false;
     this.workspaceService.getUsersOfWorkspace(this.workspaceId).subscribe(
       usersOfWorkspace => {
         console.log(usersOfWorkspace);
@@ -59,7 +63,6 @@ export class RQMAssignUsersComponent implements OnInit {
         this.initialized = true;
       }
     );
-
   }
 
   openDialog(component: any, dataValue?: any): any {
@@ -78,23 +81,34 @@ export class RQMAssignUsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'success') {
-        this.workspaceService.getUsersOfWorkspace(this.workspaceId).subscribe(
-          usersOfWorkspace => {
-            console.log(usersOfWorkspace);
-
-            this.dataSourceUsers = new MatTableDataSource<RQMWorkspaceUser>(usersOfWorkspace);
-            this.dataSourceUsers.paginator = this.paginatorUsers;
-          },
-          err => {
-            console.log(err);
-          },
-          () => {
-            console.log('get users of workspace done');
-          }
-        );
+        this.loadData();
       }
       console.log('The dialog was closed');
     });
+  }
+
+
+
+  deleteUser() {
+    let users: RQMWorkspaceUser[] = this.selection.selected;
+
+    console.log(users);
+    users.forEach((user) => {
+      this.selection.deselect(user);
+      this.workspaceService.deleteUserOfWorkspace(this.workspaceId, user.userId).subscribe(
+        next => {
+          console.log(next);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('get users of workspace done');
+          this.loadData();
+        }
+      );
+    });
+
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -118,5 +132,4 @@ export class RQMAssignUsersComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
-
 }

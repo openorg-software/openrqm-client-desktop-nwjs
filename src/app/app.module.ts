@@ -54,6 +54,7 @@ import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassig
 import { RQMDeleteTreeViewItemComponent } from './rqmdelete-tree-view-item/rqmdelete-tree-view-item.component';
 import { RQMAddUserComponent } from './rqmadd-user/rqmadd-user.component';
 import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmult
     RQMDeleteTreeViewItemComponent,
     RQMAddUserComponent,
     RQMMultiLineSnackBarComponent,
+    RQMManageAccessGroupsComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,7 +111,8 @@ import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmult
     RQMDeleteTreeViewItemComponent,
     RQMAddDocumentComponent,
     RQMAddUserComponent,
-    RQMMultiLineSnackBarComponent
+    RQMMultiLineSnackBarComponent,
+    RQMManageAccessGroupsComponent
   ],
   bootstrap: [AppComponent]
 })

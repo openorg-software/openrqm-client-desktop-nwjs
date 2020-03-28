@@ -1,27 +1,27 @@
 /*
 openrqm-client-desktop-nwjs
-RQMAddUser Component Tests
+RQMManageAccessGroups Component Tests
 SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RQMAddUserComponent } from './rqmadd-user.component';
+import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups.component';
 
-describe('RQMAddUserComponent', () => {
-  let component: RQMAddUserComponent;
-  let fixture: ComponentFixture<RQMAddUserComponent>;
+describe('RQMManageAccessGroupsComponent', () => {
+  let component: RQMManageAccessGroupsComponent;
+  let fixture: ComponentFixture<RQMManageAccessGroupsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RQMAddUserComponent]
+      declarations: [RQMManageAccessGroupsComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RQMAddUserComponent);
+    fixture = TestBed.createComponent(RQMManageAccessGroupsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

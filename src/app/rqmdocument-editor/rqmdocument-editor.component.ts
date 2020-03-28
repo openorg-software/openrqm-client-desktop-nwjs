@@ -15,6 +15,10 @@ import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
+export class LinkWrapper {
+  constructor(public documentId: number, public elementId: number) { }
+}
+
 @Component({
   selector: 'app-rqmdocument-editor',
   templateUrl: './rqmdocument-editor.component.html',
@@ -46,7 +50,7 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() linkingDocumentId: number = -1;
   @Input() linkTo: boolean = false;
   @Input() linkFrom: boolean = false;
-  @Output() createLink = new EventEmitter<number>();
+  @Output() createLink = new EventEmitter<LinkWrapper>();
   selectedId: number = -1;
   oldSelectedId: number = -1;
 
@@ -397,7 +401,7 @@ export class RQMDocumentEditorComponent implements OnInit {
     if (this.linkFrom) {
       this.selectedId = id;
     }
-    this.createLink.emit(id);
+    this.createLink.emit(new LinkWrapper(this.documentId, id));
   }
 
   reloadPage() {
