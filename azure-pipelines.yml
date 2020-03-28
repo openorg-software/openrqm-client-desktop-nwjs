@@ -10,7 +10,7 @@ steps:
 
 - script: |
     sudo apt-get install npm debhelper
-    mkdir -p debian-packaging
+    mkdir -p debian-packagingng
     rsync -av --exclude='debian-packaging' . debian-packaging/
     cd debian-packaging
     dpkg-buildpackage -uc -us

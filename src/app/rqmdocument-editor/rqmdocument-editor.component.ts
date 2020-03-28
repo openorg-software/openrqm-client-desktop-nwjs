@@ -119,9 +119,9 @@ export class RQMDocumentEditorComponent implements OnInit {
     }
     if (this.displayedColumns == null || this.displayedColumns.length == 0) {
       if (this.linking) {
-        this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+        this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
       } else {
-        this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
+        this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
       }
     }
 
@@ -161,9 +161,9 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('add element done');
         this.elements.push(element);
+        this.reloadPage();
       }
     );
-    this.reloadPage();
   }
 
 
@@ -249,9 +249,9 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log('add element done');
         this.elements.push(element);
         this.openSnackBar("Added element after " + this.documentShortName + aboveElementId + ".");
+        // this.reloadPage();
       }
     );
-    // this.reloadPage();
   }
 
 
@@ -297,11 +297,11 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log('add element done');
         this.elements.push(element);
         this.openSnackBar("Added element below " + this.documentShortName + aboveElementId + ".");
+        this.reloadPage();
       }
     );
 
 
-    this.reloadPage();
   }
 
   // Add an element below the current element
@@ -328,9 +328,9 @@ export class RQMDocumentEditorComponent implements OnInit {
         console.log('delete element done');
         this.elements.splice(this.elements.indexOf(element), 1);
         this.openSnackBar("Deleted element " + this.documentShortName + elementId + ".");
+        this.reloadPage();
       }
     );
-    this.reloadPage();
   }
 
   onBlurCKeditor({ editor }: ChangeEvent, elementId: number) {

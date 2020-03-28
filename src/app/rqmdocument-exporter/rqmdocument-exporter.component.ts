@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { ExportService } from 'openrqm-api'
+import { ExportService, RQMTemplate } from 'openrqm-api'
 
 @Component({
   selector: 'app-rqmdocument-exporter',
@@ -24,6 +24,10 @@ export class RQMDocumentExporterComponent implements OnInit {
   documentId: number;
   exportType: string;
 
+  templates: RQMTemplate[];
+
+  selectedTemplate: number;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
     this.rqmExportService.configuration.apiKeys = {};
@@ -34,11 +38,40 @@ export class RQMDocumentExporterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.exportType == "pdf") {
+      this.rqmExportService.getPdfTemplates().subscribe(
+        next => {
+          console.log(next);
+          this.templates = next;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('get PDF templates done');
+        }
+      );
+    } else if (this.exportType == "markdown") {
+      this.rqmExportService.getMarkdownTemplates().subscribe(
+        next => {
+          console.log(next);
+          this.templates = next;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('get markdown templates done');
+        }
+      );
+    } else {
+      console.log("unhandled template type");
+    }
   }
 
   exportDocument() {
     if (this.exportType == "pdf") {
-      this.rqmExportService.exportPdf(this.documentId, 1).subscribe(
+      this.rqmExportService.exportPdf(this.documentId, this.selectedTemplate).subscribe(
         next => {
           console.log(next);
           const url = window.URL.createObjectURL(next);
@@ -52,7 +85,7 @@ export class RQMDocumentExporterComponent implements OnInit {
         }
       );
     } else if (this.exportType == "markdown") {
-      this.rqmExportService.exportMarkdown(this.documentId, 1).subscribe(
+      this.rqmExportService.exportMarkdown(this.documentId, this.selectedTemplate).subscribe(
         next => {
           console.log(next);
           const url = window.URL.createObjectURL(next);

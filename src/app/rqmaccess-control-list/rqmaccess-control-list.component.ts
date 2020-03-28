@@ -1,3 +1,10 @@
+/*
+openrqm-client-desktop-nwjs
+RQMAccessControlList Component Controller
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+*/
+
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
