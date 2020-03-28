@@ -118,9 +118,9 @@ export class RQMDocumentEditorComponent implements OnInit {
     }
     if (this.displayedColumns == null || this.displayedColumns.length == 0) {
       if (this.linking) {
-        this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
+        this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
       } else {
-        this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content'];
+        this.displayedColumns = ['id', 'elementTypeId', 'parentElementId', 'content', 'rank'];
       }
     }
 
@@ -243,6 +243,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       err => {
         console.log('err');
         console.log(err);
+        this.openSnackBar("Failed adding element after " + this.documentShortName + aboveElementId + "." + "\nError: " + err);
       },
       () => {
         console.log('add element done');
