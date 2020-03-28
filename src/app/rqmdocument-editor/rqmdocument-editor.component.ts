@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ElementsService, RQMElement, RQMElementType, DocumentsService } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
+import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
 @Component({
   selector: 'app-rqmdocument-editor',
@@ -195,7 +196,7 @@ export class RQMDocumentEditorComponent implements OnInit {
                 lastIndex = this.elements.indexOf(newElement);
                 continue;
               }
-              // If we are in the correct location in the tree and the parentId changed, the newElement  in the belowElement and the last element is the above element.
+              // If we are in the correct location in the tree and the parentId changed, the newElement in the belowElement and the last element is the above element.
               if (parentFound && lastParentId != null && lastParentId != newElement.parentElementId) {
                 aboveElement = this.elements[lastIndex];
                 belowElement = newElement;
@@ -204,7 +205,6 @@ export class RQMDocumentEditorComponent implements OnInit {
               lastParentId = newElement.parentElementId;
               lastIndex = this.elements.indexOf(newElement);
             }
-
           }
         }
 
@@ -406,8 +406,12 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   openSnackBar(message: string) {
     console.log("Open SnackBar: " + message);
-    let snackBarRef = this._snackBar.open(message, null, {
-      duration: 2000,
-    });
+    let messages: string[] = [];
+    messages.push(message);
+    let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+      data: messages,
+      duration: 3000
+    },
+    );
   }
 }

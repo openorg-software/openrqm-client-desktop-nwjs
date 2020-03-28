@@ -5,11 +5,20 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
+
+// Material Design
+import { MatMenuTrigger } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-
 import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+
+import { WorkspacesService, RQMWorkspaceUser } from 'openrqm-api'
+import { RQMAddUserComponent } from '../rqmadd-user/rqmadd-user.component';
 
 @Component({
   selector: 'app-rqmassign-users',
@@ -18,55 +27,96 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class RQMAssignUsersComponent implements OnInit {
 
+  @Input() workspaceId: number;
 
-  displayedColumnsUsers: string[] = ['userId', 'permissions'];
-  dataSourceUsers = new MatTableDataSource<RQMWorkspaceUser>(WorkspaceUsers);
+  displayedColumnsUsers: string[] = ['select', 'userId', 'permissions'];
+  dataSourceUsers: MatTableDataSource<RQMWorkspaceUser>;
+  selection = new SelectionModel<RQMWorkspaceUser>(true, []);
+
+  initialized: boolean = false;
+
   @ViewChild(MatPaginator, { static: true }) paginatorUsers: MatPaginator;
 
-  constructor() { }
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService) {
+
+  }
 
   ngOnInit() {
 
-    this.dataSourceUsers.paginator = this.paginatorUsers;
+
+    this.workspaceService.getUsersOfWorkspace(this.workspaceId).subscribe(
+      usersOfWorkspace => {
+        console.log(usersOfWorkspace);
+
+        this.dataSourceUsers = new MatTableDataSource<RQMWorkspaceUser>(usersOfWorkspace);
+        this.dataSourceUsers.paginator = this.paginatorUsers;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        console.log('get workspace done');
+        this.initialized = true;
+      }
+    );
+
+  }
+
+  openDialog(component: any, dataValue?: any): any {
+    return this.dialog.open(component, {
+      width: '80vw',
+      data: dataValue
+    });
+  }
+
+  openAddUser() {
+    const dialogRef = this.openDialog(RQMAddUserComponent,
+      {
+        workspaceId: this.workspaceId
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'success') {
+        this.workspaceService.getUsersOfWorkspace(this.workspaceId).subscribe(
+          usersOfWorkspace => {
+            console.log(usersOfWorkspace);
+
+            this.dataSourceUsers = new MatTableDataSource<RQMWorkspaceUser>(usersOfWorkspace);
+            this.dataSourceUsers.paginator = this.paginatorUsers;
+          },
+          err => {
+            console.log(err);
+          },
+          () => {
+            console.log('get users of workspace done');
+          }
+        );
+      }
+      console.log('The dialog was closed');
+    });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSourceUsers.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSourceUsers.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: RQMWorkspaceUser): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
 
 }
-
-
-export interface RQMWorkspaceUser {
-  workspaceId: number;
-  userId: number;
-  permissions: number;
-}
-
-
-const WorkspaceUsers: RQMWorkspaceUser[] = [
-  { workspaceId: 5, userId: 1, permissions: 9 },
-  { workspaceId: 5, userId: 2, permissions: 9 },
-  { workspaceId: 5, userId: 3, permissions: 9 },
-  { workspaceId: 5, userId: 4, permissions: 9 },
-  { workspaceId: 5, userId: 5, permissions: 9 },
-  { workspaceId: 5, userId: 6, permissions: 9 },
-  { workspaceId: 1, userId: 7, permissions: 6 },
-  { workspaceId: 2, userId: 8, permissions: 7 },
-  { workspaceId: 3, userId: 9, permissions: 8 },
-  { workspaceId: 4, userId: 10, permissions: 10 },
-  { workspaceId: 5, userId: 11, permissions: 9 },
-  { workspaceId: 5, userId: 12, permissions: 9 },
-  { workspaceId: 5, userId: 13, permissions: 9 },
-  { workspaceId: 5, userId: 14, permissions: 9 },
-  { workspaceId: 5, userId: 15, permissions: 9 },
-  { workspaceId: 5, userId: 16, permissions: 9 },
-  { workspaceId: 5, userId: 17, permissions: 9 },
-  { workspaceId: 5, userId: 18, permissions: 9 },
-  { workspaceId: 5, userId: 19, permissions: 9 },
-  { workspaceId: 5, userId: 20, permissions: 9 },
-  { workspaceId: 5, userId: 21, permissions: 9 },
-  { workspaceId: 5, userId: 22, permissions: 9 },
-  { workspaceId: 5, userId: 23, permissions: 9 },
-  { workspaceId: 5, userId: 24, permissions: 9 },
-  { workspaceId: 5, userId: 25, permissions: 9 },
-  { workspaceId: 5, userId: 26, permissions: 9 },
-  { workspaceId: 5, userId: 27, permissions: 9 },
-  { workspaceId: 5, userId: 28, permissions: 9 },
-];

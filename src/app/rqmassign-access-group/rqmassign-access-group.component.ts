@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2020 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -17,6 +17,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./rqmassign-access-group.component.css']
 })
 export class RQMAssignAccessGroupComponent implements OnInit {
+
+  @Input() workspaceId: number;
 
   displayedColumnsAccessGroups: string[] = ['accessGroupId', 'permissions'];
   dataSourceAccessGroups = new MatTableDataSource<RQMWorkspaceAccessGroup>(WorkspaceAccessGroups);

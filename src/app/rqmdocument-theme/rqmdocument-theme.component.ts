@@ -44,7 +44,7 @@ export class RQMDocumentThemeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.themesService.getThemes(this.documentId).subscribe(
+    this.themesService.getThemesOfDocument(this.documentId).subscribe(
       themes => {
         console.log(themes);
         this.themes = themes;
