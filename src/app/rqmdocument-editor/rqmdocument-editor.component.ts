@@ -16,7 +16,7 @@ import { RQMUserService } from '../rqmuser.service';
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
 export class LinkWrapper {
-  constructor(public documentId: number, public elementId: number) { }
+  constructor(public documentId: number, public documentShortName: string, public elementId: number) { }
 }
 
 @Component({
@@ -247,12 +247,12 @@ export class RQMDocumentEditorComponent implements OnInit {
       err => {
         console.log('err');
         console.log(err);
-        this.openSnackBar("Failed adding element after " + this.documentShortName + aboveElementId + "." + "\nError: " + err);
+        this.openSnackBar(["Failed adding element after " + this.documentShortName + aboveElementId + ".", "Error: " + err]);
       },
       () => {
         console.log('add element done');
         this.elements.push(element);
-        this.openSnackBar("Added element after " + this.documentShortName + aboveElementId + ".");
+        this.openSnackBar(["Added element after " + this.documentShortName + aboveElementId + "."]);
         // this.reloadPage();
       }
     );
@@ -300,7 +300,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('add element done');
         this.elements.push(element);
-        this.openSnackBar("Added element below " + this.documentShortName + aboveElementId + ".");
+        this.openSnackBar(["Added element below " + this.documentShortName + aboveElementId + "."]);
         this.reloadPage();
       }
     );
@@ -331,7 +331,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       () => {
         console.log('delete element done');
         this.elements.splice(this.elements.indexOf(element), 1);
-        this.openSnackBar("Deleted element " + this.documentShortName + elementId + ".");
+        this.openSnackBar(["Deleted element " + this.documentShortName + elementId + "."]);
         this.reloadPage();
       }
     );
@@ -389,7 +389,7 @@ export class RQMDocumentEditorComponent implements OnInit {
           console.log('patching element done');
           let index: number = this.elements.findIndex(el => el.id == elementId);
           this.elements[index] = element;
-          this.openSnackBar("Saved element " + this.documentShortName + elementId);
+          this.openSnackBar(["Saved element " + this.documentShortName + elementId + "."]);
         }
       );
     }
@@ -401,17 +401,15 @@ export class RQMDocumentEditorComponent implements OnInit {
     if (this.linkFrom) {
       this.selectedId = id;
     }
-    this.createLink.emit(new LinkWrapper(this.documentId, id));
+    this.createLink.emit(new LinkWrapper(this.documentId, this.documentShortName, id));
   }
 
   reloadPage() {
     this.router.navigate(['/document-viewer', this.documentId, this.documentShortName]);
   }
 
-  openSnackBar(message: string) {
-    console.log("Open SnackBar: " + message);
-    let messages: string[] = [];
-    messages.push(message);
+  openSnackBar(messages: string[]) {
+    console.log("Open SnackBar: " + messages);
     let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
       data: messages,
       duration: 3000

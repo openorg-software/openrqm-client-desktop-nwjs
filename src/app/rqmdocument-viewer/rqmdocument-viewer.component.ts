@@ -9,6 +9,10 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
+// Material Design
+import { MatMenuTrigger } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 // OpenRQM
 import { LinksService, RQMLink } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -31,7 +35,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   // For linking
   doLinking: boolean = false;
   startLinkElement: number = 0;
-  startLinkDocument: number = 0;
+  startLinkDocumentId: number = 0;
+  startLinkDocumentShortName: string = "";
   showDocumentEditor: boolean = false;
   linkingDocumentId: number = -1;
 
@@ -39,7 +44,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   requirementColor: string = "#acecde";
   proseColor: string = "#adadad";
 
-  constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
+  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
     this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
     this.linksService.configuration.apiKeys = {};
@@ -78,16 +83,17 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   onCreateLinkFrom(wrappedLink: LinkWrapper) {
-    console.log('create link from document ' + wrappedLink.documentId + ' with element id' + wrappedLink.elementId);
+    console.log('create link from document ' + wrappedLink.documentShortName + ' with element id' + wrappedLink.elementId);
     this.startLinkElement = wrappedLink.elementId;
-    this.startLinkDocument = wrappedLink.documentId;
+    this.startLinkDocumentId = wrappedLink.documentId;
+    this.startLinkDocumentShortName = wrappedLink.documentShortName;
   }
 
   onCreateLinkTo(wrappedLink: LinkWrapper) {
-    console.log('create link to document ' + wrappedLink.documentId + ' with element id' + wrappedLink.elementId);
+    console.log('create link to document ' + wrappedLink.documentShortName + ' with element id' + wrappedLink.elementId);
     let newLink = {} as RQMLink;
     newLink.fromElementId = this.startLinkElement;
-    newLink.fromDocumentId = this.startLinkDocument;
+    newLink.fromDocumentId = this.startLinkDocumentId;
     newLink.toElementId = wrappedLink.elementId;
     newLink.toDocumentId = wrappedLink.documentId;
     newLink.linkTypeId = 1;
@@ -99,9 +105,11 @@ export class RQMDocumentViewerComponent implements OnInit {
       err => {
         console.log('err');
         console.log(err);
+        this.openSnackBar(['Creating link failed.']);
       },
       () => {
         console.log('linking elements done');
+        this.openSnackBar(['Created link.', 'From ' + this.startLinkDocumentShortName + newLink.fromElementId + ' to ' + wrappedLink.documentShortName + newLink.toElementId]);
       }
     );
   }
@@ -118,5 +126,13 @@ export class RQMDocumentViewerComponent implements OnInit {
 
   onProseColorChange(color: string) {
     this.proseColor = color;
+  }
+
+  openSnackBar(messages: string[]) {
+    let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+      data: messages,
+      duration: 3000
+    },
+    );
   }
 }
