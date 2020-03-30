@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 // Material Design
-import { MatMenuTrigger } from '@angular/material'
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
@@ -129,7 +128,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   openSnackBar(messages: string[]) {
-    let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+    this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
       data: messages,
       duration: 3000
     },

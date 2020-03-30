@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 
 
 // Material Design
-import { MatMenuTrigger } from '@angular/material'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';

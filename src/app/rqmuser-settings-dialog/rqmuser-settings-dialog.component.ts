@@ -6,11 +6,9 @@ Copyright (C) 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 
 
 // Material Design
-import { MatMenuTrigger } from '@angular/material'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -107,7 +105,7 @@ export class RQMUserSettingsDialogComponent implements OnInit {
 
     openSnackBar(messages: string[]) {
         console.log("Open SnackBar: " + messages);
-        let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+        this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
             data: messages,
             duration: 3000
         },

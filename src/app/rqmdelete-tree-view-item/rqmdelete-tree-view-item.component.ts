@@ -88,7 +88,7 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
   }
 
   openSnackBar(message: string) {
-    let snackBarRef = this._snackBar.open(message, null, {
+    this._snackBar.open(message, null, {
       duration: 2000,
     });
   }

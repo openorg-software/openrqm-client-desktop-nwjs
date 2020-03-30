@@ -410,7 +410,7 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   openSnackBar(messages: string[]) {
     console.log("Open SnackBar: " + messages);
-    let snackBarRef = this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+    this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
       data: messages,
       duration: 3000
     },
