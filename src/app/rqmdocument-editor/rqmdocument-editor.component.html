@@ -1,18 +1,21 @@
 <!-- SONARQUBE HTML IGNORE START -->
-<table mat-table [dataSource]="elements">
+<table #elementTable mat-table [dataSource]="wrappedElements">
+  <!-- Container for column with buttons for linking -->
   <ng-container matColumnDef="link" *ngIf="linking">
     <th mat-header-cell *matHeaderCellDef>
       <div *ngIf="linkTo"> Link to</div>
       <div *ngIf="linkFrom"> Link from </div>
     </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button [ngClass]="{'linkFromClass': selectedId == element.id}" (click)="link(element.id)">here</button>
+      <button mat-raised-button [ngClass]="{'linkFromClass': selectedId == element.id}" (click)="link(element.id)">Here</button>
     </td>
   </ng-container>
+  <!-- Container for column with requirement ID -->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)"> {{documentShortName}}_{{element.id}} </td>
   </ng-container>
+  <!-- Container with column for Element Type ID -->
   <ng-container matColumnDef="elementTypeId">
     <th mat-header-cell *matHeaderCellDef> Type </th>
     <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)">
@@ -28,10 +31,12 @@
       </div>
     </td>
   </ng-container>
+  <!-- Container for column with parent element id -->
   <ng-container matColumnDef="parentElementId">
     <th mat-header-cell *matHeaderCellDef> Parent </th>
     <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id, element.parentElementId)"> {{element.parentElementId}} </td>
   </ng-container>
+  <!-- Container with Content of Element -->
   <ng-container matColumnDef="content">
     <th mat-header-cell *matHeaderCellDef> Content </th>
     <td mat-cell *matCellDef="let element" style="width: 100%" (contextmenu)="onContextMenu($event,  element.id, element.parentElementId)">
@@ -44,10 +49,21 @@
       </div>
     </td>
   </ng-container>
+  <!-- Container for column with Rank of element -->
   <ng-container *ngIf="!linking" matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> Rank </th>
     <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id)"> {{element.rank}} </td>
   </ng-container>
+  <!-- Container for column with incoming and outgoing Links -->
+  <ng-container *ngIf="showLinks" matColumnDef="links">
+    <th mat-header-cell *matHeaderCellDef> Links </th>
+    <td mat-cell *matCellDef="let element" (contextmenu)="onContextMenu($event, element.id)">
+      <p *ngFor="let link of element.inlinks">Incoming: {{link.fromDocumentShortName}}_{{link.fromElementId}}</p>
+      <p *ngFor="let link of element.outlinks">Outgoing: {{link.toDocumentShortName}}_{{link.toElementId}}</p>
+    </td>
+  </ng-container>
+
+  <!-- Row and header definition -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
@@ -60,6 +76,8 @@
     <button mat-menu-item (click)="addElementBelow(elementId,parentId)">Add element below</button>
     <button mat-menu-item (click)="deleteElement(elementId,parentId)">Delete element</button>
     <button mat-menu-item (click)="saveElement(elementId,parentId, typeId, content )">Save element</button>
+    <button *ngIf="!showLinks" mat-menu-item (click)="toggleShowLinks()">Show links</button>
+    <button *ngIf="showLinks" mat-menu-item (click)="toggleShowLinks()">Hide links</button>
   </ng-template>
 </mat-menu>
 <!-- SONARQUBE HTML IGNORE END -->

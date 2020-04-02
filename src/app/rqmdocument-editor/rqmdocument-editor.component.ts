@@ -6,14 +6,15 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
 // Material Design
-import { MatMenuTrigger } from '@angular/material'
+import { MatMenuTrigger, MatTable } from '@angular/material'
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
-import { ElementsService, RQMElement, RQMElementType, DocumentsService } from 'openrqm-api';
+import { ElementsService, LinksService, RQMElement, RQMElementType, DocumentsService, RQMLink, RQMLinkType } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+import { RQMElementWrapper } from './rqmelement-wrapper';
 
 export class LinkWrapper {
   constructor(public documentId: number, public documentShortName: string, public elementId: number) { }
@@ -40,6 +41,8 @@ export class RQMDocumentEditorComponent implements OnInit {
   displayedColumns: string[];
 
   // For OpenRQM API
+  @ViewChild('elementTable', { static: false }) elementTable;
+  wrappedElements: RQMElementWrapper[] = [];
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
   documentId: number;
@@ -58,7 +61,12 @@ export class RQMDocumentEditorComponent implements OnInit {
   @Input() requirementColor: string;
   @Input() proseColor: string;
 
-  constructor(private elementsService: ElementsService, private _snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private userService: RQMUserService) {
+  // For displaying links
+  private showLinks: boolean = false;
+  links: RQMLink[] = [];
+  linkTypes: RQMLinkType[] = [];
+
+  constructor(private elementsService: ElementsService, private _snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private linksService: LinksService, private userService: RQMUserService) {
     //Initialization
     this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.elementsService.configuration.apiKeys = {};
@@ -74,7 +82,7 @@ export class RQMDocumentEditorComponent implements OnInit {
     } else {
       this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
     }
-
+    // Fetch the document name to display the IDs correctly
     if (this.documentShortName == null || this.documentShortName == "") {
       console.log("fetched short name");
       this.documentsSerivce.getDocument(this.documentId).subscribe(
@@ -89,7 +97,7 @@ export class RQMDocumentEditorComponent implements OnInit {
         }
       );
     }
-
+    // Fetch all elements
     if (this.elements == null || this.elements.length == 0) {
       console.log("fetched elements");
       this.elementsService.getElements(this.documentId).subscribe(
@@ -104,9 +112,58 @@ export class RQMDocumentEditorComponent implements OnInit {
           if (this.elements.length == 0) {
             this.addFirstElement();
           }
+          // Fetch all links of the document
+          this.documentsSerivce.getLinksOfDocument(this.documentId).subscribe(
+            links => {
+              this.links = links;
+            },
+            err => {
+              console.log(err);
+            },
+            () => {
+              console.log(this.links);
+              // Fetch all link types
+              this.linksService.getLinkTypes().subscribe(
+                linkTypes => {
+                  this.linkTypes = linkTypes;
+                  //Attach links to elements
+                  this.elements.forEach((element) => {
+                    let inlinks: RQMLink[] = [];
+                    let outlinks: RQMLink[] = [];
+                    //Figure out inlinks
+                    this.links.forEach((link) => {
+                      if (link.toElementId == element.id && link.toDocumentId == element.documentId) {
+                        inlinks.push(link);
+                      }
+                    });
+                    //Figure out outlinks
+                    this.links.forEach((link) => {
+                      if (link.fromElementId == element.id && link.fromDocumentId == element.documentId) {
+                        outlinks.push(link);
+                      }
+                    });
+                    //Merge elements and corresponding links
+                    this.wrappedElements.push(
+                      new RQMElementWrapper(element, inlinks, outlinks)
+                    );
+                  });
+                  console.log('Wrapped Elements:');
+                  console.log(this.wrappedElements);
+                  this.elementTable.renderRows();
+                },
+                err => {
+                  console.log(err);
+                },
+                () => {
+                  console.log(this.linkTypes);
+                }
+              );
+            }
+          );
         }
       );
     }
+    // Fetch all element types
     if (this.elementTypes == null || this.elementTypes.length == 0) {
       console.log("fetched element types");
       this.elementsService.getElementTypes().subscribe(
@@ -121,7 +178,10 @@ export class RQMDocumentEditorComponent implements OnInit {
         }
       );
     }
+
+    // Set the columns which should be displayed
     if (this.displayedColumns == null || this.displayedColumns.length == 0) {
+      // If the linking is enabled we have to show the link column which contains the button to select the source/target of the link
       if (this.linking) {
         this.displayedColumns = ['link', 'id', 'elementTypeId', 'parentElementId', 'content'];
       } else {
@@ -139,6 +199,17 @@ export class RQMDocumentEditorComponent implements OnInit {
     this.contextMenu.menuData = { 'elementId': elementId };
     this.contextMenu.openMenu();
   }
+
+  toggleShowLinks() {
+    this.showLinks = !this.showLinks;
+    if (this.showLinks) {
+      this.displayedColumns.push('links');
+    } else {
+      this.displayedColumns.splice(this.displayedColumns.indexOf('links'), 1);
+    }
+  }
+
+
 
   // Add the first element of the document to initialize
   addFirstElement(): void {
