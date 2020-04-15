@@ -1,12 +1,8 @@
-table {
-    width: 100%;
-  }
-
 .linkFromClass {
   background-color: gray;
 }
 
-.elementTypeColor{
+.elementTypeColor {
   height: 50px;
   width: 5px;
   float: left;

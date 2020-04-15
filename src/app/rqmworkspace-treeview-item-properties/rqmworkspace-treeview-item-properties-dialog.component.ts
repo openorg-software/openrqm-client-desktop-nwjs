@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeviewItemProperties Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
@@ -17,11 +17,11 @@ import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 @Component({
-  selector: 'app-rqmworkspace-treeview-item-properties',
-  templateUrl: './rqmworkspace-treeview-item-properties.component.html',
-  styleUrls: ['./rqmworkspace-treeview-item-properties.component.css']
+  selector: 'app-rqmworkspace-treeview-item-properties-dialog',
+  templateUrl: './rqmworkspace-treeview-item-properties-dialog.component.html',
+  styleUrls: ['./rqmworkspace-treeview-item-properties-dialog.component.css']
 })
-export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
+export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit {
 
   private item: RQMWorkspaceTreeViewItem;
 

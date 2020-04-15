@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -27,6 +27,7 @@ export class RQMDocumentExporterComponent implements OnInit {
   templates: RQMTemplate[];
 
   selectedTemplate: number;
+  @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
@@ -89,6 +90,8 @@ export class RQMDocumentExporterComponent implements OnInit {
         next => {
           console.log(next);
           const url = window.URL.createObjectURL(next);
+          console.log('URL:');
+          console.log(url);
           window.open(url);
         },
         err => {

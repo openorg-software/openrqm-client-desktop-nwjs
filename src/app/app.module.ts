@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 App Modules
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
 
@@ -10,7 +10,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,7 +41,7 @@ import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.co
 import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
 import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
 import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
-import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
+import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
 import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
 import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
 import { RQMUserSettingsDialogComponent } from './rqmuser-settings-dialog/rqmuser-settings-dialog.component';
@@ -58,7 +57,6 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
 
 @NgModule({
   declarations: [
-    AppComponent,
     RQMWorkspaceTreeComponent,
     RQMMainComponent,
     RQMWorkspaceTreeviewComponent,
@@ -70,7 +68,7 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     RQMAddDocumentComponent,
     RQMTracingComponent,
     RQMDocumentExporterComponent,
-    RQMWorkspaceTreeviewItemPropertiesComponent,
+    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
     RQMLoginComponent,
     RQMRegisterComponent,
     RQMUserSettingsDialogComponent,
@@ -103,7 +101,7 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,
     RQMDocumentMenubarComponent,
-    RQMWorkspaceTreeviewItemPropertiesComponent,
+    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
     RQMUserSettingsDialogComponent,
     RQMDocumentExporterComponent,
     RQMDocumentThemeComponent,
@@ -114,6 +112,6 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     RQMMultiLineSnackBarComponent,
     RQMManageAccessGroupsComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [RQMMainComponent]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeView Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
 // Angular
@@ -36,7 +36,7 @@ import { RQMUserService } from '../rqmuser.service';
 
 // OpenRQM API
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
-import { RQMWorkspaceTreeviewItemPropertiesComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
+import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
 
 @Component({
   selector: 'app-rqmworkspace-treeview',
@@ -182,7 +182,7 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    const dialogRef = this.openDialog(RQMWorkspaceTreeviewItemPropertiesComponent,
+    const dialogRef = this.openDialog(RQMWorkspaceTreeviewItemPropertiesDialogComponent,
       {
         item: item
       }

@@ -45,7 +45,7 @@
         <ckeditor *ngIf="linkFrom" [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
       </div>
       <div *ngIf="!linking">
-        <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
+        <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)" #editorElement></ckeditor>
       </div>
     </td>
   </ng-container>
@@ -67,6 +67,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
 <div *ngIf="!linkTo" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
 </div>
 

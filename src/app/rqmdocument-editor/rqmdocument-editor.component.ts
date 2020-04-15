@@ -37,11 +37,13 @@ export class RQMDocumentEditorComponent implements OnInit {
   editorConfig = {
     placeholder: 'Type the content here!',
     extraPlugins: [Base64UploaderPlugin],
+    toolbar: ['heading', '|', 'bold', 'italic', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', 'blockQuote', '|', 'imageUpload', 'insertTable'],
   };
   displayedColumns: string[];
 
   // For OpenRQM API
   @ViewChild('elementTable', { static: false }) elementTable;
+  @ViewChild('editorElement', { static: false }) editorElement;
   wrappedElements: RQMElementWrapper[] = [];
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
@@ -83,6 +85,7 @@ export class RQMDocumentEditorComponent implements OnInit {
       this.documentId = parseInt(this.route.snapshot.paramMap.get('id'));
     }
     // Fetch the document name to display the IDs correctly
+    let dateTimeBeforeGetDocument = new Date();
     if (this.documentShortName == null || this.documentShortName == "") {
       console.log("fetched short name");
       this.documentsSerivce.getDocument(this.documentId).subscribe(
@@ -97,7 +100,11 @@ export class RQMDocumentEditorComponent implements OnInit {
         }
       );
     }
+    let dateTimeAfterGetDocument = new Date();
+    console.log('Miliseconds for getDocument ' + (dateTimeAfterGetDocument.getTime() - dateTimeBeforeGetDocument.getTime()));
+
     // Fetch all elements
+    let dateTimeBeforeGetElements = new Date();
     if (this.elements == null || this.elements.length == 0) {
       console.log("fetched elements");
       this.elementsService.getElements(this.documentId).subscribe(
@@ -127,6 +134,8 @@ export class RQMDocumentEditorComponent implements OnInit {
                 linkTypes => {
                   this.linkTypes = linkTypes;
                   //Attach links to elements
+
+                  let dateTimeBeforeAttachLinks = new Date();
                   this.elements.forEach((element) => {
                     let inlinks: RQMLink[] = [];
                     let outlinks: RQMLink[] = [];
@@ -147,6 +156,8 @@ export class RQMDocumentEditorComponent implements OnInit {
                       new RQMElementWrapper(element, inlinks, outlinks)
                     );
                   });
+                  let dateTimeAfterAttachLinks = new Date();
+                  console.log('Miliseconds for attach links ' + (dateTimeAfterAttachLinks.getTime() - dateTimeBeforeAttachLinks.getTime()));
                   console.log('Wrapped Elements:');
                   console.log(this.wrappedElements);
                   this.elementTable.renderRows();
@@ -163,6 +174,8 @@ export class RQMDocumentEditorComponent implements OnInit {
         }
       );
     }
+    let dateTimeAfterGetElements = new Date();
+    console.log('Miliseconds for getElements ' + (dateTimeAfterGetElements.getTime() - dateTimeBeforeGetElements.getTime()));
     // Fetch all element types
     if (this.elementTypes == null || this.elementTypes.length == 0) {
       console.log("fetched element types");
@@ -412,6 +425,8 @@ export class RQMDocumentEditorComponent implements OnInit {
     const data = editor.getData();
     console.log(data);
     this.saveElement(elementId, null, data, null);
+
+    console.log(editor);
   }
 
   onElementTypeChange(typeDropdownEvent, elementId: number) {
