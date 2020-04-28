@@ -1,0 +1,29 @@
+<!-- 
+openrqm-client-desktop-nwjs
+RQMAddUser Component Template
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+-->
+
+<h4 mat-dialog-title>Add User</h4>
+<mat-dialog-content>
+  <mat-list-item>
+    <mat-form-field>
+      <mat-label>User Id</mat-label>
+      <mat-select [(value)]="selectedUser">
+        <mat-option *ngFor="let user of userInfos" [value]="user">{{user.email}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <mat-form-field>
+      <mat-label>Permissions</mat-label>
+      <input matInput #permissions type="number">
+    </mat-form-field>
+  </mat-list-item>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close (click)="addUser()">Add</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

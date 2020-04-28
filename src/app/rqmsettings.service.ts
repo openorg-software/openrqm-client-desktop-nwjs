@@ -8,11 +8,6 @@ Copyright (C) 2019-2020 Benjamin Schilling
 import { Injectable } from '@angular/core';
 import { RQMSettingsModel } from './rqmsettings-model'
 
-interface SettingsJsonObject {
-  serverIpAddress: string,
-  serverPort: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,27 +17,25 @@ export class RQMSettingsService {
   private DEVELOPMENT_MODE_OFF: boolean = false;
   public developmentMode: boolean = false;
 
-  public rqmSettingsModel: RQMSettingsModel = new RQMSettingsModel("", -1);
-  static settingsFileName = 'openrqm-settings.json';
-  filePath: string;
-  serverUrl: string = '';
+  public rqmSettingsModel: RQMSettingsModel = new RQMSettingsModel("");
+  static settingsFileName = "openrqm-settings.json";
+  private filePath: string = "";
 
   constructor() {
     this.filePath = RQMSettingsService.getFilePath();
     this.developmentMode = this.checkSettingsFile();
     if (this.developmentMode == this.DEVELOPMENT_MODE_ON) {
-      this.rqmSettingsModel.serverIpAddress = "127.0.0.1";
-      this.rqmSettingsModel.serverPort = 8090;
+      this.rqmSettingsModel.serverUrl = "http://127.0.0.1:8090";
     }
   }
 
   getApiBasePath(): string {
     if (this.developmentMode == this.DEVELOPMENT_MODE_OFF) {
       this.rqmSettingsModel = this.loadSettings();
-      return 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
+      return this.rqmSettingsModel.serverUrl;
     } else {
-      console.log("NW.js not available, falling back to development mode, server at " + this.rqmSettingsModel.serverIpAddress + " with port " + this.rqmSettingsModel.serverPort);
-      return 'http://' + this.rqmSettingsModel.serverIpAddress + ':' + this.rqmSettingsModel.serverPort + '/api/v1';
+      console.log("NW.js not available, falling back to development mode, server at " + this.rqmSettingsModel.serverUrl);
+      return this.rqmSettingsModel.serverUrl;
     }
   }
 
@@ -53,7 +46,7 @@ export class RQMSettingsService {
         console.log("OpenRQM settings file available");
       } else {
         console.log("OpenRQM settings file not available, creating initial one.");
-        this.rqmSettingsModel = new RQMSettingsModel("127.0.0.1", 8090);
+        this.rqmSettingsModel = new RQMSettingsModel("http://127.0.0.1:8090");
         this.saveSettings();
       }
       return this.DEVELOPMENT_MODE_OFF;
@@ -62,22 +55,19 @@ export class RQMSettingsService {
   }
 
   private loadSettings(): RQMSettingsModel {
-    let jsonString: string;
-    window.nw.require('fs').readFileSync(this.filePath, (err, data) => {
+    let jsonString: string = window.nw.require('fs').readFileSync(this.filePath, (err, data) => {
       if (err) throw err;
       jsonString = data;
+
+      console.log(jsonString);
     });
-    let jsonObject: SettingsJsonObject = JSON.parse(jsonString);
-    return new RQMSettingsModel(jsonObject.serverIpAddress, jsonObject.serverPort);
+    console.log(jsonString);
+    let jsonObject: RQMSettingsModel = JSON.parse(jsonString);
+    return jsonObject;
   }
 
-  saveServerIpAddress(serverIpAddres: string) {
-    this.rqmSettingsModel.serverIpAddress = serverIpAddres;
-    this.saveSettings();
-  }
-
-  saveServerPort(serverPort: number) {
-    this.rqmSettingsModel.serverPort = serverPort;
+  saveServerUrl(serverUrl: string) {
+    this.rqmSettingsModel.serverUrl = serverUrl;
     this.saveSettings();
   }
 
@@ -95,7 +85,6 @@ export class RQMSettingsService {
     } else {
       console.log('save settings while development mode is on');
     }
-
   }
 
   static getFilePath(): string {

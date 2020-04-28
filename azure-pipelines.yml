@@ -3,10 +3,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Copyright (C) 2019 Benjamin Schilling
 
-trigger:
-- master
-- development
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -14,7 +10,7 @@ steps:
 
 - script: |
     sudo apt-get install npm debhelper
-    mkdir -p debian-packaging
+    mkdir -p debian-packagingng
     rsync -av --exclude='debian-packaging' . debian-packaging/
     cd debian-packaging
     dpkg-buildpackage -uc -us
@@ -85,14 +81,14 @@ steps:
   displayName: 'Set Release Tag if development branch'
 
 - task: GithubRelease@0 
-  condition: or(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development')))
+  condition: succeeded()
   displayName: 'Create GitHub Release'      
   inputs:
     gitHubConnection: benjaminSchilling33
     repositoryName: openrqm/openrqm-client-desktop-nwjs
     action: edit
     tagSource: manual
-    tag: $(releasetag) 
+    tag: user-and-access-groups
     assetUploadMode: replace
     assets: |
          $(Build.Repository.LocalPath)/README.pdf

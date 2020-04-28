@@ -6,6 +6,6 @@ Copyright (C) 2020 Benjamin Schilling
 */
 
 export class RQMSettingsModel {
-    constructor(public serverIpAddress: string, public serverPort: number) {
+    constructor(public serverUrl: string) {
     }
 }

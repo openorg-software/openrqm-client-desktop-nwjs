@@ -5,12 +5,13 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { ExportService } from 'openrqm-api'
+import { ExportService, RQMTemplate } from 'openrqm-api'
 
 @Component({
   selector: 'app-rqmdocument-exporter',
@@ -20,23 +21,58 @@ import { ExportService } from 'openrqm-api'
 export class RQMDocumentExporterComponent implements OnInit {
 
   closeResult: string;
-  documentId: string;
+  documentId: number;
+  exportType: string;
 
-  @Input() type: string;
+  templates: RQMTemplate[];
 
-  constructor(private rqmExportService: ExportService, private route: ActivatedRoute, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  selectedTemplate: number;
+  @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
     this.rqmExportService.configuration.apiKeys = {};
     this.rqmExportService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.documentId = data.documentId;
+    this.exportType = data.type;
+
   }
 
   ngOnInit() {
-    this.documentId = this.route.snapshot.paramMap.get('id');
+    if (this.exportType == "pdf") {
+      this.rqmExportService.getPdfTemplates().subscribe(
+        next => {
+          console.log(next);
+          this.templates = next;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('get PDF templates done');
+        }
+      );
+    } else if (this.exportType == "markdown") {
+      this.rqmExportService.getMarkdownTemplates().subscribe(
+        next => {
+          console.log(next);
+          this.templates = next;
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('get markdown templates done');
+        }
+      );
+    } else {
+      console.log("unhandled template type");
+    }
   }
 
   exportDocument() {
-    if (this.type == "pdf") {
-      this.rqmExportService.exportPdf(Number(this.documentId), 1).subscribe(
+    if (this.exportType == "pdf") {
+      this.rqmExportService.exportPdf(this.documentId, this.selectedTemplate).subscribe(
         next => {
           console.log(next);
           const url = window.URL.createObjectURL(next);
@@ -49,11 +85,13 @@ export class RQMDocumentExporterComponent implements OnInit {
           console.log('export PDF document done');
         }
       );
-    } else if (this.type == "markdown") {
-      this.rqmExportService.exportMarkdown(Number(this.documentId), 1).subscribe(
+    } else if (this.exportType == "markdown") {
+      this.rqmExportService.exportMarkdown(this.documentId, this.selectedTemplate).subscribe(
         next => {
           console.log(next);
           const url = window.URL.createObjectURL(next);
+          console.log('URL:');
+          console.log(url);
           window.open(url);
         },
         err => {

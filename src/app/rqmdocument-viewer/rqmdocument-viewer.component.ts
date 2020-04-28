@@ -9,10 +9,15 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
+// Material Design
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 // OpenRQM
-import { LinksService } from 'openrqm-api';
+import { LinksService, RQMLink } from 'openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
+import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
+import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
 @Component({
   selector: 'app-rqmdocument-viewer',
@@ -29,6 +34,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   // For linking
   doLinking: boolean = false;
   startLinkElement: number = 0;
+  startLinkDocumentId: number = 0;
+  startLinkDocumentShortName: string = "";
   showDocumentEditor: boolean = false;
   linkingDocumentId: number = -1;
 
@@ -36,7 +43,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   requirementColor: string = "#acecde";
   proseColor: string = "#adadad";
 
-  constructor(private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
+  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
     this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
     this.linksService.configuration.apiKeys = {};
@@ -68,15 +75,28 @@ export class RQMDocumentViewerComponent implements OnInit {
   onDoLinking(doLinking: boolean) {
     console.log('emitted doLinking');
     this.doLinking = doLinking;
+    if (this.doLinking == false) {
+      this.showDocumentEditor = false;
+      this.linkingDocumentId = -1;
+    }
   }
 
-  onCreateLinkFrom(elementId: number) {
-    console.log('create link from ' + elementId);
-    this.startLinkElement = elementId;
+  onCreateLinkFrom(wrappedLink: LinkWrapper) {
+    console.log('create link from document ' + wrappedLink.documentShortName + ' with element id' + wrappedLink.elementId);
+    this.startLinkElement = wrappedLink.elementId;
+    this.startLinkDocumentId = wrappedLink.documentId;
+    this.startLinkDocumentShortName = wrappedLink.documentShortName;
   }
-  onCreateLinkTo(elementId: number) {
-    console.log('create link to ' + elementId);
-    this.linksService.linkElement(this.startLinkElement, elementId, 1).subscribe(
+
+  onCreateLinkTo(wrappedLink: LinkWrapper) {
+    console.log('create link to document ' + wrappedLink.documentShortName + ' with element id' + wrappedLink.elementId);
+    let newLink = {} as RQMLink;
+    newLink.fromElementId = this.startLinkElement;
+    newLink.fromDocumentId = this.startLinkDocumentId;
+    newLink.toElementId = wrappedLink.elementId;
+    newLink.toDocumentId = wrappedLink.documentId;
+    newLink.linkTypeId = 1;
+    this.linksService.linkElement(newLink).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -84,9 +104,11 @@ export class RQMDocumentViewerComponent implements OnInit {
       err => {
         console.log('err');
         console.log(err);
+        this.openSnackBar(['Creating link failed.']);
       },
       () => {
         console.log('linking elements done');
+        this.openSnackBar(['Created link.', 'From ' + this.startLinkDocumentShortName + newLink.fromElementId + ' to ' + wrappedLink.documentShortName + newLink.toElementId]);
       }
     );
   }
@@ -103,5 +125,13 @@ export class RQMDocumentViewerComponent implements OnInit {
 
   onProseColorChange(color: string) {
     this.proseColor = color;
+  }
+
+  openSnackBar(messages: string[]) {
+    this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
+      data: messages,
+      duration: 3000
+    },
+    );
   }
 }

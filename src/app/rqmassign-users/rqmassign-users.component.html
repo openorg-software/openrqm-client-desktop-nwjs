@@ -1,0 +1,57 @@
+<!-- 
+openrqm-client-desktop-nwjs
+RQMAssignUsers Component Template
+SPDX-License-Identifier: GPL-2.0-only
+Copyright (C) 2020 Benjamin Schilling
+-->
+
+<!-- SONARQUBE HTML IGNORE START -->
+<p>Users</p>
+
+<div class="mat-elevation-z1">
+  <table mat-table [dataSource]="dataSourceUsers">
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox *ngIf=initialized (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox *ngIf=initialized (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- UserId Column -->
+    <ng-container matColumnDef="userId">
+      <th mat-header-cell *matHeaderCellDef> User </th>
+      <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+    </ng-container>
+
+    <!-- Permission Column -->
+    <ng-container matColumnDef="permissions">
+      <th mat-header-cell *matHeaderCellDef> Permissions </th>
+      <td mat-cell *matCellDef="let element"> {{element.permissions}} </td>
+    </ng-container>
+
+    <!-- Interaction -->
+    <ng-container matColumnDef="interactionAdd">
+      <td mat-footer-cell *matFooterCellDef>
+        <button mat-raised-button (click)="openAddUser()">Add</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="interactionDelete">
+      <td mat-footer-cell *matFooterCellDef>
+        <button mat-raised-button (click)="deleteUser()">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsUsers"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsUsers;" (click)="selection.toggle(row)"></tr>
+    <tr mat-row *matFooterRowDef="['interactionAdd', 'interactionDelete']" class="example-second-footer-row">
+
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<!-- SONARQUBE HTML IGNORE END -->

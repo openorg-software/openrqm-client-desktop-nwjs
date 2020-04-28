@@ -2,24 +2,42 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeView Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
+// Angular
 import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { isNil } from 'lodash';
-import { TreeviewI18n, TreeviewConfig } from 'ngx-treeview';
-import { RQMWorkspaceTreeviewI18n } from './rqmworkspace-treeview-i18n';
-import { TreeviewComponent } from 'ngx-treeview';
-import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
-import { faFolder as faFolderRegular } from '@fortawesome/free-regular-svg-icons';
-import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { Router } from '@angular/router';
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+// Misc
+import { isNil } from 'lodash';
+
+// TreeView
+import { TreeviewI18n, TreeviewConfig } from 'ngx-treeview';
+import { TreeviewComponent } from 'ngx-treeview';
+
+// FontAwesome
+import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faFolder as faFolderRegular } from '@fortawesome/free-regular-svg-icons';
+
+// Material Design
+import { MatMenuTrigger } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+
+// OpenRQM
+import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
+import { RQMWorkspaceTreeviewI18n } from './rqmworkspace-treeview-i18n';
 import { RQMAddDocumentComponent } from '../rqmadd-document/rqmadd-document.component';
+import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
+
+import { RQMDeleteTreeViewItemComponent } from '../rqmdelete-tree-view-item/rqmdelete-tree-view-item.component';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
+
+// OpenRQM API
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
+import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
+
 @Component({
   selector: 'app-rqmworkspace-treeview',
   templateUrl: './rqmworkspace-treeview.component.html',
@@ -34,6 +52,11 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Input() value: any;
   @Output() valueChange = new EventEmitter<any>();
   @ViewChild(TreeviewComponent, { read: false, static: false }) treeviewComponent: TreeviewComponent;
+
+  // For context menu
+  @ViewChild(MatMenuTrigger, { static: false })
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
 
   // For linking
   @Input() linking: boolean = false;
@@ -54,8 +77,8 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   /// Router for navigation to documents
   closeResult: string;
 
-  constructor(
-    public i18n: TreeviewI18n, private router: Router, private modalService: NgbModal, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
+  constructor(public dialog: MatDialog,
+    public i18n: TreeviewI18n, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
     this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
     this.documentsService.configuration.apiKeys = {};
@@ -87,30 +110,42 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     console.log("select");
     console.log(item.value);
 
-    if (item.isDocument) {
-      if (this.linking) {
-        console.log("Emit from treeview: " + item.value);
-        this.selectedDocument.emit(item.value);
-      } else {
-        this.documentsService.getDocument(item.value).subscribe(
-          (doc) => {
-            this.router.navigate(['/document-viewer', item.value, doc.shortName]);
-          },
-          err => {
-            console.log('err');
-            console.log(err);
-          },
-          () => {
-            console.log('getting document done');
-          }
-        );
-      }
+    if (item.isItemDocument()) {
+      this.openDocument(item);
     }
   }
 
-  onContextMenu(event: MouseEvent, dropDown: any) {
+  openDocument(item: RQMWorkspaceTreeViewItem) {
+    if (this.linking) {
+      console.log("Emit from treeview: " + item.value);
+      this.selectedDocument.emit(item.value);
+    } else {
+      this.documentsService.getDocument(item.value).subscribe(
+        (doc) => {
+          this.router.navigate(['/document-viewer', item.value, doc.shortName]);
+        },
+        err => {
+          console.log('err');
+          console.log(err);
+        },
+        () => {
+          console.log('getting document done');
+        }
+      );
+    }
+
+  }
+
+  onContextMenu(event: MouseEvent, item: RQMWorkspaceTreeViewItem) {
     event.preventDefault();
-    dropDown.open();
+    this.itemId = item.value;
+    this.tempTreeViewItem = item;
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = {
+      item: this.tempTreeViewItem
+    };
+    this.contextMenu.openMenu();
   }
 
   private updateSelectedItem() {
@@ -136,82 +171,70 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     }
   }
 
-  openModal(content: any, item: RQMWorkspaceTreeViewItem) {
-    if (item.children === undefined) {
-      this.selectItem(item);
-    }
-    this.itemId = item.value;
-    this.tempTreeViewItem = item;
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  openDialog(component: any, dataValue?: any): any {
+    return this.dialog.open(component, {
+      width: '80vw',
+      data: dataValue
     });
   }
 
-  openAddDocument(item: RQMWorkspaceTreeViewItem) {
+  openWorkspaceItemProperties(item: RQMWorkspaceTreeViewItem) {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    const modalRef = this.modalService.open(RQMAddDocumentComponent);
-    console.log("givin item value to modal");
-    console.log(item.value);
-    modalRef.componentInstance.parentId = item.value;
-    modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    const dialogRef = this.openDialog(RQMWorkspaceTreeviewItemPropertiesDialogComponent,
+      {
+        item: item
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 
-  deleteWorkspace(item: RQMWorkspaceTreeViewItem) {
+  openDialogNewWorkspace(item: RQMWorkspaceTreeViewItem) {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    this.workspaceService.deleteWorkspace(item.value).subscribe(
-      next => {
-        console.log('next');
-        console.log(next);
-      },
-      err => {
-        console.log('err');
-        console.log(err);
-      },
-      () => {
-        console.log('delete workspace done');
+    const dialogRef = this.openDialog(RQMAddWorkspaceComponent,
+      {
+        parentId: item.value
       }
     );
-    this.router.navigate(['/workspace-tree']);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
-  deleteDocument(item: RQMWorkspaceTreeViewItem) {
+  openDialogAddDocument(item: RQMWorkspaceTreeViewItem) {
     if (item.children === undefined) {
       this.selectItem(item);
     }
-    this.documentsService.deleteDocument(item.value).subscribe(
-      next => {
-        console.log('next');
-        console.log(next);
-      },
-      err => {
-        console.log('err');
-        console.log(err);
-      },
-      () => {
-        console.log('delete workspace done');
+    const dialogRef = this.openDialog(RQMAddDocumentComponent,
+      {
+        parentId: item.value
       }
     );
-    this.router.navigate(['/workspace-tree']);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  openDialogDelete(item: RQMWorkspaceTreeViewItem) {
+    if (item.children === undefined) {
+      this.selectItem(item);
     }
+    const dialogRef = this.openDialog(RQMDeleteTreeViewItemComponent,
+      {
+        item: item
+      }
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

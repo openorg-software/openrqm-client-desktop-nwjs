@@ -2,10 +2,14 @@
 openrqm-client-desktop-nwjs
 RQMAddWorkspace Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -20,17 +24,18 @@ import { RQMUserService } from '../rqmuser.service';
 export class RQMAddWorkspaceComponent implements OnInit {
 
   @ViewChild('workspaceName', { static: false }) workspaceName: { nativeElement: { value: string; }; };
-  @Input() public parentId: number = -1;
+  private parentId: number = -1;
   parentName: string = "";
 
-  constructor(private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.parentId = data.parentId;
   }
 
   ngOnInit() {
-    if (this.parentId != null) {
+    if (this.parentId != -1 && this.parentId != null) {
       this.workspaceService.getWorkspace(this.parentId).subscribe(
         workspace => {
           console.log(workspace);
@@ -44,6 +49,7 @@ export class RQMAddWorkspaceComponent implements OnInit {
         }
       );
     } else {
+      this.parentId = null;
       this.parentName = "Root";
     }
   }
@@ -64,8 +70,15 @@ export class RQMAddWorkspaceComponent implements OnInit {
       },
       () => {
         console.log('add workspace done');
+        this.router.navigate(['/workspace-tree']);
+        this.openSnackBar("Added workspace " + workspace.name + ".");
       }
     );
-    //window.location.reload();
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 2000,
+    });
   }
 }

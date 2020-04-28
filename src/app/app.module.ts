@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 App Modules
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
 
@@ -10,7 +10,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,38 +36,51 @@ import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
 import { RQMDocumentMenubarComponent } from './rqmdocument-menubar/rqmdocument-menubar.component';
-import { RQMServerSettingsModalComponent } from './rqmserver-settings-modal/rqmserver-settings-modal.component';
+import { RQMServerSettingsDialogComponent } from './rqmserver-settings-dialog/rqmserver-settings-dialog.component';
 import { RQMAddWorkspaceComponent } from './rqmadd-workspace/rqmadd-workspace.component';
 import { RQMAddDocumentComponent } from './rqmadd-document/rqmadd-document.component';
 import { RQMTracingComponent } from './rqmtracing/rqmtracing.component';
 import { RQMDocumentExporterComponent } from './rqmdocument-exporter/rqmdocument-exporter.component';
-import { RQMWorkspaceTreeviewItemPropertiesComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties.component';
+import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from './rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
 import { RQMLoginComponent } from './rqmlogin/rqmlogin.component';
 import { RQMRegisterComponent } from './rqmregister/rqmregister.component';
-import { RQMUserSettingsModalComponent } from './rqmuser-settings-modal/rqmuser-settings-modal.component';
+import { RQMUserSettingsDialogComponent } from './rqmuser-settings-dialog/rqmuser-settings-dialog.component';
 import { RQMDocumentEditorComponent } from './rqmdocument-editor/rqmdocument-editor.component';
 import { RQMDocumentThemeComponent } from './rqmdocument-theme/rqmdocument-theme.component';
+import { RQMAccessControlListComponent } from './rqmaccess-control-list/rqmaccess-control-list.component';
+import { RQMAssignUsersComponent } from './rqmassign-users/rqmassign-users.component';
+import { RQMAssignAccessGroupComponent } from './rqmassign-access-group/rqmassign-access-group.component';
+import { RQMDeleteTreeViewItemComponent } from './rqmdelete-tree-view-item/rqmdelete-tree-view-item.component';
+import { RQMAddUserComponent } from './rqmadd-user/rqmadd-user.component';
+import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     RQMWorkspaceTreeComponent,
     RQMMainComponent,
     RQMWorkspaceTreeviewComponent,
     RQMWorkspaceMenubarComponent,
     RQMDocumentViewerComponent,
     RQMDocumentMenubarComponent,
-    RQMServerSettingsModalComponent,
+    RQMServerSettingsDialogComponent,
     RQMAddWorkspaceComponent,
     RQMAddDocumentComponent,
     RQMTracingComponent,
     RQMDocumentExporterComponent,
-    RQMWorkspaceTreeviewItemPropertiesComponent,
+    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
     RQMLoginComponent,
     RQMRegisterComponent,
-    RQMUserSettingsModalComponent,
+    RQMUserSettingsDialogComponent,
     RQMDocumentEditorComponent,
     RQMDocumentThemeComponent,
+    RQMAccessControlListComponent,
+    RQMAssignUsersComponent,
+    RQMAssignAccessGroupComponent,
+    RQMDeleteTreeViewItemComponent,
+    RQMAddUserComponent,
+    RQMMultiLineSnackBarComponent,
+    RQMManageAccessGroupsComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,12 +97,21 @@ import { RQMDocumentThemeComponent } from './rqmdocument-theme/rqmdocument-theme
     CKEditorModule,
   ],
   entryComponents: [
-    RQMServerSettingsModalComponent,
+    RQMServerSettingsDialogComponent,
     RQMAddDocumentComponent,
     RQMAddWorkspaceComponent,
     RQMDocumentMenubarComponent,
-    RQMWorkspaceTreeviewItemPropertiesComponent
+    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
+    RQMUserSettingsDialogComponent,
+    RQMDocumentExporterComponent,
+    RQMDocumentThemeComponent,
+    RQMRegisterComponent,
+    RQMDeleteTreeViewItemComponent,
+    RQMAddDocumentComponent,
+    RQMAddUserComponent,
+    RQMMultiLineSnackBarComponent,
+    RQMManageAccessGroupsComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [RQMMainComponent]
 })
 export class AppModule { }

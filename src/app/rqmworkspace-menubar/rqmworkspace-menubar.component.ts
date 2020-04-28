@@ -6,7 +6,16 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { UserManagementService } from 'openrqm-api'
+import { RQMSettingsService } from '../rqmsettings.service';
+import { RQMUserService } from '../rqmuser.service';
+import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
+import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
+import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.component';
+import { RQMManageAccessGroupsComponent } from '../rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @Component({
   selector: 'app-rqmworkspace-menubar',
@@ -19,27 +28,63 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
 
   closeResult: string;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(public dialog: MatDialog, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.userManagementService.configuration.apiKeys = {};
+    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+  }
 
   ngOnInit() {
   }
 
-  openModal(content: any) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  openDialog(component: any, dataValue?: any): any {
+    return this.dialog.open(component, {
+      width: '80vw',
+      data: dataValue
     });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  openDialogNewWorkspace() {
+    const dialogRef = this.openDialog(RQMAddWorkspaceComponent,
+      {
+        parentId: null,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogManageAccessGroups() {
+    const dialogRef = this.openDialog(RQMManageAccessGroupsComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogServerSettings() {
+    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogUserSettings() {
+    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  logout() {
+    this.userManagementService.logout(0);
   }
 
 }

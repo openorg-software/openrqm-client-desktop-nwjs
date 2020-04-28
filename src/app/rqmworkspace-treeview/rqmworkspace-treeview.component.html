@@ -5,29 +5,8 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 -->
 
-<ng-template #newWorkspaceModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Add Workspace</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-  </div>
-  <app-rqmadd-workspace [parentId]=itemId></app-rqmadd-workspace>
-</ng-template>
-
-<ng-template #propertiesModal let-modal>
-  <div class="modal-header">
-    <h4 *ngIf="tempTreeViewItem.isDocument " class="modal-title pull-left">Document Properties</h4>
-    <h4 *ngIf=" !tempTreeViewItem.isDocument " class="modal-title pull-left">Workspace Properties</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-  </div>
-  <app-rqmworkspace-treeview-item-properties [item]=tempTreeViewItem (logoutEvent)="modal.dismiss('Cross click')"></app-rqmworkspace-treeview-item-properties>
-</ng-template>
-
 <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
-  <div class="form-inline row-item" ngbDropdown #treeViewDropdown="ngbDropdown" (click)="onCollapseExpand() " (contextmenu)="onContextMenu($event, treeViewDropdown);">
+  <div class="form-inline row-item" (click)="onCollapseExpand() " (contextmenu)="onContextMenu($event, item);">
     <!-- If the item has children a black folder icon shall be displayed -->
     <fa-icon *ngIf=" item.children " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
     <!-- If the item is a document a file icon shall be displayed -->
@@ -35,17 +14,21 @@ Copyright (C) 2019 Benjamin Schilling
     <!-- If the item is not a document and does not has children, a white folder shall be displayed -->
     <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular "></fa-icon>
     <!-- On click the select method with the item as a parameter is called, the text of the item and the ID are displayed (the ID only for debug purposes) -->
-    <label class="form-check-label " (click)="select(item) " id="treeviewObjectDropdown " ngbDropdownAnchor>
+    <label class="form-check-label " (click)="select(item) " id="treeviewObjectDropdown ">
         {{ item.text }}
         </label>
-    <!-- Dropdown when clicking on a treeview item -->
-    <div ngbDropdownMenu aria-labelledby="dropdownManual" autoClose="true">
-      <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="openModal(newWorkspaceModal, item)">Add Workspace</button>
-      <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="openAddDocument(item)">Add Document</button>
-      <button ngbDropdownItem (click)="openModal(propertiesModal, item)">Properties</button>
-      <button *ngIf="item.isItemWorkspace() " ngbDropdownItem (click)="deleteWorkspace(item)">Delete Workspace</button>
-      <button *ngIf="item.isItemDocument() " ngbDropdownItem (click)="deleteDocument(item)">Delete Document</button>
+    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
     </div>
+    <!-- Dropdown when clicking on a treeview item -->
+    <mat-menu #contextMenu="matMenu">
+      <ng-template matMenuContent let-item="item">
+        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogNewWorkspace(item)">Add Workspace</button>
+        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogAddDocument(item)">Add Document</button>
+        <button mat-menu-item (click)="openWorkspaceItemProperties(item)">Properties</button>
+        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogDelete(item)">Delete Workspace</button>
+        <button mat-menu-item *ngIf="item.isItemDocument() " (click)="openDialogDelete(item)">Delete Document</button>
+      </ng-template>
+    </mat-menu>
   </div>
 </ng-template>
 

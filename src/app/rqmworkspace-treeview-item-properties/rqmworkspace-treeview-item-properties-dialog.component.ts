@@ -2,23 +2,28 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeviewItemProperties Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2020 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 @Component({
-  selector: 'app-rqmworkspace-treeview-item-properties',
-  templateUrl: './rqmworkspace-treeview-item-properties.component.html',
-  styleUrls: ['./rqmworkspace-treeview-item-properties.component.css']
+  selector: 'app-rqmworkspace-treeview-item-properties-dialog',
+  templateUrl: './rqmworkspace-treeview-item-properties-dialog.component.html',
+  styleUrls: ['./rqmworkspace-treeview-item-properties-dialog.component.css']
 })
-export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
+export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit {
+
+  private item: RQMWorkspaceTreeViewItem;
 
   workspace: RQMWorkspace;
   // To fetch/update the document properties
@@ -41,22 +46,24 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
   @ViewChild('languageId', { static: false }) languageId;
   @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
 
-  // The item we want to manipulate
-  @Input() public item: RQMWorkspaceTreeViewItem;
-
-  constructor(private workspaceService: WorkspacesService, private documentService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
     this.workspaceService.configuration.apiKeys = {};
     this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
 
-    this.documentService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentService.configuration.apiKeys = {};
-    this.documentService.configuration.apiKeys['token'] = this.userService.getToken();
+    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.documentsService.configuration.apiKeys = {};
+    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
+    if (data.item != null) {
+      this.item = data.item;
+    } else {
+      console.log("Data.item is null");
+    }
   }
 
   ngOnInit() {
-    if (this.item.isDocument) {
-      this.documentService.getDocument(this.item.value).subscribe(
+    if (this.item.isItemDocument()) {
+      this.documentsService.getDocument(this.item.value).subscribe(
         (doc) => {
           console.log(doc);
           this.document = doc;
@@ -123,9 +130,11 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
       },
       () => {
         console.log('patching workspace done');
+
+        this.openSnackBar("Updated workspace " + workspace.name + ".");
+        this.router.navigate(['/workspace-tree']);
       }
     );
-    window.location.reload();
   }
 
   updateDocument() {
@@ -149,8 +158,7 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
     document.baselineReview = 0;
     document.previousBaselineId = null;
 
-    console.log(document);
-    this.documentService.patchDocument(document).subscribe(
+    this.documentsService.patchDocument(document).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -161,9 +169,17 @@ export class RQMWorkspaceTreeviewItemPropertiesComponent implements OnInit {
       },
       () => {
         console.log('patching document done');
+
+        this.openSnackBar("Updated document " + document.name + ".");
+        this.router.navigate(['/workspace-tree']);
       }
     );
-    window.location.reload();
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 2000,
+    });
   }
 
 }

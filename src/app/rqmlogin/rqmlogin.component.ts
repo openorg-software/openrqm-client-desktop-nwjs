@@ -6,12 +6,16 @@ Copyright (C) 2020 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+
+import { MatDialog } from '@angular/material/dialog';
+
 import { UserManagementService } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
+import { RQMServerSettingsDialogComponent } from '../rqmserver-settings-dialog/rqmserver-settings-dialog.component';
+import { RQMRegisterComponent } from '../rqmregister/rqmregister.component'
 
 import * as jssha512 from 'js-sha512';
 
@@ -27,29 +31,37 @@ export class RQMLoginComponent implements OnInit {
   @ViewChild('passwordLogin', { static: false }) passwordLogin;
 
   closeResult: string;
-  constructor(private modalService: NgbModal, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(public dialog: MatDialog, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {
   }
 
-  openModal(content: any) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+  openDialog(component: any, dataValue?: any): any {
+    return this.dialog.open(component, {
+      width: '80vw',
+      data: dataValue
     });
   }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+
+  openDialogServerSettings() {
+    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
+
+  openDialogRegister() {
+    const dialogRef = this.openDialog(RQMRegisterComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 
   login() {
     let passwordHash: string = jssha512.sha512(this.passwordLogin.nativeElement.value);
