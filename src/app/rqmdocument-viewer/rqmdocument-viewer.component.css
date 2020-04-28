@@ -23,7 +23,11 @@ Copyright (C) 2019 Benjamin Schilling
   padding-left: 0;
 }
 
+
+/** SONARQUBE IGNORE START **/
+
 app-rqmdocument-menubar {
+  /** SONARQUBE IGNORE END **/
   z-index: 100;
   position: fixed;
   top: 0;
