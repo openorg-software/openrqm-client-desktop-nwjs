@@ -4,7 +4,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 // CKEditor
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
+
+//Requires custom ckeditor build, postponed for now
+/*
+import Table from '@ckeditor/ckeditor5-table/src/table';
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import Image from '@ckeditor/ckeditor5-image/src/image';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
+*/
+
+// Custom CKEditor Plugins
 import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
+
 // Material Design
 import { MatMenuTrigger, MatTable } from '@angular/material'
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -37,7 +53,19 @@ export class RQMDocumentEditorComponent implements OnInit {
   editorConfig = {
     placeholder: 'Type the content here!',
     extraPlugins: [Base64UploaderPlugin],
+    //Requires custom ckeditor build, postponed for now
+    //   plugins: [Table, TableToolbar, TableProperties, TableCellProperties, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize],
     toolbar: ['heading', '|', 'bold', 'italic', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', 'blockQuote', '|', 'imageUpload', 'insertTable'],
+    //Requires custom ckeditor build, postponed for now
+    /*table: {
+      contentToolbar: [
+        'tableColumn', 'tableRow', 'mergeTableCells',
+        'tableProperties', 'tableCellProperties'
+      ],
+    },
+    image: {
+      toolbar: ['imageTextAlternative', '|', 'imageStyle:full', 'imageStyle:side']
+    }*/
   };
   displayedColumns: string[];
 
