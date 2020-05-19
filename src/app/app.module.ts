@@ -117,7 +117,7 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
     RQMAddUserComponent,
     RQMMultiLineSnackBarComponent,
     RQMManageAccessGroupsComponent,
-    RQMDocumentImportDialogComponent
+    RQMDocumentImportDialogComponent,
   ],
   bootstrap: [RQMMainComponent]
 })
