@@ -13,9 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RQMMaterialModule } from './material-module'
 
 
@@ -95,8 +93,6 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
     FontAwesomeModule,
     ApiModule,
     HttpClientModule,
-    NgbModule,
-    BsDropdownModule.forRoot(),
     BrowserAnimationsModule,
     RQMMaterialModule,
     CKEditorModule,

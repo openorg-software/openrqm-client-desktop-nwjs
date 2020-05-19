@@ -44,9 +44,36 @@ export class LinkWrapper {
 export class RQMDocumentEditorComponent implements OnInit {
 
   // For context menu
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: false }) contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
+
+  // For OpenRQM API
+  @ViewChild('elementTable', { static: false }) elementTable;
+  @ViewChild('editorElement', { static: false }) editorElement;
+  wrappedElements: RQMElementWrapper[] = [];
+  elements: RQMElement[] = [];
+  elementTypes: RQMElementType[] = [];
+  documentId: number;
+  documentShortName: string = "";
+
+  // For linking
+  @Input() linking: boolean = false;
+  @Input() linkingDocumentId: number = -1;
+  @Input() linkTo: boolean = false;
+  @Input() linkFrom: boolean = false;
+  @Input() inputReadOnly: boolean = false;
+  @Output() createLink = new EventEmitter<LinkWrapper>();
+  selectedId: number = -1;
+  oldSelectedId: number = -1;
+
+  // For Theme
+  @Input() requirementColor: string;
+  @Input() proseColor: string;
+
+  // For displaying links
+  public showLinks: boolean = false;
+  links: RQMLink[] = [];
+  linkTypes: RQMLinkType[] = [];
 
   // For CKEditor
   public Editor = InlineEditor;
@@ -68,33 +95,6 @@ export class RQMDocumentEditorComponent implements OnInit {
     }*/
   };
   displayedColumns: string[];
-
-  // For OpenRQM API
-  @ViewChild('elementTable') elementTable;
-  @ViewChild('editorElement') editorElement;
-  wrappedElements: RQMElementWrapper[] = [];
-  elements: RQMElement[] = [];
-  elementTypes: RQMElementType[] = [];
-  documentId: number;
-  documentShortName: string = "";
-
-  // For linking
-  @Input() linking: boolean = false;
-  @Input() linkingDocumentId: number = -1;
-  @Input() linkTo: boolean = false;
-  @Input() linkFrom: boolean = false;
-  @Output() createLink = new EventEmitter<LinkWrapper>();
-  selectedId: number = -1;
-  oldSelectedId: number = -1;
-
-  // For Theme
-  @Input() requirementColor: string;
-  @Input() proseColor: string;
-
-  // For displaying links
-  private showLinks: boolean = false;
-  links: RQMLink[] = [];
-  linkTypes: RQMLinkType[] = [];
 
   constructor(private elementsService: ElementsService, private _snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private linksService: LinksService, private userService: RQMUserService) {
     //Initialization

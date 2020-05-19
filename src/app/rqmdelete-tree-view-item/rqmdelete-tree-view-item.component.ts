@@ -26,7 +26,7 @@ import { DocumentsService, WorkspacesService } from 'openrqm-api';
 })
 export class RQMDeleteTreeViewItemComponent implements OnInit {
 
-  private item: RQMWorkspaceTreeViewItem;
+  public item: RQMWorkspaceTreeViewItem;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
 

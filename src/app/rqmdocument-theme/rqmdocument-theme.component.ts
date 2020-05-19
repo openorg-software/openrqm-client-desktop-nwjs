@@ -28,8 +28,8 @@ export class RQMDocumentThemeComponent implements OnInit {
   @Output() requirementColorOutput = new EventEmitter<string>();
   @Output() proseColorOutput = new EventEmitter<string>();
 
-  @ViewChild('requirementColor') requirementColor: { nativeElement: { value: string; }; };
-  @ViewChild('proseColor') proseColor: { nativeElement: { value: string; }; };
+  @ViewChild('requirementColor', { static: false }) requirementColor: { nativeElement: { value: string; }; };
+  @ViewChild('proseColor', { static: false }) proseColor: { nativeElement: { value: string; }; };
 
   public reqColor: string = "";
   public proColor: string = "";

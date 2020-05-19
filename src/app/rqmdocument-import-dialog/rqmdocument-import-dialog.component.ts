@@ -31,7 +31,7 @@ import { RQMUserService } from '../rqmuser.service';
 export class RQMDocumentImportDialogComponent implements OnInit {
 
   public parentId: any;
-  @ViewChild('importFile') importFile: FileInputComponent;
+  @ViewChild('importFile', { static: false }) importFile: FileInputComponent;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();

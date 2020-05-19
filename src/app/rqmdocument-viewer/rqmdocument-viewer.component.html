@@ -10,15 +10,15 @@ Copyright (C) 2019 Benjamin Schilling
   <div [ngClass]="{'wrap': doLinking}">
     <div [ngClass]="{'box': doLinking}">
       <div *ngIf="doLinking==true">
-        <app-rqmdocument-editor [linking]=true [linkFrom]=true (createLink)="onCreateLinkFrom($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
+        <app-rqmdocument-editor [linking]=true [linkFrom]=true [inputReadOnly]=false (createLink)="onCreateLinkFrom($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
       </div>
       <div *ngIf="doLinking==false">
-        <app-rqmdocument-editor [linking]=false [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
+        <app-rqmdocument-editor [linking]=false [inputReadOnly]=false [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
       </div>
     </div>
     <div *ngIf="doLinking==true" class="box">
       <app-rqmworkspace-tree *ngIf="showDocumentEditor==false" [noMenuBar]=true [linking]=true (selectedDocument)="onSelectedDocument($event)"></app-rqmworkspace-tree>
-      <app-rqmdocument-editor *ngIf="showDocumentEditor==true" [linkingDocumentId]=linkingDocumentId [linking]=doLinking [linkTo]="true" (createLink)="onCreateLinkTo($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
+      <app-rqmdocument-editor *ngIf="showDocumentEditor==true" [linkingDocumentId]=linkingDocumentId [linking]=doLinking [linkTo]="true" [inputReadOnly]=true (createLink)="onCreateLinkTo($event)" [requirementColor]="requirementColor" [proseColor]="proseColor"></app-rqmdocument-editor>
     </div>
   </div>
 </div>

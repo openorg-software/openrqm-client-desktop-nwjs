@@ -26,8 +26,6 @@ $openrqm-client-desktop-nwjs-theme: mat-light-theme($openrqm-client-desktop-nwjs
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($openrqm-client-desktop-nwjs-theme);
-/// Bootstrap
-@import "~bootstrap/scss/bootstrap";
 .btn-group-xs>.btn,
 .btn-xs {
   padding: 6px 2px;

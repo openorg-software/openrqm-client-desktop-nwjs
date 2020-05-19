@@ -27,7 +27,7 @@ export class RQMDocumentExporterComponent implements OnInit {
   templates: RQMTemplate[];
 
   selectedTemplate: number;
-  @ViewChild('exportFileName') exportFileName: { nativeElement: { value: string; }; };
+  @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
