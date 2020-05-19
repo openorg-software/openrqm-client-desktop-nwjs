@@ -22,7 +22,7 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
 
 // Material Design
-import { MatMenuTrigger } from '@angular/material'
+import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM

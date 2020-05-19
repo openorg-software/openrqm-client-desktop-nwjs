@@ -21,7 +21,7 @@ import { faFileAlt, faFolder as faFolderSolid, faFolderOpen } from '@fortawesome
 import { faFolder as faFolderRegular } from '@fortawesome/free-regular-svg-icons';
 
 // Material Design
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 
 // OpenRQM
