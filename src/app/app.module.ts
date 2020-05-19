@@ -29,6 +29,9 @@ import { FormsModule } from '@angular/forms';
 /// For document-viewer
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+/// File upload
+import { MaterialFileInputModule } from 'ngx-material-file-input'
+
 
 /// For OpenRQM API
 import { ApiModule } from 'openrqm-api';
@@ -54,6 +57,7 @@ import { RQMDeleteTreeViewItemComponent } from './rqmdelete-tree-view-item/rqmde
 import { RQMAddUserComponent } from './rqmadd-user/rqmadd-user.component';
 import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmmanage-access-groups.component';
+import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rqmdocument-import-dialog.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +85,7 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     RQMAddUserComponent,
     RQMMultiLineSnackBarComponent,
     RQMManageAccessGroupsComponent,
+    RQMDocumentImportDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +100,7 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     BrowserAnimationsModule,
     RQMMaterialModule,
     CKEditorModule,
+    MaterialFileInputModule,
   ],
   entryComponents: [
     RQMServerSettingsDialogComponent,
@@ -110,7 +116,8 @@ import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmman
     RQMAddDocumentComponent,
     RQMAddUserComponent,
     RQMMultiLineSnackBarComponent,
-    RQMManageAccessGroupsComponent
+    RQMManageAccessGroupsComponent,
+    RQMDocumentImportDialogComponent
   ],
   bootstrap: [RQMMainComponent]
 })

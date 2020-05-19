@@ -24,6 +24,7 @@ Copyright (C) 2019 Benjamin Schilling
       <ng-template matMenuContent let-item="item">
         <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogNewWorkspace(item)">Add Workspace</button>
         <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogAddDocument(item)">Add Document</button>
+        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogImportDocument(item)">Import Document from Disk</button>
         <button mat-menu-item (click)="openWorkspaceItemProperties(item)">Properties</button>
         <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogDelete(item)">Delete Workspace</button>
         <button mat-menu-item *ngIf="item.isItemDocument() " (click)="openDialogDelete(item)">Delete Document</button>

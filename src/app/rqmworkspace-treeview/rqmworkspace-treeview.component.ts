@@ -37,6 +37,7 @@ import { RQMUserService } from '../rqmuser.service';
 // OpenRQM API
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
 import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
+import { RQMDocumentImportDialogComponent } from '../rqmdocument-import-dialog/rqmdocument-import-dialog.component';
 
 @Component({
   selector: 'app-rqmworkspace-treeview',
@@ -213,6 +214,21 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
       this.selectItem(item);
     }
     const dialogRef = this.openDialog(RQMAddDocumentComponent,
+      {
+        parentId: item.value
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogImportDocument(item: RQMWorkspaceTreeViewItem) {
+    if (item.children === undefined) {
+      this.selectItem(item);
+    }
+    const dialogRef = this.openDialog(RQMDocumentImportDialogComponent,
       {
         parentId: item.value
       }
