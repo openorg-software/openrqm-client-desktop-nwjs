@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Copyright (C) 2019 Benjamin Schilling
 
+trigger:
+- master
+- development
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -81,14 +85,14 @@ steps:
   displayName: 'Set Release Tag if development branch'
 
 - task: GithubRelease@0 
-  condition: succeeded()
+  condition: or(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development')))
   displayName: 'Create GitHub Release'      
   inputs:
     gitHubConnection: benjaminSchilling33
     repositoryName: openrqm/openrqm-client-desktop-nwjs
     action: edit
     tagSource: manual
-    tag: user-and-access-groups
+    tag: $(releasetag)
     assetUploadMode: replace
     assets: |
          $(Build.Repository.LocalPath)/README.pdf
