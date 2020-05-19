@@ -52,10 +52,10 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
   @Input() items: RQMWorkspaceTreeViewItem[];
   @Input() value: any;
   @Output() valueChange = new EventEmitter<any>();
-  @ViewChild(TreeviewComponent, { read: false, static: false }) treeviewComponent: TreeviewComponent;
+  @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
 
   // For context menu
-  @ViewChild(MatMenuTrigger, { static: false })
+  @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
 

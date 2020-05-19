@@ -7,7 +7,9 @@ Copyright (C) 2019 Benjamin Schilling
 
 import { TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
 import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
     private internalSelectedItem: RQMWorkspaceTreeViewItem;
 

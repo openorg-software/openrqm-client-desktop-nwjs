@@ -37,7 +37,7 @@ export class RQMDocumentMenubarComponent implements OnInit {
   typeMarkdown: string = "markdown";
 
   // For Linking
-  @ViewChild('exportModal', { static: false }) exportModal: any;
+  @ViewChild('exportModal') exportModal: any;
   linkingInProgress: boolean = false;
   @Output() doLinking = new EventEmitter<boolean>();
 

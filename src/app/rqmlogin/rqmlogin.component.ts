@@ -27,8 +27,8 @@ import * as jssha512 from 'js-sha512';
 export class RQMLoginComponent implements OnInit {
 
   // Login
-  @ViewChild('emailLogin', { static: false }) emailLogin;
-  @ViewChild('passwordLogin', { static: false }) passwordLogin;
+  @ViewChild('emailLogin') emailLogin;
+  @ViewChild('passwordLogin') passwordLogin;
 
   closeResult: string;
   constructor(public dialog: MatDialog, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {

@@ -30,21 +30,21 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
   document: RQMDocument;
 
   // Access the workspace variables
-  @ViewChild('workspaceName', { static: false }) workspaceName;
-  @ViewChild('parentWorkspace', { static: false }) parentWorkspace;
+  @ViewChild('workspaceName') workspaceName;
+  @ViewChild('parentWorkspace') parentWorkspace;
 
 
   // Access the document variables
-  @ViewChild('documentName', { static: false }) documentName;
-  @ViewChild('workspaceId', { static: false }) workspaceId;
-  @ViewChild('shortName', { static: false }) shortName;
-  @ViewChild('description', { static: false }) description;
-  @ViewChild('confidentiality', { static: false }) confidentiality;
-  @ViewChild('authorId', { static: false }) authorId;
-  @ViewChild('reviewerText', { static: false }) reviewerText;
-  @ViewChild('approverId', { static: false }) approverId;
-  @ViewChild('languageId', { static: false }) languageId;
-  @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
+  @ViewChild('documentName') documentName;
+  @ViewChild('workspaceId') workspaceId;
+  @ViewChild('shortName') shortName;
+  @ViewChild('description') description;
+  @ViewChild('confidentiality') confidentiality;
+  @ViewChild('authorId') authorId;
+  @ViewChild('reviewerText') reviewerText;
+  @ViewChild('approverId') approverId;
+  @ViewChild('languageId') languageId;
+  @ViewChild('externalIdentifier') externalIdentifier;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();

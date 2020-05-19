@@ -44,7 +44,7 @@ export class LinkWrapper {
 export class RQMDocumentEditorComponent implements OnInit {
 
   // For context menu
-  @ViewChild(MatMenuTrigger, { static: false })
+  @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
 
@@ -70,8 +70,8 @@ export class RQMDocumentEditorComponent implements OnInit {
   displayedColumns: string[];
 
   // For OpenRQM API
-  @ViewChild('elementTable', { static: false }) elementTable;
-  @ViewChild('editorElement', { static: false }) editorElement;
+  @ViewChild('elementTable') elementTable;
+  @ViewChild('editorElement') editorElement;
   wrappedElements: RQMElementWrapper[] = [];
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];

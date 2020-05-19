@@ -22,8 +22,8 @@ export class RQMAddUserComponent implements OnInit {
   userInfos: RQMUser[];
   selectedUser: RQMUser;
 
-  @ViewChild('userId', { static: false }) userId: { nativeElement: { value: number; }; };
-  @ViewChild('permissions', { static: false }) permissions: { nativeElement: { value: number; }; };
+  @ViewChild('userId') userId: { nativeElement: { value: number; }; };
+  @ViewChild('permissions') permissions: { nativeElement: { value: number; }; };
 
   constructor(private dialogRef: MatDialogRef<RQMAddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private workspaceService: WorkspacesService, private userManagementServce: UserManagementService) {
 

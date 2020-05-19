@@ -23,7 +23,7 @@ import { RQMUserService } from '../rqmuser.service';
 })
 export class RQMAddWorkspaceComponent implements OnInit {
 
-  @ViewChild('workspaceName', { static: false }) workspaceName: { nativeElement: { value: string; }; };
+  @ViewChild('workspaceName') workspaceName: { nativeElement: { value: string; }; };
   private parentId: number = -1;
   parentName: string = "";
 

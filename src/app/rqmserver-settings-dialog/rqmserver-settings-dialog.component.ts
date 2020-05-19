@@ -12,7 +12,7 @@ export class RQMServerSettingsDialogComponent implements OnInit {
     public version: string = version;
     closeResult: string;
 
-    @ViewChild('serverUrlInputField', { static: false }) serverUrlInputField;
+    @ViewChild('serverUrlInputField') serverUrlInputField;
     serverUrl: string = "";
 
     constructor(private rqmSettingsService: RQMSettingsService) {

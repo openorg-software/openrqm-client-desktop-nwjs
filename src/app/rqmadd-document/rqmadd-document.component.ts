@@ -22,15 +22,15 @@ import { RQMUserService } from '../rqmuser.service';
 })
 export class RQMAddDocumentComponent implements OnInit {
 
-  @ViewChild('documentName', { static: false }) documentName: { nativeElement: { value: string; }; };
-  @ViewChild('shortName', { static: false }) shortName: { nativeElement: { value: string; }; };
-  @ViewChild('description', { static: false }) description: { nativeElement: { value: string; }; };
-  @ViewChild('confidentiality', { static: false }) confidentiality: { nativeElement: { value: string; }; };
-  @ViewChild('authorId', { static: false }) authorId: { nativeElement: { value: number; }; };
-  @ViewChild('reviewerText', { static: false }) reviewerText: { nativeElement: { value: string; }; };
-  @ViewChild('approverId', { static: false }) approverId: { nativeElement: { value: number; }; };
-  @ViewChild('languageId', { static: false }) languageId: { nativeElement: { value: number; }; };
-  @ViewChild('externalIdentifier', { static: false }) externalIdentifier: { nativeElement: { value: string; }; };
+  @ViewChild('documentName') documentName: { nativeElement: { value: string; }; };
+  @ViewChild('shortName') shortName: { nativeElement: { value: string; }; };
+  @ViewChild('description') description: { nativeElement: { value: string; }; };
+  @ViewChild('confidentiality') confidentiality: { nativeElement: { value: string; }; };
+  @ViewChild('authorId') authorId: { nativeElement: { value: number; }; };
+  @ViewChild('reviewerText') reviewerText: { nativeElement: { value: string; }; };
+  @ViewChild('approverId') approverId: { nativeElement: { value: number; }; };
+  @ViewChild('languageId') languageId: { nativeElement: { value: number; }; };
+  @ViewChild('externalIdentifier') externalIdentifier: { nativeElement: { value: string; }; };
 
   public parentId: any;
 

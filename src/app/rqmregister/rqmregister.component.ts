@@ -21,12 +21,12 @@ import * as jssha512 from 'js-sha512';
 export class RQMRegisterComponent implements OnInit {
 
   //Register
-  @ViewChild('emailRegister', { static: false }) emailRegister;
-  @ViewChild('passwordRegister', { static: false }) passwordRegister;
-  @ViewChild('passwordAgainRegister', { static: false }) passwordAgainRegister;
-  @ViewChild('nameRegister', { static: false }) nameRegister;
-  @ViewChild('surnameRegister', { static: false }) surnameRegister;
-  @ViewChild('departmentRegister', { static: false }) departmentRegister;
+  @ViewChild('emailRegister') emailRegister;
+  @ViewChild('passwordRegister') passwordRegister;
+  @ViewChild('passwordAgainRegister') passwordAgainRegister;
+  @ViewChild('nameRegister') nameRegister;
+  @ViewChild('surnameRegister') surnameRegister;
+  @ViewChild('departmentRegister') departmentRegister;
 
   constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
     this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();

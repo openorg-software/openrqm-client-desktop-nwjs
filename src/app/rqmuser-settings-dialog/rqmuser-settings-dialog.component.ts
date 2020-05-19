@@ -32,13 +32,13 @@ export class RQMUserSettingsDialogComponent implements OnInit {
     surname: string;
     department: string;
 
-    @ViewChild('emailRegister', { static: false }) emailRegister;
-    @ViewChild('oldPassword', { static: false }) oldPassword;
-    @ViewChild('newPassword', { static: false }) newPassword;
-    @ViewChild('newPasswordAgain', { static: false }) newPasswordAgain;
-    @ViewChild('nameRegister', { static: false }) nameRegister;
-    @ViewChild('surnameRegister', { static: false }) surnameRegister;
-    @ViewChild('departmentRegister', { static: false }) departmentRegister;
+    @ViewChild('emailRegister') emailRegister;
+    @ViewChild('oldPassword') oldPassword;
+    @ViewChild('newPassword') newPassword;
+    @ViewChild('newPasswordAgain') newPasswordAgain;
+    @ViewChild('nameRegister') nameRegister;
+    @ViewChild('surnameRegister') surnameRegister;
+    @ViewChild('departmentRegister') departmentRegister;
 
     // For user management
     @Output() logoutEvent = new EventEmitter<any>();
