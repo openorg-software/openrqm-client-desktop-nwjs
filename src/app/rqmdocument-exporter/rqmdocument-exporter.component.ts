@@ -101,6 +101,22 @@ export class RQMDocumentExporterComponent implements OnInit {
           console.log('export markdown document done');
         }
       );
+    } else if (this.exportType == "raw") {
+      this.rqmExportService.exportRaw(this.documentId).subscribe(
+        next => {
+          console.log(next);
+          const url = window.URL.createObjectURL(next);
+          console.log('URL:');
+          console.log(url);
+          window.open(url);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          console.log('export raw document done');
+        }
+      );
     } else {
       console.log("unhandled exporter");
     }

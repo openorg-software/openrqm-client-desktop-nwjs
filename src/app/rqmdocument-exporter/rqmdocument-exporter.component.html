@@ -7,6 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 
 <h4 mat-dialog-title *ngIf="exportType=='pdf'">Export PDF</h4>
 <h4 mat-dialog-title *ngIf="exportType=='markdown'">Export Markdown</h4>
+<h4 mat-dialog-title *ngIf="exportType=='raw'">Export Raw</h4>
 
 <mat-dialog-content>
   <mat-list-item>
@@ -15,7 +16,7 @@ Copyright (C) 2019 Benjamin Schilling
       <input matInput #exportFileName>
     </mat-form-field>
   </mat-list-item>
-  <mat-list-item>
+  <mat-list-item *ngIf="exportType != 'raw'">
     <mat-form-field>
       <mat-label>Template</mat-label>
       <mat-select [(value)]="selectedTemplate">

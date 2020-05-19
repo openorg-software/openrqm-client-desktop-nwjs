@@ -123,6 +123,22 @@ export class RQMDocumentMenubarComponent implements OnInit {
     });
   }
 
+  openDialogExportModalRaw() {
+    const dialogRef = this.openDialog(RQMDocumentExporterComponent,
+      {
+        documentId: this.documentId,
+        type: "raw"
+      }
+    );
+    dialogRef.componentInstance.documentId = this.documentId;
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+
+
   openDialogDocumentTheme() {
     const dialogRef = this.openDialog(RQMDocumentThemeComponent,
       {

@@ -22,7 +22,7 @@ import { TreeviewModule } from 'ngx-treeview';
 import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
 import { RQMMainComponent } from './rqmmain/rqmmain.component';
 import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /// For document-viewer
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -97,6 +97,7 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
     RQMMaterialModule,
     CKEditorModule,
     MaterialFileInputModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [
     RQMServerSettingsDialogComponent,

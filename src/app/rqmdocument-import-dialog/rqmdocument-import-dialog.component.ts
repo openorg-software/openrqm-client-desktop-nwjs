@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 /// File Upload Dependencies
 import { FileInputComponent } from 'ngx-material-file-input'
 
-
 /// OpenRQM Dependencies
 import { DocumentsService, RQMDocument } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -43,13 +42,13 @@ export class RQMDocumentImportDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  addDocument() {
+  importDocument() {
     let document = {} as RQMDocument;
     document.id = 0;
     document.workspaceId = this.parentId;
     document.internalIdentifier = 0;
 
-    this.documentsSerivce.postDocument(document).subscribe(
+    this.documentsSerivce.importDocument(this.importFile.value.files[0]).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -59,8 +58,8 @@ export class RQMDocumentImportDialogComponent implements OnInit {
         console.log(err);
       },
       () => {
-        console.log('add document done');
-        this.openSnackBar("Added document " + document.name + ".");
+        console.log('import document done');
+        this.openSnackBar("Import document " + document.name + ".");
         this.router.navigate(['/workspace-tree']);
       }
     );

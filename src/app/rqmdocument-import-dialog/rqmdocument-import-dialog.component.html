@@ -14,7 +14,7 @@ Copyright (C) 2019 Benjamin Schilling
   </mat-list-item>
   <mat-list-item>
     <mat-form-field>
-      <ngx-mat-file-input formControlName="importFile" #importFile placeholder="Select file for Import"></ngx-mat-file-input>
+      <ngx-mat-file-input #importFile placeholder="Select file for Import"></ngx-mat-file-input>
       <button mat-icon-button matSuffix *ngIf="!importFile.empty" (click)="importFile.clear($event)">
         <mat-icon>clear</mat-icon>
       </button>
@@ -23,6 +23,6 @@ Copyright (C) 2019 Benjamin Schilling
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close (click)="addDocument()">Add</button>
+  <button mat-raised-button mat-dialog-close (click)="importDocument()">Import</button>
   <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
