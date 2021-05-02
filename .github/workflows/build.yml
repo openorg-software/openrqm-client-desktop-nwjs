@@ -1,0 +1,23 @@
+name: Build & Release
+
+on: push
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare Debian build
+      run: |
+        apt-get update
+        apt-get install -y apt-transport-https wget rsync debhelper npm
+        sh -c 'wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+        sh -c 'wget -qO- https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+        apt-get update
+        apt-get install -y dart
+        mkdir -p debian-packaging
+        rsync -av --exclude='debian-packaging' . debian-packaging/
+    - name: Build Debian Package
+      run: |
+        cd debian-packaging
+        dpkg-buildpackage -uc -us
