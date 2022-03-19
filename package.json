@@ -43,11 +43,11 @@
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.5.4",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.5"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.3.0",
-    "@angular/cli": "^11.2.18",
+    "@angular/cli": "^12.2.16",
     "@angular/compiler-cli": "^12.2.16",
     "@angular/language-service": "^12.2.16",
     "@types/jasmine": "~3.3.8",
