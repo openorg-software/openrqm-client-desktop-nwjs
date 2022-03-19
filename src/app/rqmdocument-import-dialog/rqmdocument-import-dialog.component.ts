@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileInputComponent } from 'ngx-material-file-input'
 
 /// OpenRQM Dependencies
-import { DocumentsService, RQMDocument } from 'openrqm-api'
+import { DocumentsService, ImportService, RQMDocument } from 'openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -32,10 +32,10 @@ export class RQMDocumentImportDialogComponent implements OnInit {
   public parentId: any;
   @ViewChild('importFile', { static: false }) importFile: FileInputComponent;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsSerivce.configuration.apiKeys = {};
-    this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private importService: ImportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    this.importService.configuration.basePath = this.settingsService.getApiBasePath();
+    this.importService.configuration.apiKeys = {};
+    this.importService.configuration.apiKeys['token'] = this.userService.getToken();
     this.parentId = data.parentId;
   }
 
@@ -48,7 +48,7 @@ export class RQMDocumentImportDialogComponent implements OnInit {
     document.workspaceId = this.parentId;
     document.internalIdentifier = 0;
 
-    this.documentsSerivce.importDocument(this.importFile.value.files[0]).subscribe(
+    this.importService.importDocument(this.parentId, this.importFile.value.files[0]).subscribe(
       next => {
         console.log('next');
         console.log(next);

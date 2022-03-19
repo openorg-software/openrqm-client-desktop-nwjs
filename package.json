@@ -37,6 +37,7 @@
     "jquery-ui-dist": "^1.12.1",
     "js-sha512": "^0.8.0",
     "lodash": "^4.17.21",
+    "ngx-material-file-input": "^2.1.1",
     "ngx-treeview": "^6.0.2",
     "openrqm-api": "^1.0.23",
     "path": "^0.12.7",
@@ -46,7 +47,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^13.3.0",
+    "@angular-devkit/build-angular": "^12.2.16",
     "@angular/cli": "^12.2.16",
     "@angular/compiler-cli": "^12.2.16",
     "@angular/language-service": "^12.2.16",

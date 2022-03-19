@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RQMSettingsService } from '../rqmsettings.service';
-// To display application version
-import { version } from '../../../package.json';
 
 @Component({
     selector: 'app-rqmserver-settings-dialog',
@@ -9,7 +7,7 @@ import { version } from '../../../package.json';
     styleUrls: ['./rqmserver-settings-dialog.component.css']
 })
 export class RQMServerSettingsDialogComponent implements OnInit {
-    public version: string = version;
+    public version: string = "0.0.1";
     closeResult: string;
 
     @ViewChild('serverUrlInputField') serverUrlInputField;

@@ -59,7 +59,7 @@ export class RQMAddDocumentComponent implements OnInit {
     document.approverId = this.approverId.nativeElement.value;
     document.languageId = this.languageId.nativeElement.value;
     document.lastModifiedById = 0;
-    document.lastModifiedOn = new Date(5000);
+    document.lastModifiedOn = new Date(5000).toString();
     document.baselineMajor = 0;
     document.baselineMinor = 0;
     document.baselineReview = 0;
