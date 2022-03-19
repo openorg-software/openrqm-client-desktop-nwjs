@@ -27,7 +27,7 @@
     "@ckeditor/ckeditor5-image": "^27.0.0",
     "@ckeditor/ckeditor5-table": "^33.0.0",
     "@ckeditor/ckeditor5-upload": "^33.0.0",
-    "@fortawesome/angular-fontawesome": "^0.5.0",
+    "@fortawesome/angular-fontawesome": "^0.10.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
