@@ -37,7 +37,7 @@ fi
 check_tools
 
 echo "==> Installing npm dependencies..."
-npm ci
+npm install
 
 echo "==> Building Angular frontend..."
 npm run build
