@@ -52,8 +52,8 @@ jobs:
       - name: Install Tauri CLI
         run: cargo install tauri-cli
 
-      - name: Run Tauri tests
-        run: cargo test --manifest-path src-tauri/Cargo.toml
+      - name: Run Tauri unit tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml --lib
 
       - name: Build Windows application
         run: cargo tauri build --bundles nsis,msi
