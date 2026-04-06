@@ -1,25 +1,7 @@
 // Angular
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-// CKEditor
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
-import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
-
-//Requires custom ckeditor build, postponed for now
-/*
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
-import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
-*/
-
-// Custom CKEditor Plugins
-import Base64UploaderPlugin from '../../@ckeditor/Base64UploaderPlugin';
+import TurndownService from 'turndown';
 
 // Material Design
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -50,7 +32,6 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   // For OpenRQM API
   @ViewChild('elementTable', { static: false }) elementTable;
-  @ViewChild('editorElement', { static: false }) editorElement;
   wrappedElements: RQMElementWrapper[] = [];
   elements: RQMElement[] = [];
   elementTypes: RQMElementType[] = [];
@@ -76,24 +57,12 @@ export class RQMDocumentEditorComponent implements OnInit {
   links: RQMLink[] = [];
   linkTypes: RQMLinkType[] = [];
 
-  // For CKEditor
-  public Editor = InlineEditor;
-  editorConfig = {
-    placeholder: 'Type the content here!',
-    extraPlugins: [Base64UploaderPlugin],
-    //Requires custom ckeditor build, postponed for now
-    //   plugins: [Table, TableToolbar, TableProperties, TableCellProperties, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize],
-    toolbar: ['heading', '|', 'bold', 'italic', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', 'blockQuote', '|', 'imageUpload', 'insertTable'],
-    //Requires custom ckeditor build, postponed for now
-    /*table: {
-      contentToolbar: [
-        'tableColumn', 'tableRow', 'mergeTableCells',
-        'tableProperties', 'tableCellProperties'
-      ],
-    },
-    image: {
-      toolbar: ['imageTextAlternative', '|', 'imageStyle:full', 'imageStyle:side']
-    }*/
+  private turndownService = new TurndownService();
+
+  markdownEditorOptions = {
+    iconlibrary: 'fa',
+    resize: 'vertical',
+    autofocus: false,
   };
   displayedColumns: string[];
 
@@ -185,6 +154,11 @@ export class RQMDocumentEditorComponent implements OnInit {
                   console.log('Miliseconds for attach links ' + (dateTimeAfterAttachLinks.getTime() - dateTimeBeforeAttachLinks.getTime()));
                   console.log('Wrapped Elements:');
                   console.log(this.wrappedElements);
+                  this.elements.forEach((element) => {
+                    if (element.content) {
+                      element.content = this.turndownService.turndown(element.content);
+                    }
+                  });
                   this.elementTable.renderRows();
                 },
                 err => {
@@ -446,12 +420,9 @@ export class RQMDocumentEditorComponent implements OnInit {
     );
   }
 
-  onBlurCKeditor({ editor }: ChangeEvent, elementId: number) {
-    const data = editor.getData();
-    console.log(data);
-    this.saveElement(elementId, null, data, null);
-
-    console.log(editor);
+  onBlurMarkdownEditor(elementId: number, content: string) {
+    console.log(content);
+    this.saveElement(elementId, null, content, null);
   }
 
   onElementTypeChange(typeDropdownEvent, elementId: number) {

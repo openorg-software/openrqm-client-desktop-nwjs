@@ -24,7 +24,8 @@ import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworksp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /// For document-viewer
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
+import { MarkdownModule } from 'ngx-markdown';
 
 /// For OpenRQM API
 import { HttpClientModule } from '@angular/common/http';
@@ -88,7 +89,8 @@ import { OpenRqmApi } from './openrqm-api';
     HttpClientModule,
     BrowserAnimationsModule,
     RQMMaterialModule,
-    CKEditorModule,
+    AngularMarkdownEditorModule.forRoot({ iconlibrary: 'fa' }),
+    MarkdownModule.forRoot(),
     ReactiveFormsModule,
     OpenRqmApi,
   ],

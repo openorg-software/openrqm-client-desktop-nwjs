@@ -41,11 +41,21 @@
     <th mat-header-cell *matHeaderCellDef> Content </th>
     <td mat-cell *matCellDef="let element" style="width: 100%" (contextmenu)="onContextMenu($event,  element.id)">
       <div *ngIf="linking">
-        <ckeditor *ngIf="linkTo" [config]="editorConfig" [editor]="Editor" data="{{element.content}}"></ckeditor>
-        <ckeditor *ngIf="linkFrom" [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)"></ckeditor>
+        <textarea *ngIf="linkTo" class="form-control" [ngModel]="element.content" readonly></textarea>
+        <angular-markdown-editor *ngIf="linkFrom"
+          textareaId="editor-{{element.id}}"
+          [(ngModel)]="element.content"
+          [options]="markdownEditorOptions"
+          (blur)="onBlurMarkdownEditor(element.id, element.content)">
+        </angular-markdown-editor>
       </div>
       <div *ngIf="!linking">
-        <ckeditor [config]="editorConfig" [editor]="Editor" data="{{element.content}}" (blur)="onBlurCKeditor($event,  element.id)" #editorElement></ckeditor>
+        <angular-markdown-editor
+          textareaId="editor-{{element.id}}"
+          [(ngModel)]="element.content"
+          [options]="markdownEditorOptions"
+          (blur)="onBlurMarkdownEditor(element.id, element.content)">
+        </angular-markdown-editor>
       </div>
     </td>
   </ng-container>
