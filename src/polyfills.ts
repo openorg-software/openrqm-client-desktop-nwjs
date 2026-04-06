@@ -69,11 +69,3 @@ Copyright (C) 2019 Benjamin Schilling
 import 'zone.js';  // Included with Angular CLI.
 
 
-/***************************************************************************************************
- * APPLICATION IMPORTS
- */
-declare global {
-    interface Window {
-        nw: any;
-    }
-}
