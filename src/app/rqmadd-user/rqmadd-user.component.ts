@@ -9,7 +9,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { WorkspacesService, RQMWorkspaceUser, RQMUser, UserManagementService } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspaceUser, RQMUser, UserManagementService } from '../openrqm-api'
 
 @Component({
   standalone: false,

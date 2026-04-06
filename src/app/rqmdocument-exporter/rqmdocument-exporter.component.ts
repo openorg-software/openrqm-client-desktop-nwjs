@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { ExportService, RQMTemplate } from 'openrqm-api'
+import { ExportService, RQMTemplate, OpenAPI } from '../openrqm-api'
 
 @Component({
   standalone: false,
@@ -31,9 +31,8 @@ export class RQMDocumentExporterComponent implements OnInit {
   @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.rqmExportService.configuration.apiKeys = {};
-    this.rqmExportService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     this.documentId = data.documentId;
     this.exportType = data.type;
 

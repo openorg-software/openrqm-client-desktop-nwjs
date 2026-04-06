@@ -6,7 +6,7 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
+import { WorkspacesService, RQMWorkspace, OpenAPI } from '../openrqm-api';
 
 import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -29,9 +29,8 @@ export class RQMWorkspaceTreeComponent implements OnInit {
 
   constructor(private workspacesService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
-    this.workspacesService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspacesService.configuration.apiKeys = {};
-    this.workspacesService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnInit() {

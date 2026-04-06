@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "tauri": "cargo tauri",
     "tauri:dev": "cargo tauri dev",
-    "tauri:build": "cargo tauri build"
+    "tauri:build": "cargo tauri build",
+    "generate:api": "openapi-typescript-codegen --input ../openrqm-docs/api/openapi-3-0.yml --output src/app/openrqm-api --client angular --name OpenRqmApi"
   },
   "private": true,
   "dependencies": {
@@ -42,7 +43,6 @@
     "jquery-ui-dist": "^1.12.1",
     "js-sha512": "^0.8.0",
     "lodash": "^4.17.21",
-    "openrqm-api": "^1.0.23",
     "path": "^0.12.7",
     "rxjs": "6.6.7",
     "tslib": "2.8.1",

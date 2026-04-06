@@ -8,7 +8,7 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserManagementService, RQMUser } from 'openrqm-api'
+import { UserManagementService, RQMUser, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -30,7 +30,7 @@ export class RQMRegisterComponent implements OnInit {
   @ViewChild('departmentRegister') departmentRegister;
 
   constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
-    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {

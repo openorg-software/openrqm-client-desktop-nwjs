@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { DocumentsService, RQMDocument } from 'openrqm-api'
+import { DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -36,9 +36,8 @@ export class RQMAddDocumentComponent implements OnInit {
   public parentId: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsSerivce.configuration.apiKeys = {};
-    this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     this.parentId = data.parentId;
   }
 

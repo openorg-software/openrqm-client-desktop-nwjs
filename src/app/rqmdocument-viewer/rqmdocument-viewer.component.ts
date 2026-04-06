@@ -13,7 +13,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
-import { LinksService, RQMLink } from 'openrqm-api';
+import { LinksService, RQMLink, OpenAPI } from '../openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
@@ -46,9 +46,8 @@ export class RQMDocumentViewerComponent implements OnInit {
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
-    this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.linksService.configuration.apiKeys = {};
-    this.linksService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

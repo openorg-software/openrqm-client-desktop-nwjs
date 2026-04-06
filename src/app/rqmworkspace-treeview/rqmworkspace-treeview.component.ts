@@ -24,7 +24,7 @@ import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.c
 import { RQMDeleteTreeViewItemComponent } from '../rqmdelete-tree-view-item/rqmdelete-tree-view-item.component';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { DocumentsService, WorkspacesService } from 'openrqm-api';
+import { DocumentsService, WorkspacesService, OpenAPI } from '../openrqm-api';
 import { RQMWorkspaceTreeviewItemPropertiesDialogComponent } from '../rqmworkspace-treeview-item-properties/rqmworkspace-treeview-item-properties-dialog.component';
 import { RQMDocumentImportDialogComponent } from '../rqmdocument-import-dialog/rqmdocument-import-dialog.component';
 
@@ -66,12 +66,8 @@ export class RQMWorkspaceTreeviewComponent implements OnChanges {
     private settingsService: RQMSettingsService,
     private userService: RQMUserService
   ) {
-    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsService.configuration.apiKeys = {};
-    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
-    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspaceService.configuration.apiKeys = {};
-    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnChanges(changes: SimpleChanges) {

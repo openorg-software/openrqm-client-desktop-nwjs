@@ -16,7 +16,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { WorkspacesService, RQMWorkspaceUser } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspaceUser } from '../openrqm-api'
 import { RQMAddUserComponent } from '../rqmadd-user/rqmadd-user.component';
 
 @Component({

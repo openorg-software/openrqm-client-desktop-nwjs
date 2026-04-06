@@ -17,7 +17,7 @@ import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 // OpenRQM API
-import { DocumentsService, WorkspacesService } from 'openrqm-api';
+import { DocumentsService, WorkspacesService, OpenAPI } from '../openrqm-api';
 
 @Component({
   standalone: false,
@@ -31,13 +31,8 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
 
-    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspaceService.configuration.apiKeys = {};
-    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
-
-    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsService.configuration.apiKeys = {};
-    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
 
     if (data.item != null) {
       this.item = data.item;

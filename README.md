@@ -50,6 +50,18 @@ sudo apt-get install -y \
 
 **Windows** — no additional system libraries required beyond the tools listed above.
 
+### Generating the API client
+
+The TypeScript Angular API client is generated from the OpenAPI spec in `openrqm-docs` using [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen). The generated code lives in `src/app/openrqm-api/`.
+
+To regenerate after spec changes:
+
+```bash
+npm run generate:api
+```
+
+This requires the `openrqm-docs` repository to be cloned alongside this repository (i.e. `../openrqm-docs/api/openapi-3-0.yml` must exist).
+
 ### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4201/`. The app will automatically reload when source files change.

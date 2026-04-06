@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserManagementService } from 'openrqm-api'
+import { UserManagementService, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
@@ -30,9 +30,8 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   closeResult: string;
 
   constructor(public dialog: MatDialog, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.userManagementService.configuration.apiKeys = {};
-    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnInit() {

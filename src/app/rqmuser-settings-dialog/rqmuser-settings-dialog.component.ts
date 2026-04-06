@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@ang
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { UserManagementService, RQMUser } from 'openrqm-api'
+import { UserManagementService, RQMUser, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -48,9 +48,8 @@ export class RQMUserSettingsDialogComponent implements OnInit {
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar,
         private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-        this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
-        this.userManagementService.configuration.apiKeys = {};
-        this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+        OpenAPI.BASE = this.settingsService.getApiBasePath();
+        OpenAPI.TOKEN = this.userService.getToken();
     }
 
     ngOnInit() {

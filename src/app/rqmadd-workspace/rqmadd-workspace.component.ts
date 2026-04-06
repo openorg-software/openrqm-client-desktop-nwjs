@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { WorkspacesService, RQMWorkspace } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspace, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -29,9 +29,8 @@ export class RQMAddWorkspaceComponent implements OnInit {
   parentName: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspaceService.configuration.apiKeys = {};
-    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     this.parentId = data.parentId;
   }
 

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserManagementService } from 'openrqm-api'
+import { UserManagementService, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -33,7 +33,7 @@ export class RQMLoginComponent implements OnInit {
 
   closeResult: string;
   constructor(public dialog: MatDialog, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {

@@ -13,7 +13,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
-import { ThemesService, RQMTheme } from 'openrqm-api'
+import { ThemesService, RQMTheme, OpenAPI } from '../openrqm-api'
 
 @Component({
   standalone: false,
@@ -36,9 +36,8 @@ export class RQMDocumentThemeComponent implements OnInit {
   public proColor: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private themesService: ThemesService, private userService: RQMUserService, private settingsService: RQMSettingsService, private route: ActivatedRoute) {
-    this.themesService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.themesService.configuration.apiKeys = {};
-    this.themesService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     this.proColor = data.proseColor;
     this.reqColor = data.reqColor;
     this.documentId = data.documentId;

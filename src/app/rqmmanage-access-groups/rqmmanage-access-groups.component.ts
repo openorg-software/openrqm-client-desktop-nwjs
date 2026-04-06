@@ -13,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { AccessGroupsService, RQMAccessGroup } from 'openrqm-api';
+import { AccessGroupsService, RQMAccessGroup } from '../openrqm-api';
 
 @Component({
   standalone: false,

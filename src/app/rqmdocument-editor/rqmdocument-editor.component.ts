@@ -26,7 +26,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // OpenRQM
-import { ElementsService, LinksService, RQMElement, RQMElementType, DocumentsService, RQMLink, RQMLinkType } from 'openrqm-api';
+import { ElementsService, LinksService, RQMElement, RQMElementType, DocumentsService, RQMLink, RQMLinkType, OpenAPI } from '../openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
@@ -99,12 +99,8 @@ export class RQMDocumentEditorComponent implements OnInit {
 
   constructor(private elementsService: ElementsService, private _snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute, private settingsService: RQMSettingsService, private documentsSerivce: DocumentsService, private linksService: LinksService, private userService: RQMUserService) {
     //Initialization
-    this.elementsService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.elementsService.configuration.apiKeys = {};
-    this.elementsService.configuration.apiKeys['token'] = this.userService.getToken();
-    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsSerivce.configuration.apiKeys = {};
-    this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnInit() {

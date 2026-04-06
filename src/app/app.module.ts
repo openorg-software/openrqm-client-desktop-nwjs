@@ -50,6 +50,7 @@ import { RQMAddUserComponent } from './rqmadd-user/rqmadd-user.component';
 import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmmanage-access-groups.component';
 import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rqmdocument-import-dialog.component';
+import { OpenRqmApi } from './openrqm-api';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
     RQMMaterialModule,
     CKEditorModule,
     ReactiveFormsModule,
+    OpenRqmApi,
   ],
   bootstrap: [RQMMainComponent]
 })
