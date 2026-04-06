@@ -41,10 +41,10 @@ jobs:
           patchelf
 
     - name: Install Tauri CLI
-      run: cargo install tauri-cli
+      run: cargo install cargo-binstall && cargo binstall tauri-cli --no-confirm
 
     - name: Build using makefile
-      run: make
+      run: make build
 
     - name: Run Tauri tests
       run: cargo test --manifest-path src-tauri/Cargo.toml
