@@ -5,19 +5,16 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 
-
-// Material Design
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
 import { UserManagementService, RQMUser, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 import * as jssha512 from 'js-sha512';
-import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+
 @Component({
   standalone: false,
   selector: 'app-rqmuser-settings-dialog',
@@ -46,7 +43,7 @@ export class RQMUserSettingsDialogComponent implements OnInit {
 
 
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar,
+    constructor(readonly activeModal: IxActiveModal, private toastService: ToastService,
         private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
         OpenAPI.BASE = this.settingsService.getApiBasePath();
         OpenAPI.TOKEN = this.userService.getToken();
@@ -94,21 +91,12 @@ export class RQMUserSettingsDialogComponent implements OnInit {
             err => {
                 console.log('err');
                 console.log(err);
-                this.openSnackBar(['Error during user update.', 'Error: ' + err.message]);
+                this.toastService.show({ message: 'Error during user update. Error: ' + err.message, type: 'error' });
             },
             () => {
                 console.log('change user done');
-                this.openSnackBar(['Successfully updated user.']);
+                this.toastService.show({ message: 'Successfully updated user.' });
             }
-        );
-    }
-
-    openSnackBar(messages: string[]) {
-        console.log("Open SnackBar: " + messages);
-        this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
-            data: messages,
-            duration: 3000
-        },
         );
     }
 

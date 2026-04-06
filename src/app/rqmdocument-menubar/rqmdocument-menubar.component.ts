@@ -7,7 +7,7 @@ Copyright (C) 2019 - 2026 Benjamin Schilling
 
 import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { ModalService } from '@siemens/ix-angular';
 
 
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
@@ -37,18 +37,16 @@ export class RQMDocumentMenubarComponent implements OnInit {
   typePdf: string = "pdf";
   typeMarkdown: string = "markdown";
 
-  // For Linking
   @ViewChild('exportModal') exportModal: any;
   linkingInProgress: boolean = false;
   @Output() doLinking = new EventEmitter<boolean>();
 
-  // For Theme
   @Output() requirementColorChange = new EventEmitter<string>();
   @Output() proseColorChange = new EventEmitter<string>();
   @Input() requirementColor: string = "";
   @Input() proseColor: string = "";
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(private modalService: ModalService, private route: ActivatedRoute, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
     console.log("constr req color" + this.requirementColor);
@@ -88,103 +86,86 @@ export class RQMDocumentMenubarComponent implements OnInit {
   }
 
 
-  openDialog(component: any, dataValue?: any): any {
-    return this.dialog.open(component, {
-      width: '80vw',
-      data: dataValue
+  async openDialogExportModalPDF() {
+    const instance = await this.modalService.open({
+      content: RQMDocumentExporterComponent,
+      data: { documentId: this.documentId, type: "pdf" }
     });
-  }
-
-
-  openDialogExportModalPDF() {
-    const dialogRef = this.openDialog(RQMDocumentExporterComponent,
-      {
-        documentId: this.documentId,
-        type: "pdf"
-      }
-    );
-    dialogRef.componentInstance.documentId = this.documentId;
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogExportModalMarkdown() {
-    const dialogRef = this.openDialog(RQMDocumentExporterComponent,
-      {
-        documentId: this.documentId,
-        type: "markdown"
-      }
-    );
-    dialogRef.componentInstance.documentId = this.documentId;
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogExportModalMarkdown() {
+    const instance = await this.modalService.open({
+      content: RQMDocumentExporterComponent,
+      data: { documentId: this.documentId, type: "markdown" }
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogExportModalRaw() {
-    const dialogRef = this.openDialog(RQMDocumentExporterComponent,
-      {
-        documentId: this.documentId,
-        type: "raw"
-      }
-    );
-    dialogRef.componentInstance.documentId = this.documentId;
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogExportModalRaw() {
+    const instance = await this.modalService.open({
+      content: RQMDocumentExporterComponent,
+      data: { documentId: this.documentId, type: "raw" }
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
 
-
-  openDialogDocumentTheme() {
-    const dialogRef = this.openDialog(RQMDocumentThemeComponent,
-      {
+  async openDialogDocumentTheme() {
+    const instance = await this.modalService.open({
+      content: RQMDocumentThemeComponent,
+      data: {
         documentId: this.documentId,
         proseColor: this.proseColor,
         reqColor: this.requirementColor
       }
-    );
+    });
 
-    dialogRef.componentInstance.requirementColorOutput.subscribe(
-      event => {
-        this.onRequirementColorChange(event);
-      }
-    );
-    dialogRef.componentInstance.proseColorOutput.subscribe(
-      event => {
-        this.onProseColorChange(event);
-      }
-    );
+    instance.htmlElement.addEventListener('requirementColorOutput', (event: CustomEvent) => {
+      this.onRequirementColorChange(event.detail);
+    });
+    instance.htmlElement.addEventListener('proseColorOutput', (event: CustomEvent) => {
+      this.onProseColorChange(event.detail);
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
 
-  openDialogNewWorkspace() {
-    const dialogRef = this.openDialog(RQMAddWorkspaceComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogNewWorkspace() {
+    const instance = await this.modalService.open({
+      content: RQMAddWorkspaceComponent,
+      data: {}
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogServerSettings() {
+    const instance = await this.modalService.open({
+      content: RQMServerSettingsDialogComponent,
+      data: {}
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogUserSettings() {
-    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogUserSettings() {
+    const instance = await this.modalService.open({
+      content: RQMUserSettingsDialogComponent,
+      data: {}
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }

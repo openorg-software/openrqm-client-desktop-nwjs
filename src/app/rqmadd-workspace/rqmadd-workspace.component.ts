@@ -5,11 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
 import { WorkspacesService, RQMWorkspace, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -28,9 +27,10 @@ export class RQMAddWorkspaceComponent implements OnInit {
   private parentId: number = -1;
   parentName: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
+    const data = this.activeModal.data;
     this.parentId = data.parentId;
   }
 
@@ -71,14 +71,8 @@ export class RQMAddWorkspaceComponent implements OnInit {
       () => {
         console.log('add workspace done');
         this.router.navigate(['/workspace-tree']);
-        this.openSnackBar("Added workspace " + workspace.name + ".");
+        this.toastService.show({ message: "Added workspace " + workspace.name + "." });
       }
     );
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
   }
 }

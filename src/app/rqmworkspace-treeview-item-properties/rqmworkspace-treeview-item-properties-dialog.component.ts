@@ -5,11 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
 import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
@@ -47,11 +46,11 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
   @ViewChild('languageId', { static: false }) languageId;
   @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
-    if (data.item != null) {
-      this.item = data.item;
+    if (this.activeModal.data.item != null) {
+      this.item = this.activeModal.data.item;
     } else {
       console.log("Data.item is null");
     }
@@ -127,7 +126,8 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
       () => {
         console.log('patching workspace done');
 
-        this.openSnackBar("Updated workspace " + workspace.name + ".");
+        this.toastService.show({ message: 'Updated workspace ' + workspace.name + '.' });
+        this.activeModal.close('updated');
         this.router.navigate(['/workspace-tree']);
       }
     );
@@ -166,17 +166,11 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
       () => {
         console.log('patching document done');
 
-        this.openSnackBar("Updated document " + document.name + ".");
+        this.toastService.show({ message: 'Updated document ' + document.name + '.' });
+        this.activeModal.close('updated');
         this.router.navigate(['/workspace-tree']);
       }
     );
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
-  }
-
 }
-

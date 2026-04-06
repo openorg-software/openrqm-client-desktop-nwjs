@@ -5,27 +5,23 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 -->
 
-<mat-toolbar color="primary">
-  <!-- SONARQUBE HTML IGNORE START -->
-  <img src="assets/img/logo_transparent.png">
-  <!-- SONARQUBE HTML IGNORE END -->
-  <span>OpenRQM </span>
-  <span class="menu-spacer"></span>
-  <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
-  <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item (click)="openDialogServerSettings()">Server</button>
-  </mat-menu>
-</mat-toolbar>
+<ix-application-header name="OpenRQM">
+  <div slot="logo"><img src="assets/img/logo_transparent.png"></div>
+  <ix-button id="loginSettingsMenuTrigger" variant="subtle-primary">Settings</ix-button>
+  <ix-dropdown trigger="loginSettingsMenuTrigger">
+    <ix-dropdown-item label="Server" (click)="openDialogServerSettings()"></ix-dropdown-item>
+  </ix-dropdown>
+</ix-application-header>
 
 <form class="login-container">
-  <mat-form-field class="login-input-container">
-    <mat-label>E-Mail</mat-label>
-    <input matInput autocomplete="email" #emailLogin>
-  </mat-form-field>
-  <mat-form-field class="login-input-container">
-    <mat-label>Password</mat-label>
-    <input type="password" autocomplete="current-password" matInput #passwordLogin>
-  </mat-form-field>
-  <div class="login-button-container"><button class="login-button" mat-raised-button (click)="login()">Login</button></div>
-  <div class="login-button-container"><button class="login-button" mat-raised-button (click)="openDialogRegister()">Register</button></div>
+  <div class="mb-3 login-input-container">
+    <label class="form-label">E-Mail</label>
+    <input class="form-control" autocomplete="email" #emailLogin>
+  </div>
+  <div class="mb-3 login-input-container">
+    <label class="form-label">Password</label>
+    <input type="password" autocomplete="current-password" class="form-control" #passwordLogin>
+  </div>
+  <div class="login-button-container"><ix-button class="login-button" (click)="login()">Login</ix-button></div>
+  <div class="login-button-container"><ix-button class="login-button" variant="subtle-primary" (click)="openDialogRegister()">Register</ix-button></div>
 </form>

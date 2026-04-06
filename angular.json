@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@siemens/ix/dist/siemens-ix/siemens-ix.css",
               "src/styles.css",
               "src/style.scss",
               "./node_modules/font-awesome/css/font-awesome.css",

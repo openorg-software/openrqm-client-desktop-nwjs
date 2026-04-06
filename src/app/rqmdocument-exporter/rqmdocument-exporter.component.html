@@ -5,28 +5,24 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 -->
 
-<h4 mat-dialog-title *ngIf="exportType=='pdf'">Export PDF</h4>
-<h4 mat-dialog-title *ngIf="exportType=='markdown'">Export Markdown</h4>
-<h4 mat-dialog-title *ngIf="exportType=='raw'">Export Raw</h4>
+<ix-modal-header *ngIf="exportType=='pdf'">Export PDF</ix-modal-header>
+<ix-modal-header *ngIf="exportType=='markdown'">Export Markdown</ix-modal-header>
+<ix-modal-header *ngIf="exportType=='raw'">Export Raw</ix-modal-header>
 
-<mat-dialog-content>
-  <mat-list-item>
-    <mat-form-field>
-      <mat-label>Exported file name</mat-label>
-      <input matInput #exportFileName>
-    </mat-form-field>
-  </mat-list-item>
-  <mat-list-item *ngIf="exportType != 'raw'">
-    <mat-form-field>
-      <mat-label>Template</mat-label>
-      <mat-select [(value)]="selectedTemplate">
-        <mat-option *ngFor="let template of templates" [value]="template.id">{{template.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-list-item>
-</mat-dialog-content>
+<ix-modal-content>
+  <div class="mb-3">
+    <label class="form-label">Exported file name</label>
+    <input class="form-control" #exportFileName>
+  </div>
+  <div class="mb-3" *ngIf="exportType != 'raw'">
+    <label class="form-label">Template</label>
+    <select class="form-select" [(ngModel)]="selectedTemplate">
+      <option *ngFor="let template of templates" [ngValue]="template.id">{{template.name}}</option>
+    </select>
+  </div>
+</ix-modal-content>
 
-<mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close (click)="exportDocument()">Export</button>
-  <button mat-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions>
+<ix-modal-footer>
+  <ix-button variant="subtle-primary" (click)="activeModal.dismiss('cancel')">Cancel</ix-button>
+  <ix-button (click)="exportDocument(); activeModal.close('export')">Export</ix-button>
+</ix-modal-footer>

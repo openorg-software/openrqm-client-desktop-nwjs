@@ -5,9 +5,9 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IxActiveModal } from '@siemens/ix-angular';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
@@ -30,11 +30,11 @@ export class RQMDocumentExporterComponent implements OnInit {
   selectedTemplate: number;
   @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
-    this.documentId = data.documentId;
-    this.exportType = data.type;
+    this.documentId = this.activeModal.data.documentId;
+    this.exportType = this.activeModal.data.type;
 
   }
 

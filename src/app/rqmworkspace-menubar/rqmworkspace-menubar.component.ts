@@ -7,7 +7,7 @@ Copyright (C) 2019 - 2026 Benjamin Schilling
 
 import { Component, OnInit } from '@angular/core';
 
-import { MatDialog } from '@angular/material/dialog';
+import { ModalService } from '@siemens/ix-angular';
 
 import { UserManagementService, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -29,7 +29,7 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
 
   closeResult: string;
 
-  constructor(public dialog: MatDialog, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(private modalService: ModalService, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
   }
@@ -37,48 +37,42 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(component: any, dataValue?: any): any {
-    return this.dialog.open(component, {
-      width: '80vw',
-      data: dataValue
+  async openDialogNewWorkspace() {
+    const instance = await this.modalService.open({
+      content: RQMAddWorkspaceComponent,
+      data: { parentId: null }
     });
-  }
-
-  openDialogNewWorkspace() {
-    const dialogRef = this.openDialog(RQMAddWorkspaceComponent,
-      {
-        parentId: null,
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogManageAccessGroups() {
-    const dialogRef = this.openDialog(RQMManageAccessGroupsComponent, {
+  async openDialogManageAccessGroups() {
+    const instance = await this.modalService.open({
+      content: RQMManageAccessGroupsComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent, {
+  async openDialogServerSettings() {
+    const instance = await this.modalService.open({
+      content: RQMServerSettingsDialogComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogUserSettings() {
-    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent, {
+  async openDialogUserSettings() {
+    const instance = await this.modalService.open({
+      content: RQMUserSettingsDialogComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }

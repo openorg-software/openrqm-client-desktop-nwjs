@@ -9,15 +9,14 @@ Copyright (C) 2019 - 2026 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-// Material Design
-import { MatSnackBar } from '@angular/material/snack-bar';
+// Siemens iX
+import { ToastService } from '@siemens/ix-angular';
 
 // OpenRQM
 import { LinksService, RQMLink, OpenAPI } from '../openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
-import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component';
 
 @Component({
   standalone: false,
@@ -44,7 +43,7 @@ export class RQMDocumentViewerComponent implements OnInit {
   requirementColor: string = "#acecde";
   proseColor: string = "#adadad";
 
-  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
+  constructor(private router: Router, private toastService: ToastService, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
@@ -128,10 +127,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   openSnackBar(messages: string[]) {
-    this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
-      data: messages,
-      duration: 3000
-    },
-    );
+    this.toastService.show({
+      message: messages.join(' '),
+    });
   }
 }

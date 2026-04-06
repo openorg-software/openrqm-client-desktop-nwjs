@@ -5,8 +5,7 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   standalone: false,
@@ -16,9 +15,9 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 })
 export class RQMMultiLineSnackBarComponent implements OnInit {
 
+  @Input() data: string[] = [];
 
-
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+  constructor() {
 
   }
 

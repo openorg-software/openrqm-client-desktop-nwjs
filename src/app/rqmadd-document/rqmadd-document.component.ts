@@ -5,11 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
 import { DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -35,9 +34,10 @@ export class RQMAddDocumentComponent implements OnInit {
 
   public parentId: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
+    const data = this.activeModal.data;
     this.parentId = data.parentId;
   }
 
@@ -76,16 +76,10 @@ export class RQMAddDocumentComponent implements OnInit {
       },
       () => {
         console.log('add document done');
-        this.openSnackBar("Added document " + document.name + ".");
+        this.toastService.show({ message: "Added document " + document.name + "." });
         this.router.navigate(['/workspace-tree']);
       }
     );
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
   }
 
 }

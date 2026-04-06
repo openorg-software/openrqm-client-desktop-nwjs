@@ -5,18 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
-// OpenRQM
 import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
-// OpenRQM API
 import { DocumentsService, WorkspacesService, OpenAPI } from '../openrqm-api';
 
 @Component({
@@ -29,11 +26,12 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
 
   public item: RQMWorkspaceTreeViewItem;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private documentsService: DocumentsService, private workspaceService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
 
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
 
+    const data = this.activeModal.data;
     if (data.item != null) {
       this.item = data.item;
     } else {
@@ -43,9 +41,6 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-  // OpenRQM API Wrapper
 
   deleteWorkspace() {
     this.workspaceService.deleteWorkspace(this.item.value).subscribe(
@@ -60,7 +55,7 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
       () => {
         console.log('delete workspace done');
         this.router.navigate(['/workspace-tree']);
-        this.openSnackBar("Deleted workspace " + this.item.text + ".");
+        this.toastService.show({ message: "Deleted workspace " + this.item.text + "." });
       }
     );
   }
@@ -78,14 +73,8 @@ export class RQMDeleteTreeViewItemComponent implements OnInit {
       () => {
         console.log('delete document done');
         this.router.navigate(['/workspace-tree']);
-        this.openSnackBar("Deleted document " + this.item.text + ".");
+        this.toastService.show({ message: "Deleted document " + this.item.text + "." });
       }
     );
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
   }
 }

@@ -5,53 +5,48 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 -->
 
-<!-- SONARQUBE HTML IGNORE START -->
 <p>Users</p>
 
-<div class="mat-elevation-z1">
-  <table mat-table [dataSource]="dataSourceUsers">
-
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox *ngIf=initialized (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox *ngIf=initialized (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- UserId Column -->
-    <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef> User </th>
-      <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
-    </ng-container>
-
-    <!-- Permission Column -->
-    <ng-container matColumnDef="permissions">
-      <th mat-header-cell *matHeaderCellDef> Permissions </th>
-      <td mat-cell *matCellDef="let element"> {{element.permissions}} </td>
-    </ng-container>
-
-    <!-- Interaction -->
-    <ng-container matColumnDef="interactionAdd">
-      <td mat-footer-cell *matFooterCellDef>
-        <button mat-raised-button (click)="openAddUser()">Add</button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="interactionDelete">
-      <td mat-footer-cell *matFooterCellDef>
-        <button mat-raised-button (click)="deleteUser()">Delete</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumnsUsers"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsUsers;" (click)="selection.toggle(row)"></tr>
-    <tr mat-row *matFooterRowDef="['interactionAdd', 'interactionDelete']" class="example-second-footer-row">
-
-    </tr>
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          <input *ngIf="initialized" type="checkbox" (change)="masterToggle()" [checked]="isAllSelected()" [indeterminate]="selectedItems.size > 0 && !isAllSelected()">
+        </th>
+        <th>User</th>
+        <th>Permissions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of pagedData" (click)="toggleSelection(element)">
+        <td>
+          <input *ngIf="initialized" type="checkbox" (click)="$event.stopPropagation()" (change)="toggleSelection(element)" [checked]="selectedItems.has(element)">
+        </td>
+        <td>{{element.userId}}</td>
+        <td>{{element.permissions}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><ix-button (click)="openAddUser()">Add</ix-button></td>
+        <td><ix-button (click)="deleteUser()">Delete</ix-button></td>
+        <td></td>
+      </tr>
+    </tfoot>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <select class="form-select" style="width: auto;" [(ngModel)]="pageSize" (ngModelChange)="updatePage()">
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+    </select>
+    <div>
+      <ix-button variant="subtle-primary" [disabled]="currentPage === 0" (click)="currentPage = 0; updatePage()">First</ix-button>
+      <ix-button variant="subtle-primary" [disabled]="currentPage === 0" (click)="currentPage = currentPage - 1; updatePage()">Prev</ix-button>
+      <span class="mx-2">Page {{currentPage + 1}} of {{totalPages}}</span>
+      <ix-button variant="subtle-primary" [disabled]="currentPage >= totalPages - 1" (click)="currentPage = currentPage + 1; updatePage()">Next</ix-button>
+      <ix-button variant="subtle-primary" [disabled]="currentPage >= totalPages - 1" (click)="currentPage = totalPages - 1; updatePage()">Last</ix-button>
+    </div>
+  </div>
 </div>
-<!-- SONARQUBE HTML IGNORE END -->

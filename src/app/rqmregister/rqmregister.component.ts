@@ -7,6 +7,7 @@ Copyright (C) 2019 - 2026 Benjamin Schilling
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IxActiveModal } from '@siemens/ix-angular';
 
 import { UserManagementService, RQMUser, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
@@ -21,7 +22,6 @@ import * as jssha512 from 'js-sha512';
 })
 export class RQMRegisterComponent implements OnInit {
 
-  //Register
   @ViewChild('emailRegister') emailRegister;
   @ViewChild('passwordRegister') passwordRegister;
   @ViewChild('passwordAgainRegister') passwordAgainRegister;
@@ -29,7 +29,7 @@ export class RQMRegisterComponent implements OnInit {
   @ViewChild('surnameRegister') surnameRegister;
   @ViewChild('departmentRegister') departmentRegister;
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
+  constructor(readonly activeModal: IxActiveModal, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
   }
 

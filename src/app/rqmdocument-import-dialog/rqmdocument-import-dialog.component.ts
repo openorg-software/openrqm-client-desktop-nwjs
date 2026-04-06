@@ -6,12 +6,11 @@ Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 /// Angular Dependencies
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-/// Material Design Dependencies
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+/// Siemens iX Dependencies
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
 /// OpenRQM Dependencies
 import { DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
@@ -27,13 +26,13 @@ import { RQMUserService } from '../rqmuser.service';
 })
 export class RQMDocumentImportDialogComponent implements OnInit {
 
-  public parentId: any;
+  public parentId: number;
   @ViewChild('importFile', { static: false }) importFile: ElementRef<HTMLInputElement>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
-    this.parentId = data.parentId;
+    this.parentId = this.activeModal.data.parentId;
   }
 
   ngOnInit() {
@@ -42,7 +41,7 @@ export class RQMDocumentImportDialogComponent implements OnInit {
   importDocument() {
     const selectedFile = this.importFile?.nativeElement.files?.[0];
     if (!selectedFile) {
-      this.openSnackBar('Please select a file to import.');
+      this.toastService.show({ message: 'Please select a file to import.', type: 'warning' });
       return;
     }
 
@@ -62,15 +61,10 @@ export class RQMDocumentImportDialogComponent implements OnInit {
       },
       () => {
         console.log('import document done');
-        this.openSnackBar("Import document " + document.name + ".");
+        this.toastService.show({ message: 'Import document ' + document.name + '.' });
         this.router.navigate(['/workspace-tree']);
       }
     );
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
-  }
 }

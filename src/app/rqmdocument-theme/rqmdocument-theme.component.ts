@@ -5,10 +5,10 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IxActiveModal } from '@siemens/ix-angular';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
@@ -35,12 +35,12 @@ export class RQMDocumentThemeComponent implements OnInit {
   public reqColor: string = "";
   public proColor: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private themesService: ThemesService, private userService: RQMUserService, private settingsService: RQMSettingsService, private route: ActivatedRoute) {
+  constructor(readonly activeModal: IxActiveModal, private themesService: ThemesService, private userService: RQMUserService, private settingsService: RQMSettingsService, private route: ActivatedRoute) {
     OpenAPI.BASE = this.settingsService.getApiBasePath();
     OpenAPI.TOKEN = this.userService.getToken();
-    this.proColor = data.proseColor;
-    this.reqColor = data.reqColor;
-    this.documentId = data.documentId;
+    this.proColor = this.activeModal.data.proseColor;
+    this.reqColor = this.activeModal.data.reqColor;
+    this.documentId = this.activeModal.data.documentId;
   }
 
   ngOnInit() {

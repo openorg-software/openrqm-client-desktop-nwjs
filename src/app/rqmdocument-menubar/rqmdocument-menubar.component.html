@@ -5,37 +5,29 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 - 2026 Benjamin Schilling
 -->
 
-<mat-toolbar color="primary">
-  <button mat-button class="menu-icon" aria-hidden="false" aria-label="Back to workspaces" routerLink="/workspace-tree" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></button>
-  <!-- SONARQUBE HTML IGNORE START -->
-  <img src="assets/img/logo_transparent.png">
-  <!-- SONARQUBE HTML IGNORE END -->
-  <span>OpenRQM</span>
-  <!-- Themes -->
-  <button mat-button (click)="openDialogDocumentTheme()">Theme</button>
-  <!-- Document Export -->
-  <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
-  <mat-menu #exportMenu="matMenu">
-    <button mat-menu-item (click)="openDialogExportModalPDF()">PDF</button>
-    <button mat-menu-item (click)="openDialogExportModalMarkdown()">Markdown</button>
-    <button mat-menu-item (click)="openDialogExportModalRaw()">Raw</button>
-  </mat-menu>
-  <!-- Document Review -->
-  <button mat-button>Review</button>
-  <!-- Linking -->
-  <button mat-button [matMenuTriggerFor]="linkMenu">Links</button>
-  <mat-menu #linkMenu="matMenu">
-    <button *ngIf="!linkingInProgress" mat-menu-item (click)="startLinking()">Start Linking</button>
-    <button *ngIf="linkingInProgress" mat-menu-item (click)="stopLinking()">Stop Linking</button>
-    <button mat-menu-item>Tracing</button>
-  </mat-menu>
+<ix-application-header name="OpenRQM">
+  <div slot="logo"><img src="assets/img/logo_transparent.png"></div>
+  <ix-icon-button icon="arrow-left" variant="tertiary" routerLink="/workspace-tree" routerLinkActive="active"></ix-icon-button>
+  <ix-button variant="subtle-primary" (click)="openDialogDocumentTheme()">Theme</ix-button>
+  <ix-button id="docExportMenuTrigger" variant="subtle-primary">Export</ix-button>
+  <ix-dropdown trigger="docExportMenuTrigger">
+    <ix-dropdown-item label="PDF" (click)="openDialogExportModalPDF()"></ix-dropdown-item>
+    <ix-dropdown-item label="Markdown" (click)="openDialogExportModalMarkdown()"></ix-dropdown-item>
+    <ix-dropdown-item label="Raw" (click)="openDialogExportModalRaw()"></ix-dropdown-item>
+  </ix-dropdown>
+  <ix-button variant="subtle-primary">Review</ix-button>
+  <ix-button id="docLinkMenuTrigger" variant="subtle-primary">Links</ix-button>
+  <ix-dropdown trigger="docLinkMenuTrigger">
+    <ix-dropdown-item *ngIf="!linkingInProgress" label="Start Linking" (click)="startLinking()"></ix-dropdown-item>
+    <ix-dropdown-item *ngIf="linkingInProgress" label="Stop Linking" (click)="stopLinking()"></ix-dropdown-item>
+    <ix-dropdown-item label="Tracing"></ix-dropdown-item>
+  </ix-dropdown>
 
   <span class="menu-spacer"></span>
-  <!-- Settings -->
-  <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
-  <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item (click)="openDialogServerSettings()">Server</button>
-    <button mat-menu-item (click)="openDialogUserSettings()">User</button>
-    <button mat-menu-item (click)="logout()" routerLink="/login" routerLinkActive="active">Logout</button>
-  </mat-menu>
-</mat-toolbar>
+  <ix-button id="docSettingsMenuTrigger" variant="subtle-primary">Settings</ix-button>
+  <ix-dropdown trigger="docSettingsMenuTrigger">
+    <ix-dropdown-item label="Server" (click)="openDialogServerSettings()"></ix-dropdown-item>
+    <ix-dropdown-item label="User" (click)="openDialogUserSettings()"></ix-dropdown-item>
+    <ix-dropdown-item label="Logout" (click)="logout()" routerLink="/login" routerLinkActive="active"></ix-dropdown-item>
+  </ix-dropdown>
+</ix-application-header>

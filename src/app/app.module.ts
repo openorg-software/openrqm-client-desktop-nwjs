@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RQMMaterialModule } from './material-module'
+import { IxModule } from '@siemens/ix-angular';
 
 
 /// For workspace-tree
@@ -88,7 +88,7 @@ import { OpenRqmApi } from './openrqm-api';
     FontAwesomeModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RQMMaterialModule,
+    IxModule.forRoot(),
     AngularMarkdownEditorModule.forRoot({ iconlibrary: 'fa' }),
     MarkdownModule.forRoot(),
     ReactiveFormsModule,

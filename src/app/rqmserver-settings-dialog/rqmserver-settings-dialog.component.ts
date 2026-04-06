@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { IxActiveModal } from '@siemens/ix-angular';
 import { RQMSettingsService } from '../rqmsettings.service';
 // To display application version
 declare const require: (path: string) => { version: string };
@@ -17,7 +18,7 @@ export class RQMServerSettingsDialogComponent implements OnInit {
     @ViewChild('serverUrlInputField') serverUrlInputField;
     serverUrl: string = "";
 
-    constructor(private rqmSettingsService: RQMSettingsService) {
+    constructor(readonly activeModal: IxActiveModal, private rqmSettingsService: RQMSettingsService) {
         this.serverUrl = this.rqmSettingsService.rqmSettingsModel.serverUrl;
     }
 
