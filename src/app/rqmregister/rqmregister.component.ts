@@ -2,25 +2,26 @@
 openrqm-client-desktop-nwjs
 RQMRegister Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IxActiveModal } from '@siemens/ix-angular';
 
-import { UserManagementService, RQMUser } from 'openrqm-api'
+import { UserManagementService, RQMUser, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 import * as jssha512 from 'js-sha512';
 @Component({
+  standalone: false,
   selector: 'app-rqmregister',
   templateUrl: './rqmregister.component.html',
   styleUrls: ['./rqmregister.component.css']
 })
 export class RQMRegisterComponent implements OnInit {
 
-  //Register
   @ViewChild('emailRegister') emailRegister;
   @ViewChild('passwordRegister') passwordRegister;
   @ViewChild('passwordAgainRegister') passwordAgainRegister;
@@ -28,8 +29,8 @@ export class RQMRegisterComponent implements OnInit {
   @ViewChild('surnameRegister') surnameRegister;
   @ViewChild('departmentRegister') departmentRegister;
 
-  constructor(private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
-    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+  constructor(readonly activeModal: IxActiveModal, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService, private router: Router) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {

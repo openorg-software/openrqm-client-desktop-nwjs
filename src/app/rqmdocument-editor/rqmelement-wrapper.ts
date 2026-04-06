@@ -2,10 +2,10 @@
 openrqm-client-desktop-nwjs
 RQMElementWrapper Class
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019-2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { RQMElement, RQMLink } from 'openrqm-api';
+import { RQMElement, RQMLink } from '../openrqm-api';
 
 export class RQMElementWrapper implements RQMElement {
     public content: string;

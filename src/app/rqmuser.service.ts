@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 RQMUser Service
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 import { Injectable } from '@angular/core';

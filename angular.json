@@ -24,13 +24,19 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@siemens/ix/dist/siemens-ix/siemens-ix.css",
               "src/styles.css",
               "src/style.scss",
-              "./node_modules/font-awesome/css/font-awesome.css"
+              "./node_modules/font-awesome/css/font-awesome.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/bootstrap-markdown/css/bootstrap-markdown.min.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/jquery-ui-dist/jquery-ui.min.js"
+              "./node_modules/jquery-ui-dist/jquery-ui.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/bootstrap-markdown/js/bootstrap-markdown.js",
+              "./node_modules/marked/lib/marked.umd.js"
             ]
           },
           "configurations": {
@@ -64,11 +70,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "openrqm-client-desktop-nwjs:build"
+            "buildTarget": "openrqm-client-desktop-nwjs:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "openrqm-client-desktop-nwjs:build:production"
+              "buildTarget": "openrqm-client-desktop-nwjs:build:production"
             }
           }
         },
@@ -100,28 +106,18 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "openrqm-client-desktop-nwjs:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "openrqm-client-desktop-nwjs:serve:production"
-            }
-          }
         }
       }
     }
   },
-  "defaultProject": "openrqm-client-desktop-nwjs"
+  "defaultProject": "openrqm-client-desktop-nwjs",
+  "cli": {
+    "analytics": false
+  }
 }

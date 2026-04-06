@@ -2,17 +2,17 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTree Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TreeviewConfig } from 'ngx-treeview';
-import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
+import { WorkspacesService, RQMWorkspace, OpenAPI } from '../openrqm-api';
 
 import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 @Component({
+  standalone: false,
   selector: 'app-rqmworkspace-tree',
   templateUrl: './rqmworkspace-tree.component.html',
   styleUrls: ['./rqmworkspace-tree.component.css']
@@ -22,36 +22,15 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   dropdownEnabled = true;
   items: RQMWorkspaceTreeViewItem[];
   values: number[];
-  config = TreeviewConfig.create({
-    hasAllCheckBox: false,
-    hasFilter: false,
-    hasCollapseExpand: false,
-    decoupleChildFromParent: false,
-    maxHeight: 1000
-  });
 
-  buttonClasses = [
-    'btn-outline-primary',
-    'btn-outline-secondary',
-    'btn-outline-success',
-    'btn-outline-danger',
-    'btn-outline-warning',
-    'btn-outline-info',
-    'btn-outline-light',
-    'btn-outline-dark'
-  ];
-  buttonClass = this.buttonClasses[0];
-
-  // For linking
   @Input() linking: boolean = false;
   @Input() noMenuBar: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();
 
   constructor(private workspacesService: WorkspacesService, private settingsService: RQMSettingsService, private userService: RQMUserService
   ) {
-    this.workspacesService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspacesService.configuration.apiKeys = {};
-    this.workspacesService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnInit() {

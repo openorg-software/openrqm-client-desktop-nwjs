@@ -2,21 +2,21 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeviewItemProperties Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 - 2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
-import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspace, DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
 import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmworkspace-treeview-item-properties-dialog',
   templateUrl: './rqmworkspace-treeview-item-properties-dialog.component.html',
   styleUrls: ['./rqmworkspace-treeview-item-properties-dialog.component.css']
@@ -46,16 +46,11 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
   @ViewChild('languageId', { static: false }) languageId;
   @ViewChild('externalIdentifier', { static: false }) externalIdentifier;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.workspaceService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.workspaceService.configuration.apiKeys = {};
-    this.workspaceService.configuration.apiKeys['token'] = this.userService.getToken();
-
-    this.documentsService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsService.configuration.apiKeys = {};
-    this.documentsService.configuration.apiKeys['token'] = this.userService.getToken();
-    if (data.item != null) {
-      this.item = data.item;
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private workspaceService: WorkspacesService, private documentsService: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
+    if (this.activeModal.data.item != null) {
+      this.item = this.activeModal.data.item;
     } else {
       console.log("Data.item is null");
     }
@@ -131,7 +126,8 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
       () => {
         console.log('patching workspace done');
 
-        this.openSnackBar("Updated workspace " + workspace.name + ".");
+        this.toastService.show({ message: 'Updated workspace ' + workspace.name + '.' });
+        this.activeModal.close('updated');
         this.router.navigate(['/workspace-tree']);
       }
     );
@@ -152,7 +148,7 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
     document.approverId = this.approverId.nativeElement.value;
     document.languageId = this.languageId.nativeElement.value;
     document.lastModifiedById = 0;
-    document.lastModifiedOn = new Date(5000);
+    document.lastModifiedOn = new Date(5000).toISOString();
     document.baselineMajor = 0;
     document.baselineMinor = 0;
     document.baselineReview = 0;
@@ -170,17 +166,11 @@ export class RQMWorkspaceTreeviewItemPropertiesDialogComponent implements OnInit
       () => {
         console.log('patching document done');
 
-        this.openSnackBar("Updated document " + document.name + ".");
+        this.toastService.show({ message: 'Updated document ' + document.name + '.' });
+        this.activeModal.close('updated');
         this.router.navigate(['/workspace-tree']);
       }
     );
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
-  }
-
 }
-

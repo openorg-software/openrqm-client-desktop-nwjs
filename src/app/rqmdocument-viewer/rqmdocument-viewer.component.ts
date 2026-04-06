@@ -2,24 +2,24 @@
 openrqm-client-desktop-nwjs
 RQMDocumentViewer Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 // Angular
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-// Material Design
-import { MatSnackBar } from '@angular/material/snack-bar';
+// Siemens iX
+import { ToastService } from '@siemens/ix-angular';
 
 // OpenRQM
-import { LinksService, RQMLink } from 'openrqm-api';
+import { LinksService, RQMLink, OpenAPI } from '../openrqm-api';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
-import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
+import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-viewer',
   templateUrl: './rqmdocument-viewer.component.html',
   styleUrls: ['./rqmdocument-viewer.component.css']
@@ -43,11 +43,10 @@ export class RQMDocumentViewerComponent implements OnInit {
   requirementColor: string = "#acecde";
   proseColor: string = "#adadad";
 
-  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
+  constructor(private router: Router, private toastService: ToastService, private route: ActivatedRoute, private settingsService: RQMSettingsService, private linksService: LinksService, private userService: RQMUserService
   ) {
-    this.linksService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.linksService.configuration.apiKeys = {};
-    this.linksService.configuration.apiKeys['token'] = this.userService.getToken();
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
     // For reloading the page
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -128,10 +127,8 @@ export class RQMDocumentViewerComponent implements OnInit {
   }
 
   openSnackBar(messages: string[]) {
-    this._snackBar.openFromComponent(RQMMultiLineSnackBarComponent, {
-      data: messages,
-      duration: 3000
-    },
-    );
+    this.toastService.show({
+      message: messages.join(' '),
+    });
   }
 }

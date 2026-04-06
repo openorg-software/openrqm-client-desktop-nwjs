@@ -6,7 +6,7 @@ import '@angular/localize/init';
 openrqm-client-desktop-nwjs
 Polyfills
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 /**
@@ -66,15 +66,6 @@ Copyright (C) 2019 Benjamin Schilling
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js';  // Included with Angular CLI.
 
-
-/***************************************************************************************************
- * APPLICATION IMPORTS
- */
-declare global {
-    interface Window {
-        nw: any;
-    }
-}
 

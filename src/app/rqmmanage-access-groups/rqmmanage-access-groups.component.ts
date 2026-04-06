@@ -2,44 +2,42 @@
 openrqm-client-desktop-nwjs
 RQMManageAccessGroups Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
+import { IxActiveModal } from '@siemens/ix-angular';
 
-// Material Design
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-
-import { AccessGroupsService, RQMAccessGroup } from 'openrqm-api';
+import { AccessGroupsService, RQMAccessGroup } from '../openrqm-api';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmmanage-access-groups',
   templateUrl: './rqmmanage-access-groups.component.html',
   styleUrls: ['./rqmmanage-access-groups.component.css']
 })
 export class RQMManageAccessGroupsComponent implements OnInit {
 
-  displayedColumnsAccessGroups: string[] = ['accessGroupId'];
-  dataSourceAccessGroups = new MatTableDataSource<RQMAccessGroup>();
-  @ViewChild(MatPaginator, { static: true }) paginatorAccessGroups: MatPaginator;
+  allData: RQMAccessGroup[] = [];
+  pagedData: RQMAccessGroup[] = [];
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalPages: number = 1;
 
-  selection = new SelectionModel<RQMAccessGroup>(true, []);
+  selectedItems = new Set<RQMAccessGroup>();
 
   initialized: boolean = false;
 
-  constructor(private accessGroupsService: AccessGroupsService) { }
+  constructor(readonly activeModal: IxActiveModal, private accessGroupsService: AccessGroupsService) { }
 
   ngOnInit() {
 
     this.accessGroupsService.getAccessgroups().subscribe(
       accessGroups => {
         console.log(accessGroups);
-
-        this.dataSourceAccessGroups = new MatTableDataSource<RQMAccessGroup>(accessGroups);
-        this.dataSourceAccessGroups.paginator = this.paginatorAccessGroups;
+        this.allData = accessGroups;
+        this.updatePage();
       },
       err => {
         console.log(err);
@@ -52,26 +50,33 @@ export class RQMManageAccessGroupsComponent implements OnInit {
 
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSourceAccessGroups.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSourceAccessGroups.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: RQMAccessGroup): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  updatePage() {
+    this.totalPages = Math.max(1, Math.ceil(this.allData.length / this.pageSize));
+    if (this.currentPage >= this.totalPages) {
+      this.currentPage = this.totalPages - 1;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
+    const start = this.currentPage * this.pageSize;
+    this.pagedData = this.allData.slice(start, start + this.pageSize);
+  }
+
+  isAllSelected(): boolean {
+    return this.selectedItems.size === this.allData.length && this.allData.length > 0;
+  }
+
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selectedItems.clear();
+    } else {
+      this.allData.forEach(row => this.selectedItems.add(row));
+    }
+  }
+
+  toggleSelection(row: RQMAccessGroup) {
+    if (this.selectedItems.has(row)) {
+      this.selectedItems.delete(row);
+    } else {
+      this.selectedItems.add(row);
+    }
   }
 
 }

@@ -2,16 +2,16 @@
 openrqm-client-desktop-nwjs
 RQMAddUser Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IxActiveModal } from '@siemens/ix-angular';
 
-import { WorkspacesService, RQMWorkspaceUser, RQMUser, UserManagementService } from 'openrqm-api'
+import { WorkspacesService, RQMWorkspaceUser, RQMUser, UserManagementService } from '../openrqm-api'
 
 @Component({
+  standalone: false,
   selector: 'app-rqmadd-user',
   templateUrl: './rqmadd-user.component.html',
   styleUrls: ['./rqmadd-user.component.css']
@@ -25,7 +25,7 @@ export class RQMAddUserComponent implements OnInit {
   @ViewChild('userId') userId: { nativeElement: { value: number; }; };
   @ViewChild('permissions') permissions: { nativeElement: { value: number; }; };
 
-  constructor(private dialogRef: MatDialogRef<RQMAddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private workspaceService: WorkspacesService, private userManagementServce: UserManagementService) {
+  constructor(readonly activeModal: IxActiveModal, private workspaceService: WorkspacesService, private userManagementServce: UserManagementService) {
 
   }
 
@@ -70,7 +70,7 @@ export class RQMAddUserComponent implements OnInit {
     user.userId = this.selectedUser.id;
     user.permissions = this.permissions.nativeElement.value;
 
-    this.workspaceService.addUserToWorkspace(this.data.workspaceId, user).subscribe(
+    this.workspaceService.addUserToWorkspace(this.activeModal.data.workspaceId, user).subscribe(
       next => {
         console.log('next');
         console.log(next);
@@ -81,7 +81,7 @@ export class RQMAddUserComponent implements OnInit {
       },
       () => {
         console.log('add user to workspace done');
-        this.dialogRef.close('success');
+        this.activeModal.close('success');
       }
     );
   }

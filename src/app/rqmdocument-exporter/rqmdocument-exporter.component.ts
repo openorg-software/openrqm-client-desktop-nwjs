@@ -2,18 +2,19 @@
 openrqm-client-desktop-nwjs
 RQMDocumentsExporter Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IxActiveModal } from '@siemens/ix-angular';
 
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
-import { ExportService, RQMTemplate } from 'openrqm-api'
+import { ExportService, RQMTemplate, OpenAPI } from '../openrqm-api'
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-exporter',
   templateUrl: './rqmdocument-exporter.component.html',
   styleUrls: ['./rqmdocument-exporter.component.css']
@@ -29,12 +30,11 @@ export class RQMDocumentExporterComponent implements OnInit {
   selectedTemplate: number;
   @ViewChild('exportFileName', { static: false }) exportFileName: { nativeElement: { value: string; }; };
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.rqmExportService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.rqmExportService.configuration.apiKeys = {};
-    this.rqmExportService.configuration.apiKeys['token'] = this.userService.getToken();
-    this.documentId = data.documentId;
-    this.exportType = data.type;
+  constructor(readonly activeModal: IxActiveModal, private rqmExportService: ExportService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
+    this.documentId = this.activeModal.data.documentId;
+    this.exportType = this.activeModal.data.type;
 
   }
 

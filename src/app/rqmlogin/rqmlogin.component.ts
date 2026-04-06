@@ -2,15 +2,15 @@
 openrqm-client-desktop-nwjs
 RQMLogin Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MatDialog } from '@angular/material/dialog';
+import { ModalService } from '@siemens/ix-angular';
 
-import { UserManagementService } from 'openrqm-api'
+import { UserManagementService, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
@@ -20,44 +20,40 @@ import { RQMRegisterComponent } from '../rqmregister/rqmregister.component'
 import * as jssha512 from 'js-sha512';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmlogin',
   templateUrl: './rqmlogin.component.html',
   styleUrls: ['./rqmlogin.component.css']
 })
 export class RQMLoginComponent implements OnInit {
 
-  // Login
   @ViewChild('emailLogin') emailLogin;
   @ViewChild('passwordLogin') passwordLogin;
 
   closeResult: string;
-  constructor(public dialog: MatDialog, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
+  constructor(private modalService: ModalService, private router: Router, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
   }
 
   ngOnInit() {
   }
 
-
-  openDialog(component: any, dataValue?: any): any {
-    return this.dialog.open(component, {
-      width: '80vw',
-      data: dataValue
+  async openDialogServerSettings() {
+    const instance = await this.modalService.open({
+      content: RQMServerSettingsDialogComponent,
+      data: {}
     });
-  }
-
-  openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogRegister() {
-    const dialogRef = this.openDialog(RQMRegisterComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
+  async openDialogRegister() {
+    const instance = await this.modalService.open({
+      content: RQMRegisterComponent,
+      data: {}
+    });
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }

@@ -2,7 +2,7 @@
 openrqm-client-desktop-nwjs
 App Modules
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 - 2020 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 
@@ -14,25 +14,20 @@ import { AppRoutingModule } from './app-routing.module';
 /// Design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RQMMaterialModule } from './material-module'
+import { IxModule } from '@siemens/ix-angular';
 
 
 /// For workspace-tree
-import { TreeviewModule } from 'ngx-treeview';
 import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
 import { RQMMainComponent } from './rqmmain/rqmmain.component';
 import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /// For document-viewer
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
-/// File upload
-import { MaterialFileInputModule } from 'ngx-material-file-input'
-
+import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
+import { MarkdownModule } from 'ngx-markdown';
 
 /// For OpenRQM API
-import { ApiModule } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
@@ -56,6 +51,7 @@ import { RQMAddUserComponent } from './rqmadd-user/rqmadd-user.component';
 import { RQMMultiLineSnackBarComponent } from './rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 import { RQMManageAccessGroupsComponent } from './rqmmanage-access-groups/rqmmanage-access-groups.component';
 import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rqmdocument-import-dialog.component';
+import { OpenRqmApi } from './openrqm-api';
 
 @NgModule({
   declarations: [
@@ -88,33 +84,15 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TreeviewModule.forRoot(),
     FormsModule,
     FontAwesomeModule,
-    ApiModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RQMMaterialModule,
-    CKEditorModule,
-    MaterialFileInputModule,
+    IxModule.forRoot(),
+    AngularMarkdownEditorModule.forRoot({ iconlibrary: 'fa' }),
+    MarkdownModule.forRoot(),
     ReactiveFormsModule,
-  ],
-  entryComponents: [
-    RQMServerSettingsDialogComponent,
-    RQMAddDocumentComponent,
-    RQMAddWorkspaceComponent,
-    RQMDocumentMenubarComponent,
-    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
-    RQMUserSettingsDialogComponent,
-    RQMDocumentExporterComponent,
-    RQMDocumentThemeComponent,
-    RQMRegisterComponent,
-    RQMDeleteTreeViewItemComponent,
-    RQMAddDocumentComponent,
-    RQMAddUserComponent,
-    RQMMultiLineSnackBarComponent,
-    RQMManageAccessGroupsComponent,
-    RQMDocumentImportDialogComponent,
+    OpenRqmApi,
   ],
   bootstrap: [RQMMainComponent]
 })

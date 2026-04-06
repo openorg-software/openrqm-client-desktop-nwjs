@@ -2,48 +2,35 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceTreeView Component Template
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 -->
 
-<ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
-  <div class="form-inline row-item" (click)="onCollapseExpand() " (contextmenu)="onContextMenu($event, item);">
-    <!-- If the item has children a black folder icon shall be displayed -->
-    <fa-icon *ngIf=" item.children " aria-hidden="true " [icon]="item.collapsed ? faFolder : faFolderOpen "></fa-icon>
-    <!-- If the item is a document a file icon shall be displayed -->
-    <fa-icon *ngIf="item.isDocument " [icon]="faFile "></fa-icon>
-    <!-- If the item is not a document and does not has children, a white folder shall be displayed -->
-    <fa-icon *ngIf="!item.isDocument && !item.children " [icon]="faFolderRegular "></fa-icon>
-    <!-- On click the select method with the item as a parameter is called, the text of the item and the ID are displayed (the ID only for debug purposes) -->
-    <label class="form-check-label " (click)="select(item) " id="treeviewObjectDropdown ">
-        {{ item.text }}
-        </label>
-    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
-    </div>
-    <!-- Dropdown when clicking on a treeview item -->
-    <mat-menu #contextMenu="matMenu">
-      <ng-template matMenuContent let-item="item">
-        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogNewWorkspace(item)">Add Workspace</button>
-        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogAddDocument(item)">Add Document</button>
-        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogImportDocument(item)">Import Document from Disk</button>
-        <button mat-menu-item (click)="openWorkspaceItemProperties(item)">Properties</button>
-        <button mat-menu-item *ngIf="item.isItemWorkspace() " (click)="openDialogDelete(item)">Delete Workspace</button>
-        <button mat-menu-item *ngIf="item.isItemDocument() " (click)="openDialogDelete(item)">Delete Document</button>
-      </ng-template>
-    </mat-menu>
-  </div>
+<ng-container *ngIf="items">
+  <ng-container *ngTemplateOutlet="treeNode; context: { items: items }"></ng-container>
+</ng-container>
+
+<ng-template #treeNode let-items="items">
+  <ul class="treeview-list">
+    <li *ngFor="let item of items" class="treeview-item">
+      <div class="form-inline row-item" (contextmenu)="onContextMenu($event, item)">
+        <fa-icon *ngIf="item.children" aria-hidden="true" [icon]="item.collapsed ? faFolder : faFolderOpen"
+          (click)="toggleCollapse(item)"></fa-icon>
+        <fa-icon *ngIf="item.isItemDocument()" [icon]="faFile"></fa-icon>
+        <fa-icon *ngIf="!item.isItemDocument() && !item.children" [icon]="faFolderRegular"></fa-icon>
+        <label class="form-check-label" (click)="select(item)">{{ item.text }}</label>
+      </div>
+      <ng-container *ngIf="item.children && !item.collapsed">
+        <ng-container *ngTemplateOutlet="treeNode; context: { items: item.children }"></ng-container>
+      </ng-container>
+    </li>
+  </ul>
 </ng-template>
 
-<ng-template #headerTemplate let-config="config " let-item="item " let-onCollapseExpand="onCollapseExpand " let-onCheckedChange="onCheckedChange " let-onFilterTextChange="onFilterTextChange ">
-  <div *ngIf="config.hasAllCheckBox || config.hasCollapseExpand " class="row ">
-    <div class="col-12 ">
-      <label *ngIf="config.hasCollapseExpand " class="pull-right " (click)="onCollapseExpand() ">
-          <em aria-hidden="true " class="fa " [class.fa-expand]="item.collapsed "
-            [class.fa-compress]="!item.collapsed "></em>
-        </label>
-    </div>
-  </div>
-  <div *ngIf="config.hasDivider " class="dropdown-divider "></div>
-</ng-template>
-
-<ngx-treeview id="treeview" [config]="config " [headerTemplate]="headerTemplate " [items]="items " [itemTemplate]="itemTemplate ">
-</ngx-treeview>
+<ix-dropdown *ngIf="contextMenuVisible" [show]="contextMenuVisible" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" style="position: fixed;" (showChanged)="contextMenuVisible = $event">
+  <ix-dropdown-item *ngIf="tempTreeViewItem?.isItemWorkspace()" label="Add Workspace" (click)="openDialogNewWorkspace(tempTreeViewItem)"></ix-dropdown-item>
+  <ix-dropdown-item *ngIf="tempTreeViewItem?.isItemWorkspace()" label="Add Document" (click)="openDialogAddDocument(tempTreeViewItem)"></ix-dropdown-item>
+  <ix-dropdown-item *ngIf="tempTreeViewItem?.isItemWorkspace()" label="Import Document from Disk" (click)="openDialogImportDocument(tempTreeViewItem)"></ix-dropdown-item>
+  <ix-dropdown-item label="Properties" (click)="openWorkspaceItemProperties(tempTreeViewItem)"></ix-dropdown-item>
+  <ix-dropdown-item *ngIf="tempTreeViewItem?.isItemWorkspace()" label="Delete Workspace" (click)="openDialogDelete(tempTreeViewItem)"></ix-dropdown-item>
+  <ix-dropdown-item *ngIf="tempTreeViewItem?.isItemDocument()" label="Delete Document" (click)="openDialogDelete(tempTreeViewItem)"></ix-dropdown-item>
+</ix-dropdown>

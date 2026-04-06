@@ -1,21 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { IxActiveModal } from '@siemens/ix-angular';
 import { RQMSettingsService } from '../rqmsettings.service';
 // To display application version
-import { version } from '../../../package.json';
+declare const require: (path: string) => { version: string };
+const packageJson = require('../../../package.json');
 
 @Component({
-    selector: 'app-rqmserver-settings-dialog',
-    templateUrl: './rqmserver-settings-dialog.component.html',
-    styleUrls: ['./rqmserver-settings-dialog.component.css']
+  standalone: false,
+  selector: 'app-rqmserver-settings-dialog',
+  templateUrl: './rqmserver-settings-dialog.component.html',
+  styleUrls: ['./rqmserver-settings-dialog.component.css']
 })
 export class RQMServerSettingsDialogComponent implements OnInit {
-    public version: string = version;
+    public version: string = packageJson.version;
     closeResult: string;
 
     @ViewChild('serverUrlInputField') serverUrlInputField;
     serverUrl: string = "";
 
-    constructor(private rqmSettingsService: RQMSettingsService) {
+    constructor(readonly activeModal: IxActiveModal, private rqmSettingsService: RQMSettingsService) {
         this.serverUrl = this.rqmSettingsService.rqmSettingsModel.serverUrl;
     }
 

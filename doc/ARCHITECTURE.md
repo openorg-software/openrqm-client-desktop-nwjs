@@ -10,15 +10,19 @@ The interface to the OpenRQM server is described in [openrqm-docs](https://githu
 
 ## Functional description of components
 
-### NW.js
+### Tauri
 
-NW.js is used for packaging and deployment of the application.
-NW.js allows to run web application as stand-alone applications by providing a webkit environment which displays the website and provides node.js libraries for cross-platform development.
+[Tauri](https://tauri.app/) is used for packaging and deployment of the application.
+Tauri wraps the Angular web frontend in a native desktop shell using the operating system's built-in WebView (WebKit on Linux/macOS, WebView2 on Windows), keeping the binary size small and avoiding a bundled browser engine.
 
-#### nw-package.json
-The only NW.js specific file is the nw-package.json file, it tells NW.js what the main html file is and how the application .
+The Tauri-specific files live in the `src-tauri/` directory:
 
-### Angular 
+- `tauri.conf.json` — application metadata, window configuration, bundle targets, and plugin settings
+- `src/lib.rs` — Rust entry point; plugins (e.g. `tauri-plugin-store`) are registered here
+- `capabilities/default.json` — permission grants for Tauri plugin APIs exposed to the frontend
+- `Cargo.toml` — Rust dependencies
+
+### Angular
 
 #### 
 
@@ -29,4 +33,4 @@ SPDX-License-Identifier: GPL-2.0-only
 
 ## Copyright
 
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling

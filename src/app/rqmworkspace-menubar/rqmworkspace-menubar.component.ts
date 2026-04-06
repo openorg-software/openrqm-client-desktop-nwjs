@@ -2,14 +2,14 @@
 openrqm-client-desktop-nwjs
 RQMWorkspaceMenubar Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
 import { Component, OnInit } from '@angular/core';
 
-import { MatDialog } from '@angular/material/dialog';
+import { ModalService } from '@siemens/ix-angular';
 
-import { UserManagementService } from 'openrqm-api'
+import { UserManagementService, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 import { RQMUserSettingsDialogComponent } from '../rqmuser-settings-dialog/rqmuser-settings-dialog.component';
@@ -18,6 +18,7 @@ import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.c
 import { RQMManageAccessGroupsComponent } from '../rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmworkspace-menubar',
   templateUrl: './rqmworkspace-menubar.component.html',
   styleUrls: ['./rqmworkspace-menubar.component.css']
@@ -28,57 +29,50 @@ export class RQMWorkspaceMenubarComponent implements OnInit {
 
   closeResult: string;
 
-  constructor(public dialog: MatDialog, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.userManagementService.configuration.basePath = this.settingsService.getApiBasePath();
-    this.userManagementService.configuration.apiKeys = {};
-    this.userManagementService.configuration.apiKeys['token'] = this.userService.getToken();
+  constructor(private modalService: ModalService, private userManagementService: UserManagementService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
   }
 
   ngOnInit() {
   }
 
-  openDialog(component: any, dataValue?: any): any {
-    return this.dialog.open(component, {
-      width: '80vw',
-      data: dataValue
+  async openDialogNewWorkspace() {
+    const instance = await this.modalService.open({
+      content: RQMAddWorkspaceComponent,
+      data: { parentId: null }
     });
-  }
-
-  openDialogNewWorkspace() {
-    const dialogRef = this.openDialog(RQMAddWorkspaceComponent,
-      {
-        parentId: null,
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogManageAccessGroups() {
-    const dialogRef = this.openDialog(RQMManageAccessGroupsComponent, {
+  async openDialogManageAccessGroups() {
+    const instance = await this.modalService.open({
+      content: RQMManageAccessGroupsComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogServerSettings() {
-    const dialogRef = this.openDialog(RQMServerSettingsDialogComponent, {
+  async openDialogServerSettings() {
+    const instance = await this.modalService.open({
+      content: RQMServerSettingsDialogComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }
 
-  openDialogUserSettings() {
-    const dialogRef = this.openDialog(RQMUserSettingsDialogComponent, {
+  async openDialogUserSettings() {
+    const instance = await this.modalService.open({
+      content: RQMUserSettingsDialogComponent,
+      data: {}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    instance.onClose.on(() => {
       console.log('The dialog was closed');
     });
   }

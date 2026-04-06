@@ -2,20 +2,20 @@
 openrqm-client-desktop-nwjs
 RQMAddDocument Component Controller
 SPDX-License-Identifier: GPL-2.0-only
-Copyright (C) 2019 Benjamin Schilling
+Copyright (C) 2019 - 2026 Benjamin Schilling
 */
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IxActiveModal, ToastService } from '@siemens/ix-angular';
 
-import { DocumentsService, RQMDocument } from 'openrqm-api'
+import { DocumentsService, RQMDocument, OpenAPI } from '../openrqm-api'
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmadd-document',
   templateUrl: './rqmadd-document.component.html',
   styleUrls: ['./rqmadd-document.component.css']
@@ -34,10 +34,10 @@ export class RQMAddDocumentComponent implements OnInit {
 
   public parentId: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
-    this.documentsSerivce.configuration.basePath = this.settingsService.getApiBasePath();
-    this.documentsSerivce.configuration.apiKeys = {};
-    this.documentsSerivce.configuration.apiKeys['token'] = this.userService.getToken();
+  constructor(readonly activeModal: IxActiveModal, private toastService: ToastService, private router: Router, private documentsSerivce: DocumentsService, private settingsService: RQMSettingsService, private userService: RQMUserService) {
+    OpenAPI.BASE = this.settingsService.getApiBasePath();
+    OpenAPI.TOKEN = this.userService.getToken();
+    const data = this.activeModal.data;
     this.parentId = data.parentId;
   }
 
@@ -59,7 +59,7 @@ export class RQMAddDocumentComponent implements OnInit {
     document.approverId = this.approverId.nativeElement.value;
     document.languageId = this.languageId.nativeElement.value;
     document.lastModifiedById = 0;
-    document.lastModifiedOn = new Date(5000);
+    document.lastModifiedOn = new Date(5000).toISOString();
     document.baselineMajor = 0;
     document.baselineMinor = 0;
     document.baselineReview = 0;
@@ -76,16 +76,10 @@ export class RQMAddDocumentComponent implements OnInit {
       },
       () => {
         console.log('add document done');
-        this.openSnackBar("Added document " + document.name + ".");
+        this.toastService.show({ message: "Added document " + document.name + "." });
         this.router.navigate(['/workspace-tree']);
       }
     );
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-    });
   }
 
 }
