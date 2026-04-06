@@ -8,6 +8,7 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmaccess-control-list',
   templateUrl: './rqmaccess-control-list.component.html',
   styleUrls: ['./rqmaccess-control-list.component.css']

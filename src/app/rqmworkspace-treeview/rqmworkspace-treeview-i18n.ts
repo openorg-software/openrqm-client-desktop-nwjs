@@ -5,10 +5,9 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019 Benjamin Schilling
 */
 
-import { TreeviewSelection, TreeviewI18nDefault } from 'ngx-treeview';
-import { RQMWorkspaceTreeViewItem, } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
+import { RQMWorkspaceTreeViewItem } from '../rqmworkspace-tree/rqmworkspacetreeview-item';
 
-export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
+export class RQMWorkspaceTreeviewI18n {
     private internalSelectedItem: RQMWorkspaceTreeViewItem;
 
     set selectedItem(value: RQMWorkspaceTreeViewItem) {
@@ -21,7 +20,7 @@ export class RQMWorkspaceTreeviewI18n extends TreeviewI18nDefault {
         return this.internalSelectedItem;
     }
 
-    getText(selection: TreeviewSelection): string {
+    getText(): string {
         return this.internalSelectedItem ? this.internalSelectedItem.text : 'All';
     }
 }

@@ -16,6 +16,7 @@ import { RQMUserService } from '../rqmuser.service';
 import { ThemesService, RQMTheme } from 'openrqm-api'
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-theme',
   templateUrl: './rqmdocument-theme.component.html',
   styleUrls: ['./rqmdocument-theme.component.css']

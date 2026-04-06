@@ -20,6 +20,7 @@ import { RQMUserService } from '../rqmuser.service';
 import { DocumentsService, WorkspacesService } from 'openrqm-api';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdelete-tree-view-item',
   templateUrl: './rqmdelete-tree-view-item.component.html',
   styleUrls: ['./rqmdelete-tree-view-item.component.css']

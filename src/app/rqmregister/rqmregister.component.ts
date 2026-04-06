@@ -14,6 +14,7 @@ import { RQMUserService } from '../rqmuser.service';
 
 import * as jssha512 from 'js-sha512';
 @Component({
+  standalone: false,
   selector: 'app-rqmregister',
   templateUrl: './rqmregister.component.html',
   styleUrls: ['./rqmregister.component.css']

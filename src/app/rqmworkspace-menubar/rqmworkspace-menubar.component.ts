@@ -18,6 +18,7 @@ import { RQMAddWorkspaceComponent } from '../rqmadd-workspace/rqmadd-workspace.c
 import { RQMManageAccessGroupsComponent } from '../rqmmanage-access-groups/rqmmanage-access-groups.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmworkspace-menubar',
   templateUrl: './rqmworkspace-menubar.component.html',
   styleUrls: ['./rqmworkspace-menubar.component.css']

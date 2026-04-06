@@ -16,6 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AccessGroupsService, RQMAccessGroup } from 'openrqm-api';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmmanage-access-groups',
   templateUrl: './rqmmanage-access-groups.component.html',
   styleUrls: ['./rqmmanage-access-groups.component.css']

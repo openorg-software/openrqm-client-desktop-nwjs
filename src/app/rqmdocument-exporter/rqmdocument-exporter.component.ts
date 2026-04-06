@@ -14,6 +14,7 @@ import { RQMUserService } from '../rqmuser.service';
 import { ExportService, RQMTemplate } from 'openrqm-api'
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-exporter',
   templateUrl: './rqmdocument-exporter.component.html',
   styleUrls: ['./rqmdocument-exporter.component.css']

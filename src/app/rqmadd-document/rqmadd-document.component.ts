@@ -16,6 +16,7 @@ import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmadd-document',
   templateUrl: './rqmadd-document.component.html',
   styleUrls: ['./rqmadd-document.component.css']
@@ -59,7 +60,7 @@ export class RQMAddDocumentComponent implements OnInit {
     document.approverId = this.approverId.nativeElement.value;
     document.languageId = this.languageId.nativeElement.value;
     document.lastModifiedById = 0;
-    document.lastModifiedOn = new Date(5000);
+    document.lastModifiedOn = new Date(5000).toISOString();
     document.baselineMajor = 0;
     document.baselineMinor = 0;
     document.baselineReview = 0;

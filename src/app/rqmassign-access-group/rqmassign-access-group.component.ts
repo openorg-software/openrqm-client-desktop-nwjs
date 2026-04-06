@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmassign-access-group',
   templateUrl: './rqmassign-access-group.component.html',
   styleUrls: ['./rqmassign-access-group.component.css']

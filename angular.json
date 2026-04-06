@@ -64,11 +64,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "openrqm-client-desktop-nwjs:build"
+            "buildTarget": "openrqm-client-desktop-nwjs:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "openrqm-client-desktop-nwjs:build:production"
+              "buildTarget": "openrqm-client-desktop-nwjs:build:production"
             }
           }
         },
@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "openrqm-client-desktop-nwjs"
+  "defaultProject": "openrqm-client-desktop-nwjs",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -19,9 +19,10 @@ import { RQMUserService } from '../rqmuser.service';
 import * as jssha512 from 'js-sha512';
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 @Component({
-    selector: 'app-rqmuser-settings-dialog',
-    templateUrl: './rqmuser-settings-dialog.component.html',
-    styleUrls: ['./rqmuser-settings-dialog.component.css']
+  standalone: false,
+  selector: 'app-rqmuser-settings-dialog',
+  templateUrl: './rqmuser-settings-dialog.component.html',
+  styleUrls: ['./rqmuser-settings-dialog.component.css']
 })
 export class RQMUserSettingsDialogComponent implements OnInit {
 

@@ -20,6 +20,7 @@ import { RQMRegisterComponent } from '../rqmregister/rqmregister.component'
 import * as jssha512 from 'js-sha512';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmlogin',
   templateUrl: './rqmlogin.component.html',
   styleUrls: ['./rqmlogin.component.css']

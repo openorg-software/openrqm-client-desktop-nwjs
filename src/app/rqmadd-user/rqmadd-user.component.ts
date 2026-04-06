@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WorkspacesService, RQMWorkspaceUser, RQMUser, UserManagementService } from 'openrqm-api'
 
 @Component({
+  standalone: false,
   selector: 'app-rqmadd-user',
   templateUrl: './rqmadd-user.component.html',
   styleUrls: ['./rqmadd-user.component.css']

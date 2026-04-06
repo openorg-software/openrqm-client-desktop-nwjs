@@ -17,6 +17,7 @@ import { RQMUserService } from '../rqmuser.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-rqmadd-workspace',
   templateUrl: './rqmadd-workspace.component.html',
   styleUrls: ['./rqmadd-workspace.component.css']

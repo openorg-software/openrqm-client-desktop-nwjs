@@ -7,6 +7,7 @@ Copyright (C) 2019 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmmain',
   templateUrl: './rqmmain.component.html',
   styleUrls: ['./rqmmain.component.css']

@@ -6,5 +6,5 @@ Copyright (C) 2019 Benjamin Schilling
 -->
 
 <app-rqmworkspace-menubar *ngIf="noMenuBar==false"></app-rqmworkspace-menubar>
-<app-rqmworkspace-treeview [linking]="linking" [config]="config" [items]="items" (selectedChange)="values = $event" (filterChange)="onFilterChange($event)" (selectedDocument)="onSelectedDocument($event)">
+<app-rqmworkspace-treeview [linking]="linking" [items]="items" (selectedDocument)="onSelectedDocument($event)">
 </app-rqmworkspace-treeview>

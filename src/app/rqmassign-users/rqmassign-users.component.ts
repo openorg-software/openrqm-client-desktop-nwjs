@@ -20,6 +20,7 @@ import { WorkspacesService, RQMWorkspaceUser } from 'openrqm-api'
 import { RQMAddUserComponent } from '../rqmadd-user/rqmadd-user.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmassign-users',
   templateUrl: './rqmassign-users.component.html',
   styleUrls: ['./rqmassign-users.component.css']

@@ -6,13 +6,13 @@ Copyright (C) 2019 Benjamin Schilling
 */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TreeviewConfig } from 'ngx-treeview';
 import { WorkspacesService, RQMWorkspace } from 'openrqm-api';
 
 import { RQMWorkspaceTreeViewItem } from './rqmworkspacetreeview-item';
 import { RQMSettingsService } from '../rqmsettings.service';
 import { RQMUserService } from '../rqmuser.service';
 @Component({
+  standalone: false,
   selector: 'app-rqmworkspace-tree',
   templateUrl: './rqmworkspace-tree.component.html',
   styleUrls: ['./rqmworkspace-tree.component.css']
@@ -22,27 +22,7 @@ export class RQMWorkspaceTreeComponent implements OnInit {
   dropdownEnabled = true;
   items: RQMWorkspaceTreeViewItem[];
   values: number[];
-  config = TreeviewConfig.create({
-    hasAllCheckBox: false,
-    hasFilter: false,
-    hasCollapseExpand: false,
-    decoupleChildFromParent: false,
-    maxHeight: 1000
-  });
 
-  buttonClasses = [
-    'btn-outline-primary',
-    'btn-outline-secondary',
-    'btn-outline-success',
-    'btn-outline-danger',
-    'btn-outline-warning',
-    'btn-outline-info',
-    'btn-outline-light',
-    'btn-outline-dark'
-  ];
-  buttonClass = this.buttonClasses[0];
-
-  // For linking
   @Input() linking: boolean = false;
   @Input() noMenuBar: boolean = false;
   @Output() selectedDocument = new EventEmitter<number>();

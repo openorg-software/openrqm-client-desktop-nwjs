@@ -37,6 +37,7 @@ export class LinkWrapper {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-editor',
   templateUrl: './rqmdocument-editor.component.html',
   styleUrls: ['./rqmdocument-editor.component.css']

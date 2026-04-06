@@ -18,7 +18,6 @@ import { RQMMaterialModule } from './material-module'
 
 
 /// For workspace-tree
-import { TreeviewModule } from 'ngx-treeview';
 import { RQMWorkspaceTreeComponent } from './rqmworkspace-tree/rqmworkspace-tree.component';
 import { RQMMainComponent } from './rqmmain/rqmmain.component';
 import { RQMWorkspaceTreeviewComponent } from './rqmworkspace-treeview/rqmworkspace-treeview.component';
@@ -27,12 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /// For document-viewer
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-/// File upload
-import { MaterialFileInputModule } from 'ngx-material-file-input'
-
-
 /// For OpenRQM API
-import { ApiModule } from 'openrqm-api';
 import { HttpClientModule } from '@angular/common/http';
 import { RQMWorkspaceMenubarComponent } from './rqmworkspace-menubar/rqmworkspace-menubar.component';
 import { RQMDocumentViewerComponent } from './rqmdocument-viewer/rqmdocument-viewer.component';
@@ -88,33 +82,13 @@ import { RQMDocumentImportDialogComponent } from './rqmdocument-import-dialog/rq
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TreeviewModule.forRoot(),
     FormsModule,
     FontAwesomeModule,
-    ApiModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RQMMaterialModule,
     CKEditorModule,
-    MaterialFileInputModule,
     ReactiveFormsModule,
-  ],
-  entryComponents: [
-    RQMServerSettingsDialogComponent,
-    RQMAddDocumentComponent,
-    RQMAddWorkspaceComponent,
-    RQMDocumentMenubarComponent,
-    RQMWorkspaceTreeviewItemPropertiesDialogComponent,
-    RQMUserSettingsDialogComponent,
-    RQMDocumentExporterComponent,
-    RQMDocumentThemeComponent,
-    RQMRegisterComponent,
-    RQMDeleteTreeViewItemComponent,
-    RQMAddDocumentComponent,
-    RQMAddUserComponent,
-    RQMMultiLineSnackBarComponent,
-    RQMManageAccessGroupsComponent,
-    RQMDocumentImportDialogComponent,
   ],
   bootstrap: [RQMMainComponent]
 })

@@ -9,6 +9,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmmulti-line-snack-bar',
   templateUrl: './rqmmulti-line-snack-bar.component.html',
   styleUrls: ['./rqmmulti-line-snack-bar.component.css']

@@ -20,6 +20,7 @@ import { LinkWrapper } from '../rqmdocument-editor/rqmdocument-editor.component'
 import { RQMMultiLineSnackBarComponent } from '../rqmmulti-line-snack-bar/rqmmulti-line-snack-bar.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-viewer',
   templateUrl: './rqmdocument-viewer.component.html',
   styleUrls: ['./rqmdocument-viewer.component.css']

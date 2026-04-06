@@ -8,6 +8,7 @@ Copyright (C) 2020 Benjamin Schilling
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmtracing',
   templateUrl: './rqmtracing.component.html',
   styleUrls: ['./rqmtracing.component.css']

@@ -23,6 +23,7 @@ import { RQMDocumentExporterComponent } from '../rqmdocument-exporter/rqmdocumen
 import { RQMDocumentThemeComponent } from '../rqmdocument-theme/rqmdocument-theme.component';
 
 @Component({
+  standalone: false,
   selector: 'app-rqmdocument-menubar',
   templateUrl: './rqmdocument-menubar.component.html',
   styleUrls: ['./rqmdocument-menubar.component.css']

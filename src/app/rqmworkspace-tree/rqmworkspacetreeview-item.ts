@@ -5,38 +5,28 @@ SPDX-License-Identifier: GPL-2.0-only
 Copyright (C) 2019-2020 Benjamin Schilling
 */
 
-import { TreeviewItem } from 'ngx-treeview';
-export class RQMWorkspaceTreeViewItem extends TreeviewItem {
+export class RQMWorkspaceTreeViewItem {
+    text: string;
+    value: number;
+    collapsed: boolean;
+    children: RQMWorkspaceTreeViewItem[];
     private isDocument?: boolean;
     public internalIdentifier?: number;
-    public children: RQMWorkspaceTreeViewItem[];
 
     constructor(text?: string, value?: number, collapsed?: boolean, children?: RQMWorkspaceTreeViewItem[], isDocument?: boolean, internalIdentifier?: number) {
-        super({
-            text: text, value: value, collapsed: collapsed
-        });
+        this.text = text;
+        this.value = value;
+        this.collapsed = collapsed !== undefined ? collapsed : false;
         this.isDocument = isDocument;
         this.internalIdentifier = internalIdentifier;
-        if (children != null && children.length > 0) {
-
-            this.children = children;
-        }
+        this.children = (children != null && children.length > 0) ? children : undefined;
     }
 
-
     public isItemDocument(): boolean {
-        if (this.isDocument) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!this.isDocument;
     }
 
     public isItemWorkspace(): boolean {
-        if (!this.isDocument) {
-            return true;
-        } else {
-            return false;
-        }
+        return !this.isDocument;
     }
 }
