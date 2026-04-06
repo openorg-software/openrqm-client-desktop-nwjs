@@ -45,3 +45,6 @@ jobs:
 
     - name: Build using makefile
       run: make
+
+    - name: Run Tauri tests
+      run: cargo test --manifest-path src-tauri/Cargo.toml
