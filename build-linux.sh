@@ -37,7 +37,7 @@ fi
 check_tools
 
 echo "==> Installing npm dependencies..."
-npm ci --legacy-peer-deps
+npm ci
 
 echo "==> Building Angular frontend..."
 npm run build

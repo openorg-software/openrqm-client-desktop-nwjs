@@ -32,7 +32,7 @@ function Check-Tools {
 Check-Tools
 
 Write-Host "==> Installing npm dependencies..." -ForegroundColor Cyan
-npm ci --legacy-peer-deps
+npm ci
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "==> Building Angular frontend..." -ForegroundColor Cyan
